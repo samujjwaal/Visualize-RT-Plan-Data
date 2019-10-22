@@ -1,0 +1,8 @@
+Preliminaries:
+1. Data and task abstractions (3 hours)
+2. State of the art (3 hours)
+3. Functional specifications (4 hours)
+4. Setting goals (2 hour)
+5. Write up of the project and prototypes (4 hours)
+
+I will keep updating this schedule as it changes.
