@@ -1,4 +1,4 @@
-,Dummy ID,Gender,Race,Age at Diagnosis (Calculated),Tumor subsite (BOT/Tonsil/Soft Palate/Pharyngeal wall/GPS/NOS),HPV/P16 status,T-category,Tm Laterality (R/L),Smoking status at Diagnosis (Never/Former/Current),Smoking status (Packs/Year),Total dose,Treatment duration (Days),"Overall Survival (1=alive, 0=dead)"
+,dummy_id,gender,race,age_at_diagnosis,tumor_subsite,hpv,t_category,tm_laterality,smoking_status_at_diagnosis,smoking_status_packs,total_dose,treatment_duration,overall_survival
 0,10183,Male,White/Caucasion,45.95,Tonsil,Unknown,T3,Bilateral,Former,5,69.96,46.0,1
 1,7,Male,White/Caucasion,65.36944444,BOT,Positive,T4,Bilateral,Current,60,69.96,44.0,0
 2,13,Male,African American/Black,54.2,NOS,Negative,T4,Bilateral,Never,0,70.04,45.0,0
