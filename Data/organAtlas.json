@@ -1,0 +1,284 @@
+[{
+    "GTVn": {
+        "x": 5000.0,
+        "y": 5000.0,
+        "z": 5000.0,
+        "partition": -1
+    },
+    "GTVp": {
+        "x": 5000.0,
+        "y": 5000.0,
+        "z": 5000.0,
+        "partition": -1
+    },
+    "Brainstem": {
+        "x": 256.6672,
+        "y": 188.6602,
+        "z": 21.492,
+        "partition": 5
+    },
+    "Cricoid_cartilage": {
+        "x": 258.435,
+        "y": 160.8748,
+        "z": 70.2431,
+        "partition": 2
+    },
+    "Cricopharyngeal_Muscle": {
+        "x": 258.0176,
+        "y": 168.8593,
+        "z": 69.8022,
+        "partition": 2
+    },
+    "Esophagus": {
+        "x": 256.421,
+        "y": 198.0422,
+        "z": 86.397,
+        "partition": 2
+    },
+    "Extended_Oral_Cavity": {
+        "x": 256.4776,
+        "y": 111.4104,
+        "z": 39.2023,
+        "partition": 1
+    },
+    "Genioglossus_M": {
+        "x": 256.5192,
+        "y": 115.293,
+        "z": 47.6014,
+        "partition": 1
+    },
+    "Hard_Palate": {
+        "x": 255.8886,
+        "y": 101.5936,
+        "z": 24.9172,
+        "partition": 1
+    },
+    "Hyoid_bone": {
+        "x": 257.2713,
+        "y": 130.0231,
+        "z": 55.3449,
+        "partition": 2
+    },
+    "IPC": {
+        "x": 258.9259,
+        "y": 162.8156,
+        "z": 62.0792,
+        "partition": 2
+    },
+    "Larynx": {
+        "x": 258.9813,
+        "y": 151.6446,
+        "z": 65.9226,
+        "partition": 2
+    },
+    "Lower_Lip": {
+        "x": 259.3857,
+        "y": 65.735,
+        "z": 41.5155,
+        "partition": 1
+    },
+    "Lt_Ant_Digastric_M": {
+        "x": 272.5845,
+        "y": 103.6773,
+        "z": 51.9693,
+        "partition": 1
+    },
+    "Lt_Anterior_Seg_Eyeball": {
+        "x": 290.79,
+        "y": 98.75,
+        "z": 7.93,
+        "partition": 4
+    },
+    "Lt_Brachial_Plexus": {
+        "x": 278.9268,
+        "y": 176.1545,
+        "z": 58.8455,
+        "partition": 5
+    },
+    "Lt_Lateral_Pterygoid_M": {
+        "x": 294.2834,
+        "y": 141.7463,
+        "z": 25.1804,
+        "partition": 1
+    },
+    "Lt_Masseter_M": {
+        "x": 311.009,
+        "y": 126.027,
+        "z": 32.9061,
+        "partition": 1
+    },
+    "Lt_Mastoid": {
+        "x": 312.0492,
+        "y": 179.133,
+        "z": 34.8215,
+        "partition": 6
+    },
+    "Lt_Medial_Pterygoid_M": {
+        "x": 287.6847,
+        "y": 136.3498,
+        "z": 34.9126,
+        "partition": 1
+    },
+    "Lt_Parotid_Gland": {
+        "x": 317.4253,
+        "y": 155.6142,
+        "z": 36.9933,
+        "partition": 3
+    },
+    "Lt_Posterior_Seg_Eyeball": {
+        "x": 290.548,
+        "y": 109.0303,
+        "z": 8.3916,
+        "partition": 4
+    },
+    "Lt_Sternocleidomastoid_M": {
+        "x": 302.3812,
+        "y": 166.7465,
+        "z": 62.2146,
+        "partition": 2
+    },
+    "Lt_Submandibular_Gland": {
+        "x": 290.012,
+        "y": 135.0605,
+        "z": 50.5286,
+        "partition": 3
+    },
+    "Lt_thyroid_lobe": {
+        "x": 274.226,
+        "y": 166.7528,
+        "z": 76.8322,
+        "partition": 2
+    },
+    "Mandible": {
+        "x": 256.7629,
+        "y": 105.9644,
+        "z": 41.4555,
+        "partition": 1
+    },
+    "MPC": {
+        "x": 258.2706,
+        "y": 159.7882,
+        "z": 55.9059,
+        "partition": 2
+    },
+    "Mylogeniohyoid_M": {
+        "x": 259.0251,
+        "y": 104.1146,
+        "z": 50.6977,
+        "partition": 1
+    },
+    "Rt_Ant_Digastric_M": {
+        "x": 243.6291,
+        "y": 102.5421,
+        "z": 51.8254,
+        "partition": 1
+    },
+    "Rt_Anterior_Seg_Eyeball": {
+        "x": 224.381,
+        "y": 97.381,
+        "z": 7.581,
+        "partition": 4
+    },
+    "Rt_Brachial_Plexus": {
+        "x": 223.0537,
+        "y": 186.7532,
+        "z": 68.9788,
+        "partition": 5
+    },
+    "Rt_Lateral_Pterygoid_M": {
+        "x": 219.6986,
+        "y": 140.5013,
+        "z": 24.5944,
+        "partition": 1
+    },
+    "Rt_Masseter_M": {
+        "x": 202.2466,
+        "y": 125.0774,
+        "z": 32.2473,
+        "partition": 1
+    },
+    "Rt_Mastoid": {
+        "x": 199.922,
+        "y": 178.8073,
+        "z": 33.4862,
+        "partition": 6
+    },
+    "Rt_Medial_Pterygoid_M": {
+        "x": 225.1718,
+        "y": 136.3466,
+        "z": 34.0731,
+        "partition": 1
+    },
+    "Rt_Parotid_Gland": {
+        "x": 196.5746,
+        "y": 155.4486,
+        "z": 35.5248,
+        "partition": 3
+    },
+    "Rt_Posterior_Seg_Eyeball": {
+        "x": 223.5585,
+        "y": 107.7759,
+        "z": 7.8032,
+        "partition": 4
+    },
+    "Rt_Sternocleidomastoid_M": {
+        "x": 214.0143,
+        "y": 166.3923,
+        "z": 62.3695,
+        "partition": 2
+    },
+    "Rt_Submandibular_Gland": {
+        "x": 226.0211,
+        "y": 135.6975,
+        "z": 49.1553,
+        "partition": 3
+    },
+    "Rt_thyroid_lobe": {
+        "x": 237.2413,
+        "y": 166.7772,
+        "z": 74.5252,
+        "partition": 2
+    },
+    "Soft_Palate": {
+        "x": 256.3907,
+        "y": 133.659,
+        "z": 32.2893,
+        "partition": 1
+    },
+    "SPC": {
+        "x": 255.9108,
+        "y": 149.043,
+        "z": 41.6093,
+        "partition": 2
+    },
+    "Spinal_Cord": {
+        "x": 253.6332,
+        "y": 198.7939,
+        "z": 59.9972,
+        "partition": 5
+    },
+    "Supraglottic_Larynx": {
+        "x": 259.9969,
+        "y": 142.4454,
+        "z": 58.8223,
+        "partition": 2
+    },
+    "Thyroid_cartilage": {
+        "x": 259.2169,
+        "y": 146.1773,
+        "z": 64.7843,
+        "partition": 2
+    },
+    "Tongue": {
+        "x": 256.0246,
+        "y": 116.4423,
+        "z": 40.4858,
+        "partition": 1
+    },
+    "Upper_Lip": {
+        "x": 256.593,
+        "y": 69.8947,
+        "z": 28.2009,
+        "partition": 1
+    }
+}]
