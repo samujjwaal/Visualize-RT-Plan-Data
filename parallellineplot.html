@@ -2,6 +2,8 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <!--
       
       This gist is based on those three gists:
@@ -53,6 +55,43 @@
     </style>
   </head>
   <body>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">MedRT</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+          <ul class="navbar-nav">
+            <li class="nav-item active">
+              <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">MDACC</a>
+            </li>                
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                UIC
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <a class="dropdown-item" href="#">Patient ID: </a>
+                <a class="dropdown-item" href="#">Patient ID : </a>
+              </div>
+            </li>
+            <li class="nav-item">
+                    <a class="nav-link" href="parallellineplot.html">Statistics</a>
+            </li>
+          </ul>
+        </div>
+ </nav>
+
+
+
+
+
+
+
     <script src="https://d3js.org/d3.v3.min.js"></script>
     <script>
 
@@ -143,7 +182,7 @@
         .append("g")
           .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-      d3.csv("modified_patient_info_mdacc.csv", function(error, data) {
+      d3.csv("data/Preprocess/modified_patient_info_mdacc.csv", function(error, data) {
 
         //Create the dimensions depending on attribute "type" (number|string)
         //The x-scale calculates the position by attribute dimensions[x].name
