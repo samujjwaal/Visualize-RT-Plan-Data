@@ -24,7 +24,7 @@
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="#">MDACC</a>
-                </li>                
+                </li>
                 <li class="nav-item dropdown">
                   <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     UIC
@@ -40,62 +40,75 @@
               </ul>
             </div>
      </nav>
+     <div class="row">
+      <!-- data distribution analysis -->
+      <div class="chart-wrapper col-6" id="chart-distro1">
+        <!--Sorry about all the inline JS. It is a quick way to show what options are available-->
+        <div class="chart-options">
+            <center><p>Show: </p>
+            <button onclick="chart1.violinPlots.hide();chart1.boxPlots.show({reset:true});chart1.notchBoxes.hide();chart1.dataPlots.change({showPlot:false,showBeanLines:false})">Box Plot</button>
+            <button onclick="chart1.violinPlots.hide();chart1.notchBoxes.show({reset:true});chart1.boxPlots.show({reset:true, showBox:false,showOutliers:true,boxWidth:20,scatterOutliers:true});chart1.dataPlots.change({showPlot:false,showBeanLines:false})">Notched Box Plot</button>
+            <button onclick="chart1.violinPlots.show({reset:true,clamp:0});chart1.boxPlots.show({reset:true, showWhiskers:false,showOutliers:false,boxWidth:10,lineWidth:15,colors:['#555']});chart1.notchBoxes.hide();chart1.dataPlots.change({showPlot:false,showBeanLines:false})">Violin Plot Unbound</button>
+            <button onclick="chart1.violinPlots.show({reset:true,clamp:1});chart1.boxPlots.show({reset:true, showWhiskers:false,showOutliers:false,boxWidth:10,lineWidth:15,colors:['#555']});chart1.notchBoxes.hide();chart1.dataPlots.change({showPlot:false,showBeanLines:false})">Violin Plot Clamp to Data</button>
+            <button onclick="chart1.violinPlots.show({reset:true, width:75, clamp:0, resolution:30, bandwidth:50});chart1.dataPlots.show({showBeanLines:true,beanWidth:15,showPlot:false,colors:['#555']});chart1.boxPlots.hide();chart1.notchBoxes.hide()">Bean Plot</button>
+            <button onclick="chart1.violinPlots.hide();chart1.dataPlots.show({showPlot:true, plotType:'beeswarm',showBeanLines:false, colors:null});chart1.notchBoxes.hide();chart1.boxPlots.hide();">Beeswarm Plot</button>
+            <button onclick="chart1.violinPlots.hide();chart1.dataPlots.show({showPlot:true, plotType:40, showBeanLines:false,colors:null});chart1.notchBoxes.hide();chart1.boxPlots.hide();">Scatter Plot</button>
+            <button onclick="if(chart1.dataPlots.options.showLines){chart1.dataPlots.change({showLines:false});} else {chart1.dataPlots.change({showLines:['median','quartile1','quartile3']});}">Trend Lines</button>
+            </center>
+          </div>
+      </div>
 
-     <!-- distribution analysis -->
-     <div class="chart-wrapper" id="chart-distro1"></div>
+      <script src="https://d3js.org/d3.v3.min.js"></script>
+      <!-- <script src="https://d3js.org/d3.v4.js"></script> -->
 
-  <!--Sorry about all the inline JS. It is a quick way to show what options are available-->
-  <div class="chart-options">
-      <p>Show: </p>
-      <button onclick="chart1.violinPlots.hide();chart1.boxPlots.show({reset:true});chart1.notchBoxes.hide();chart1.dataPlots.change({showPlot:false,showBeanLines:false})">Box Plot</button>
-      <button onclick="chart1.violinPlots.hide();chart1.notchBoxes.show({reset:true});chart1.boxPlots.show({reset:true, showBox:false,showOutliers:true,boxWidth:20,scatterOutliers:true});chart1.dataPlots.change({showPlot:false,showBeanLines:false})">Notched Box Plot</button>
-      <button onclick="chart1.violinPlots.show({reset:true,clamp:0});chart1.boxPlots.show({reset:true, showWhiskers:false,showOutliers:false,boxWidth:10,lineWidth:15,colors:['#555']});chart1.notchBoxes.hide();chart1.dataPlots.change({showPlot:false,showBeanLines:false})">Violin Plot Unbound</button>
-      <button onclick="chart1.violinPlots.show({reset:true,clamp:1});chart1.boxPlots.show({reset:true, showWhiskers:false,showOutliers:false,boxWidth:10,lineWidth:15,colors:['#555']});chart1.notchBoxes.hide();chart1.dataPlots.change({showPlot:false,showBeanLines:false})">Violin Plot Clamp to Data</button>
-      <button onclick="chart1.violinPlots.show({reset:true, width:75, clamp:0, resolution:30, bandwidth:50});chart1.dataPlots.show({showBeanLines:true,beanWidth:15,showPlot:false,colors:['#555']});chart1.boxPlots.hide();chart1.notchBoxes.hide()">Bean Plot</button>
-      <button onclick="chart1.violinPlots.hide();chart1.dataPlots.show({showPlot:true, plotType:'beeswarm',showBeanLines:false, colors:null});chart1.notchBoxes.hide();chart1.boxPlots.hide();">Beeswarm Plot</button>
-      <button onclick="chart1.violinPlots.hide();chart1.dataPlots.show({showPlot:true, plotType:40, showBeanLines:false,colors:null});chart1.notchBoxes.hide();chart1.boxPlots.hide();">Scatter Plot</button>
-      <button onclick="if(chart1.dataPlots.options.showLines){chart1.dataPlots.change({showLines:false});} else {chart1.dataPlots.change({showLines:['median','quartile1','quartile3']});}">Trend Lines</button>
-  </div>
+      <script src="js/distrochart.js" charset="utf-8"></script>
+      <script type="text/javascript">
+          var chart1;
+          d3.csv('data/distribution.csv', function(error, data) {
+              data.forEach(function (d) {d.value = +d.value;});
 
-  <script src="https://d3js.org/d3.v3.min.js"></script>
-  <!-- <script src="https://d3js.org/d3.v4.js"></script> -->
-  
-  <script src="js/distrochart.js" charset="utf-8"></script>
-  <script type="text/javascript">
-      var chart1;
-      d3.csv('data/distribution.csv', function(error, data) {
-          data.forEach(function (d) {d.value = +d.value;});
+              chart1 = makeDistroChart({
+                  data:data,
+                  xName:'name',
+                  yName:'value',
+                  axisLabels: {xAxis: null, yAxis: 'Values'},
+                  selector:"#chart-distro1",
+                  chartSize:{height:460, width:960},
+                  constrainExtremes:true});
+              chart1.renderBoxPlot();
+              chart1.renderDataPlots();
+              chart1.renderNotchBoxes({showNotchBox:false});
+              chart1.renderViolinPlot({showViolinPlot:false});
 
-          chart1 = makeDistroChart({
-              data:data,
-              xName:'name',
-              yName:'value',
-              axisLabels: {xAxis: null, yAxis: 'Values'},
-              selector:"#chart-distro1",
-              chartSize:{height:460, width:960},
-              constrainExtremes:true});
-          chart1.renderBoxPlot();
-          chart1.renderDataPlots();
-          chart1.renderNotchBoxes({showNotchBox:false});
-          chart1.renderViolinPlot({showViolinPlot:false});
+          });
+      </script>
+      <!-- Radar plot images -->
+      <div class="col-6" style="height: 500;">
+          <div class="row">
+            <div class="col-6"><img src ="images/p1.PNG" height="250" width="250"></div>
+            <div class="col-3"><img src ="images/sp1.PNG" height="175" width="175"></div>
+            <div class="col-3"><img src ="images/sp2.PNG" height="175" width="175"></div>
+          </div>
+          <div class="row">
+              <div class="col-4"><img src ="images/sp3.PNG" height="175" width="175"></div>
+              <div class="col-4"><img src ="images/sp4.PNG" height="175" width="175"></div>
+              <div class="col-4"><img src ="images/sp5.PNG" height="175" width="175"></div>
+          </div>
+          <div class="row">
+              <h5>Similar Patients</h5>
+          </div>
+      </div>
 
-      });
-  </script>
+     </div>
+     <div class="row"></div>
+        <div id="dropDown"></div>
+        <div id="bar_chart" ></div>
+    </div>
 
-
-
-
-     <div id="dropDown"></div>
-     <div id="bar_chart" style="height: 650px;"></div>
-     <div id="c">
+    <div id="c">
        <!-- <canvas id="c"></canvas> -->
      </div>
      <div id="footer"></div>
-
-      
-
-
-
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>

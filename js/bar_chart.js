@@ -34,18 +34,18 @@ d3.json("data/patient_dataset.json", function(patients) {
         //console.log(organList);
         //mean dose of the organs
         var organMeanDose = getOrganMeanDose(0, organList, patients);
-        
+
         bar_chart(organList, organMeanDose);
         //organ_threeD(0, patients, organList)
         //console.log(patients[2].organData.Brainstem);
-    }   
+    }
 
     //getting the selected patient index from the drop down
     var selectedIndex = 0;
     document.getElementById("select").onchange = function(){
         onChange = true
         //alert(this.selectedIndex);
-        selectedIndex = this.selectedIndex;  
+        selectedIndex = this.selectedIndex;
         console.log(selectedIndex);
         var selectedPatientId = patientIDs[selectedIndex];
         console.log(selectedPatientId);
@@ -54,7 +54,7 @@ d3.json("data/patient_dataset.json", function(patients) {
         organList = getOrganList(selectedIndex, patients);
         //console.log(organList);
         //mean dose of the organs
-        organMeanDose = getOrganMeanDose(selectedIndex, organList, patients);        
+        organMeanDose = getOrganMeanDose(selectedIndex, organList, patients);
         bar_chart(organList, organMeanDose);
     };
 });
@@ -62,8 +62,8 @@ d3.json("data/patient_dataset.json", function(patients) {
     //creating the bar chart
 function bar_chart(orgList, meanDose){
     d3.select('#bar_chart').select('svg').remove();
-    var margin = {top: 80, right: 180, bottom: 80, left: 180},
-    width = 1010 - margin.left - margin.right,
+    var margin = {top: 80, right: 180, bottom: 120, left: 180, spacing: 4},
+    width = 1400 - margin.left - margin.right,
     height = 600 - margin.top - margin.bottom;
 
     var svg = d3.select("#bar_chart").append("svg")
@@ -95,24 +95,24 @@ function bar_chart(orgList, meanDose){
         .attr("transform", "translate(0," + height + ")")
         .call(xAxis)
         .selectAll("text")
-        .style("font-size", "8px")
+        .style("font-size", "10px")
         .style("text-anchor", "end")
         .attr("dx", "-.8em")
         .attr("dy", "-.55em")
-        .attr("transform", "rotate(-90)" );
-    
+        .attr("transform", "rotate(-60)" );
+
     svg.append("g")
         .attr("class", "y axis")
         .call(yAxis);
 
-    
-                    
+
+
     svg.selectAll("rectangle")
         .data(meanDose)
         .enter()
         .append("rect")
         .attr("class","rectangle")
-        .attr("width", width/meanDose.length)
+        .attr("width", width/meanDose.length-margin.spacing)
         .attr("height", function(d){
             return height - y(d);
         })
@@ -169,3 +169,14 @@ function getPatientDoses(patients) {
     return dose;
 }
 
+// function tooltipHover(patientID, volume) {
+//     var tooltipString = "Patient: " + groupName;
+//     tooltipString += "<br\>Max: " + formatAsFloat(metrics.max, 0.1);
+//     tooltipString += "<br\>Q3: " + formatAsFloat(metrics.quartile3);
+//     tooltipString += "<br\>Median: " + formatAsFloat(metrics.median);
+//     tooltipString += "<br\>Q1: " + formatAsFloat(metrics.quartile1);
+//     tooltipString += "<br\>Min: " + formatAsFloat(metrics.min);
+//     return function () {
+//         chart.objs.tooltip.transition().duration(200).style("opacity", 0.9);
+//         chart.objs.tooltip.html(tooltipString)
+//     };
