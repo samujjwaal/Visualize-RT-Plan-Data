@@ -36,6 +36,7 @@ d3.json("data/patient_dataset.json", function(patients) {
         var organMeanDose = getOrganMeanDose(0, organList, patients);
 
         bar_chart(organList, organMeanDose);
+        
         //organ_threeD(0, patients, organList)
         //console.log(patients[2].organData.Brainstem);
     }
@@ -56,6 +57,7 @@ d3.json("data/patient_dataset.json", function(patients) {
         //mean dose of the organs
         organMeanDose = getOrganMeanDose(selectedIndex, organList, patients);
         bar_chart(organList, organMeanDose);
+        
     };
 });
 
@@ -180,3 +182,5 @@ function getPatientDoses(patients) {
 //         chart.objs.tooltip.transition().duration(200).style("opacity", 0.9);
 //         chart.objs.tooltip.html(tooltipString)
 //     };
+
+
