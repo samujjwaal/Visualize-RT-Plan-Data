@@ -36,7 +36,7 @@ d3.json("data/patient_dataset.json", function(patients) {
         var organMeanDose = getOrganMeanDose(0, organList, patients);
 
         bar_chart(organList, organMeanDose);
-        
+
         //organ_threeD(0, patients, organList)
         //console.log(patients[2].organData.Brainstem);
     }
@@ -57,16 +57,16 @@ d3.json("data/patient_dataset.json", function(patients) {
         //mean dose of the organs
         organMeanDose = getOrganMeanDose(selectedIndex, organList, patients);
         bar_chart(organList, organMeanDose);
-        
+
     };
 });
 
     //creating the bar chart
 function bar_chart(orgList, meanDose){
     d3.select('#bar_chart').select('svg').remove();
-    var margin = {top: 80, right: 180, bottom: 120, left: 180, spacing: 4},
-    width = 1400 - margin.left - margin.right,
-    height = 600 - margin.top - margin.bottom;
+    var margin = {top: 20, right: 20, bottom: 120, left: 20, spacing: 4},
+    width = 1000 - margin.left - margin.right,
+    height = 500 - margin.top - margin.bottom;
 
     var svg = d3.select("#bar_chart").append("svg")
         .attr("width", width + margin.left + margin.right)

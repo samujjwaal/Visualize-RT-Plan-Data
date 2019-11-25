@@ -7,7 +7,7 @@ d3.csv(file, function(patients) {
     var size = [];
     //var id = [];
     //console.log(patients)
-    
+
     // for(count = 0; count<patients.length; count++){
     //     x[count] = patients[count].x;
     //     y[count] = patients[count].y;
@@ -25,9 +25,9 @@ d3.csv(file, function(patients) {
     //     })
 
     // }
-    
+
     var group_name = ['gender', 'race', 'hpv','overall_survival', 't_category', 'tumor_subsite'];
-    
+
     //creating a dropdown patientList
     var div = document.querySelector("#bubble_dropdown"),
     fragment = document.createDocumentFragment(),
@@ -47,7 +47,7 @@ d3.csv(file, function(patients) {
     fragment.appendChild(create_select);
     div.appendChild(fragment);
 
-    
+
     //bubbleplot(0, patients);
     //by default show group of gender
     var onChange = false;
@@ -74,7 +74,7 @@ d3.csv(file, function(patients) {
 function bubbleplot(id, data){
     d3.select('#bubble').select('svg').remove();
     var height = 300;
-    var width = 500;
+    var width = 400;
     var margin = 20;
 
     var labelX = 'X';
@@ -90,7 +90,7 @@ function bubbleplot(id, data){
     var x = d3.scale.linear()
             .domain([-38, 30])
             .range([0, width]);
-    
+
 
     var y = d3.scale.linear()
             .domain([-19, 25])
@@ -105,7 +105,7 @@ function bubbleplot(id, data){
                 .range([1, .5]);
     var xAxis = d3.svg.axis().scale(x);
     var yAxis = d3.svg.axis().scale(y).orient("left");
-    
+
     svg.append("g")
         .attr("class", "y axis")
         .call(yAxis)
@@ -127,9 +127,9 @@ function bubbleplot(id, data){
             .attr("dy", ".71em")
             .style("text-anchor", "end")
             .text(labelX);
-    
- 
-            
+
+
+
    if(id == 0 ){//gender
         var color0 = d3.scale.ordinal()
             .range(['#D81B60',
@@ -193,7 +193,7 @@ function bubbleplot(id, data){
         .style("opacity", opacity);
     }
 
-        
+
     //     // What to do when one group is hovered
     var highlight = function(d){
         // reduce opacity of all groups
@@ -235,7 +235,7 @@ function bubbleplot(id, data){
             .attr("cx", function (d) { return x(d.x); })
             .attr("cy", function (d) { return y(d.y); })
                 .ease("bounce");
-        
+
                 var race_size = 20;
                 var race_group = ["African American/Black", "Asian", "Hispanic/Latino",
                 "Native American","White/Caucasion"];
@@ -249,7 +249,7 @@ function bubbleplot(id, data){
                       .style("fill", function(d){ return color1(d)})
                       .on("mouseover", highlight)
                       .on("mouseleave", noHighlight)
-          
+
               // Add labels beside legend dots
               svg.selectAll("mylabels")
                 .data(race_group)
@@ -278,9 +278,9 @@ function bubbleplot(id, data){
     }else if(id == 2){//hpv
         var color2 = d3.scale.ordinal()
             .range(['#D81B60',
-            
+
             '#1E88E5',
-            
+
             '#004D40']);
         svg.selectAll("circle")
             .data(data)
@@ -317,7 +317,7 @@ function bubbleplot(id, data){
                     .style("fill", function(d){ return color2(d)})
                     .on("mouseover", highlight)
                     .on("mouseleave", noHighlight)
-        
+
             // Add labels beside legend dots
             svg.selectAll("mylabels")
             .data(hpv_group)
@@ -379,7 +379,7 @@ function bubbleplot(id, data){
                       .style("fill", function(d){ return color3(d)})
                       .on("mouseover", highlight)
                       .on("mouseleave", noHighlight)
-          
+
               // Add labels beside legend dots
               svg.selectAll("mylabels")
                 .data(survival_group)
@@ -444,7 +444,7 @@ function bubbleplot(id, data){
                       .style("fill", function(d){ return color4(d)})
                       .on("mouseover", highlight)
                       .on("mouseleave", noHighlight)
-          
+
               // Add labels beside legend dots
               svg.selectAll("mylabels")
                 .data(t_group)
@@ -509,7 +509,7 @@ function bubbleplot(id, data){
                       .style("fill", function(d){ return color5(d)})
                       .on("mouseover", highlight)
                       .on("mouseleave", noHighlight)
-          
+
               // Add labels beside legend dots
               svg.selectAll("mylabels")
                 .data(tumor_group)

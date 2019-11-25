@@ -6,101 +6,102 @@
     <link rel="stylesheet" type="text/css" href="css/distrochart.css">
     <link rel="stylesheet" href="css/bar_chart.css">
     <link rel="stylesheet" href="css/star_plot.css">
-    
+
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.10.0/d3.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script> -->
 
 </head>
 <body>
-
-    <!-- Navigation Bar
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <a class="navbar-brand" href="#">MedRT</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNavDropdown">
-              <ul class="navbar-nav">
-                <li class="nav-item active">
-                  <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#">MDACC</a>
-                </li>
-                <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    UIC
-                  </a>
-                  <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                    <a class="dropdown-item" href="#">Patient ID: </a>
-                    <a class="dropdown-item" href="#">Patient ID : </a>
-                  </div>
-                </li>
-                <li class="nav-item">
-                        <a class="nav-link" href="parallellineplot.html">Statistics</a>
-                </li>
-              </ul>
-            </div>
-     </nav> -->
      <div class="row">
       <!-- data distribution analysis -->
-      <div class="chart-wrapper col-6" id="chart-distro1">
+      <!-- <div class="chart-wrapper col-6" id="chart-distro1"> -->
         <!--Sorry about all the inline JS. It is a quick way to show what options are available-->
-        <div class="chart-options">
+        <!-- <div class="chart-options">
             <center><p>Show: </p>
             <button onclick="chart1.violinPlots.hide();chart1.boxPlots.show({reset:true});chart1.notchBoxes.hide();chart1.dataPlots.change({showPlot:false,showBeanLines:false})">Box Plot</button>
             <button onclick="chart1.violinPlots.hide();chart1.notchBoxes.show({reset:true});chart1.boxPlots.show({reset:true, showBox:false,showOutliers:true,boxWidth:20,scatterOutliers:true});chart1.dataPlots.change({showPlot:false,showBeanLines:false})">Notched Box Plot</button>
             <button onclick="chart1.violinPlots.show({reset:true,clamp:0});chart1.boxPlots.show({reset:true, showWhiskers:false,showOutliers:false,boxWidth:10,lineWidth:15,colors:['#555']});chart1.notchBoxes.hide();chart1.dataPlots.change({showPlot:false,showBeanLines:false})">Violin Plot Unbound</button>
-            <!-- <button onclick="chart1.violinPlots.show({reset:true,clamp:1});chart1.boxPlots.show({reset:true, showWhiskers:false,showOutliers:false,boxWidth:10,lineWidth:15,colors:['#555']});chart1.notchBoxes.hide();chart1.dataPlots.change({showPlot:false,showBeanLines:false})">Violin Plot Clamp to Data</button> -->
             <button onclick="chart1.violinPlots.show({reset:true, width:75, clamp:0, resolution:30, bandwidth:50});chart1.dataPlots.show({showBeanLines:true,beanWidth:15,showPlot:false,colors:['#555']});chart1.boxPlots.hide();chart1.notchBoxes.hide()">Bean Plot</button>
-            <!-- <button onclick="chart1.violinPlots.hide();chart1.dataPlots.show({showPlot:true, plotType:'beeswarm',showBeanLines:false, colors:null});chart1.notchBoxes.hide();chart1.boxPlots.hide();">Beeswarm Plot</button> -->
             <button onclick="chart1.violinPlots.hide();chart1.dataPlots.show({showPlot:true, plotType:40, showBeanLines:false,colors:null});chart1.notchBoxes.hide();chart1.boxPlots.hide();">Scatter Plot</button>
-            <!-- <button onclick="if(chart1.dataPlots.options.showLines){chart1.dataPlots.change({showLines:false});} else {chart1.dataPlots.change({showLines:['median','quartile1','quartile3']});}">Trend Lines</button> -->
             </center>
-          </div>
+          </div> -->
       </div>
 
       <script src="https://d3js.org/d3.v3.min.js"></script>
       <!-- <script src="https://d3js.org/d3.v4.js"></script> -->
 
-      <script src="js/distrochart.js" charset="utf-8"></script>
-      <script type="text/javascript">
-          var chart1;
-          d3.csv('data/distribution.csv', function(error, data) {
-              data.forEach(function (d) {d.value = +d.value;});
-
-              chart1 = makeDistroChart({
-                  data:data,
-                  xName:'name',
-                  yName:'value',
-                  axisLabels: {xAxis: null, yAxis: 'Values'},
-                  selector:"#chart-distro1",
-                  chartSize:{height:460, width:960},
-                  constrainExtremes:true});
-              chart1.renderBoxPlot();
-              chart1.renderDataPlots();
-              chart1.renderNotchBoxes({showNotchBox:false});
-              chart1.renderViolinPlot({showViolinPlot:false});
-
-          });
-      </script>
+      </div>
       <!-- Radar plot images -->
-      <div id="body_star">
-          <div id="target"></div>
+
 
       </div>
-          
-      
 
-     </div>
      <div class="row"></div>
-        <div id="dropDown"></div>
-        <div id="bar_chart" ></div>
+
     <div>
-      <div id="bubble_dropdown"></div>
-      <div id="bubble"></div>
+
     </div>
-    
+    <br>
+    <div>
+        <div class="row">
+          <div class="col-4" style="padding:20px;overflow:auto;">
+              <div class="chart-wrapper col-6" id="chart-distro1">
+                  <!--Sorry about all the inline JS. It is a quick way to show what options are available-->
+                  <div class="chart-options">
+                      <center><p>Show: </p>
+                      <button onclick="chart1.violinPlots.hide();chart1.boxPlots.show({reset:true});chart1.notchBoxes.hide();chart1.dataPlots.change({showPlot:false,showBeanLines:false})">Box Plot</button>
+                      <button onclick="chart1.violinPlots.hide();chart1.notchBoxes.show({reset:true});chart1.boxPlots.show({reset:true, showBox:false,showOutliers:true,boxWidth:20,scatterOutliers:true});chart1.dataPlots.change({showPlot:false,showBeanLines:false})">Notched Box Plot</button>
+                      <button onclick="chart1.violinPlots.show({reset:true,clamp:0});chart1.boxPlots.show({reset:true, showWhiskers:false,showOutliers:false,boxWidth:10,lineWidth:15,colors:['#555']});chart1.notchBoxes.hide();chart1.dataPlots.change({showPlot:false,showBeanLines:false})">Violin Plot Unbound</button>
+                      <!-- <button onclick="chart1.violinPlots.show({reset:true,clamp:1});chart1.boxPlots.show({reset:true, showWhiskers:false,showOutliers:false,boxWidth:10,lineWidth:15,colors:['#555']});chart1.notchBoxes.hide();chart1.dataPlots.change({showPlot:false,showBeanLines:false})">Violin Plot Clamp to Data</button> -->
+                      <button onclick="chart1.violinPlots.show({reset:true, width:75, clamp:0, resolution:30, bandwidth:50});chart1.dataPlots.show({showBeanLines:true,beanWidth:15,showPlot:false,colors:['#555']});chart1.boxPlots.hide();chart1.notchBoxes.hide()">Bean Plot</button>
+                      <!-- <button onclick="chart1.violinPlots.hide();chart1.dataPlots.show({showPlot:true, plotType:'beeswarm',showBeanLines:false, colors:null});chart1.notchBoxes.hide();chart1.boxPlots.hide();">Beeswarm Plot</button> -->
+                      <button onclick="chart1.violinPlots.hide();chart1.dataPlots.show({showPlot:true, plotType:40, showBeanLines:false,colors:null});chart1.notchBoxes.hide();chart1.boxPlots.hide();">Scatter Plot</button>
+                      <!-- <button onclick="if(chart1.dataPlots.options.showLines){chart1.dataPlots.change({showLines:false});} else {chart1.dataPlots.change({showLines:['median','quartile1','quartile3']});}">Trend Lines</button> -->
+                      </center>
+                    </div>
+                    <script src="js/distrochart.js" charset="utf-8"></script>
+                    <script type="text/javascript">
+                        var chart1;
+                        d3.csv('data/distribution.csv', function(error, data) {
+                            data.forEach(function (d) {d.value = +d.value;});
+
+                            chart1 = makeDistroChart({
+                                data:data,
+                                xName:'name',
+                                yName:'value',
+                                axisLabels: {xAxis: null, yAxis: 'Values'},
+                                selector:"#chart-distro1",
+                                chartSize:{height:460, width:960},
+                                constrainExtremes:true});
+                            chart1.renderBoxPlot();
+                            chart1.renderDataPlots();
+                            chart1.renderNotchBoxes({showNotchBox:false});
+                            chart1.renderViolinPlot({showViolinPlot:false});
+
+                        });
+                    </script>
+
+                </div>
+          </div>
+          <div class="col-4" style="padding:20px;overflow:auto;">
+              <div id="bubble_dropdown"></div>
+              <div id="bubble"></div>
+          </div>
+          <div class="col-4" style="padding:20px;overflow:auto;">
+              <div id="dropDown"></div>
+              <div id="bar_chart" ></div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-3" style="padding:20px;overflow:auto;"><h2>3D plot here</h2></div>
+          <div class="col-5" style="padding:20px;overflow:auto;"><h2>Similar 3D plots here</h2></div>
+          <div class="col-4" style="padding:20px;overflow-y:auto;">
+              <div id="body_star" style="overflow-y:auto;">
+                <div id="target"></div>
+              </div>
+          </div>
+        </div>
+      </div>
 
     <div id="c">
        <!-- <canvas id="c"></canvas> -->
@@ -131,14 +132,14 @@
     <!-- <script src="js/DataModel.js"></script> -->
     <script src="js/bubble.js"></script>
 
-    <!-- star plot -->   
+    <!-- star plot -->
     <script src="https://d3js.org/d3.v3.js"></script>
     <script src="https://d3js.org/d3.v3.min.js"></script>
-    <script src="https://code.jquery.com/jquery.min.js"></script> 
+    <script src="https://code.jquery.com/jquery.min.js"></script>
     <script src="js/star_plot.js"></script>
     <script src="js/d3-starPlot.js"></script>
 
-   
+
     <!-- <script src="https://d3js.org/d3.v3.min.js"></script> -->
     <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
 
