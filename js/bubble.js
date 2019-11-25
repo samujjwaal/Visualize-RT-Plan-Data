@@ -1,4 +1,5 @@
-d3.csv("data/bubble_chart.csv", function(patients) {
+var file = "data/bubble_chart.csv"
+d3.csv(file, function(patients) {
     var data = []
     var count = 0;
     var x = [];
@@ -126,7 +127,9 @@ function bubbleplot(id, data){
             .attr("dy", ".71em")
             .style("text-anchor", "end")
             .text(labelX);
-
+    
+ 
+            
    if(id == 0 ){//gender
         var color0 = d3.scale.ordinal()
             .range(['#D81B60',
@@ -137,6 +140,7 @@ function bubbleplot(id, data){
             .insert("circle")
             .attr("cx", width / 2)
             .attr("cy", height / 2)
+            .attr("class", function(d){ return "bubbles " + d.gender })
             .attr("opacity", function (d) { return opacity(d.size); })
             .attr("r", function (d) { return scale(d.size); })
             .style("fill", function (d) { return color0(d.gender); })
@@ -152,6 +156,34 @@ function bubbleplot(id, data){
             .attr("cx", function (d) { return x(d.x); })
             .attr("cy", function (d) { return y(d.y); })
                 .ease("bounce");
+
+      var gender_size = 20;
+      var gender_group = ["Male", "Female"];
+      svg.selectAll("myrect")
+        .data(gender_group)
+        .enter()
+        .append("circle")
+            .attr("cx", 350)
+            .attr("cy", function(d,i){ return 10 + i*(gender_size+5)}) // 100 is where the first dot appears. 25 is the distance between dots
+            .attr("r", 7)
+            .style("fill", function(d){ return color0(d)})
+            .on("mouseover", highlight)
+            .on("mouseleave", noHighlight)
+
+    // Add labels beside legend dots
+    svg.selectAll("mylabels")
+      .data(gender_group)
+      .enter()
+      .append("text")
+        .attr("x", 350 + gender_size*.8)
+        .attr("y", function(d,i){ return i * (gender_size + 5) + (gender_size/2)}) // 100 is where the first dot appears. 25 is the distance between dots
+        .style("fill", function(d){ return color0(d)})
+        .text(function(d){ return d})
+        .attr("text-anchor", "left")
+        .style("alignment-baseline", "middle")
+        .on("mouseover", highlight)
+        .on("mouseleave", noHighlight)
+
     function fade0(c, opacity) {
         svg.selectAll("circle")
             .filter(function (d) {
@@ -159,6 +191,20 @@ function bubbleplot(id, data){
             })
         .transition()
         .style("opacity", opacity);
+    }
+
+        
+    //     // What to do when one group is hovered
+    var highlight = function(d){
+        // reduce opacity of all groups
+        d3.selectAll(".bubbles").style("opacity", .05)
+        // expect the one that is hovered
+        d3.selectAll("."+d).style("opacity", 1)
+    }
+
+    // And when it is not hovered anymore
+    var noHighlight = function(d){
+        d3.selectAll(".bubbles").style("opacity", 1)
     }
 
     }else if(id == 1){//race
@@ -189,6 +235,37 @@ function bubbleplot(id, data){
             .attr("cx", function (d) { return x(d.x); })
             .attr("cy", function (d) { return y(d.y); })
                 .ease("bounce");
+        
+                var race_size = 20;
+                var race_group = ["African American/Black", "Asian", "Hispanic/Latino",
+                "Native American","White/Caucasion"];
+                svg.selectAll("myrect")
+                  .data(race_group)
+                  .enter()
+                  .append("circle")
+                      .attr("cx", 350)
+                      .attr("cy", function(d,i){ return 10 + i*(race_size+5)}) // 100 is where the first dot appears. 25 is the distance between dots
+                      .attr("r", 7)
+                      .style("fill", function(d){ return color1(d)})
+                      .on("mouseover", highlight)
+                      .on("mouseleave", noHighlight)
+          
+              // Add labels beside legend dots
+              svg.selectAll("mylabels")
+                .data(race_group)
+                .enter()
+                .append("text")
+                  .attr("x", 350 + race_size*.8)
+                  .attr("y", function(d,i){ return i * (race_size + 5) + (race_size/2)}) // 100 is where the first dot appears. 25 is the distance between dots
+                  .style("fill", function(d){ return color1(d)})
+                  .text(function(d){ return d})
+                  .attr("text-anchor", "left")
+                  .style("alignment-baseline", "middle")
+                  .on("mouseover", highlight)
+                  .on("mouseleave", noHighlight)
+
+
+
     function fade1(c, opacity) {
         svg.selectAll("circle")
             .filter(function (d) {
@@ -226,6 +303,35 @@ function bubbleplot(id, data){
             .attr("cx", function (d) { return x(d.x); })
             .attr("cy", function (d) { return y(d.y); })
                 .ease("bounce");
+
+
+            var hpv_size = 20;
+            var hpv_group = ["Positive", "Negative", "Unknown"];
+            svg.selectAll("myrect")
+                .data(hpv_group)
+                .enter()
+                .append("circle")
+                    .attr("cx", 350)
+                    .attr("cy", function(d,i){ return 10 + i*(hpv_size+5)}) // 100 is where the first dot appears. 25 is the distance between dots
+                    .attr("r", 7)
+                    .style("fill", function(d){ return color2(d)})
+                    .on("mouseover", highlight)
+                    .on("mouseleave", noHighlight)
+        
+            // Add labels beside legend dots
+            svg.selectAll("mylabels")
+            .data(hpv_group)
+            .enter()
+            .append("text")
+                .attr("x", 350 + hpv_size*.8)
+                .attr("y", function(d,i){ return i * (hpv_size + 5) + (hpv_size/2)}) // 100 is where the first dot appears. 25 is the distance between dots
+                .style("fill", function(d){ return color2(d)})
+                .text(function(d){ return d})
+                .attr("text-anchor", "left")
+                .style("alignment-baseline", "middle")
+                .on("mouseover", highlight)
+                .on("mouseleave", noHighlight)
+
     function fade2(c, opacity) {
         svg.selectAll("circle")
             .filter(function (d) {
@@ -260,6 +366,35 @@ function bubbleplot(id, data){
             .attr("cx", function (d) { return x(d.x); })
             .attr("cy", function (d) { return y(d.y); })
                 .ease("bounce");
+
+                var survival_size = 20;
+                var survival_group = ["0", "1"];
+                svg.selectAll("myrect")
+                  .data(survival_group)
+                  .enter()
+                  .append("circle")
+                      .attr("cx", 350)
+                      .attr("cy", function(d,i){ return 10 + i*(survival_size+5)}) // 100 is where the first dot appears. 25 is the distance between dots
+                      .attr("r", 7)
+                      .style("fill", function(d){ return color3(d)})
+                      .on("mouseover", highlight)
+                      .on("mouseleave", noHighlight)
+          
+              // Add labels beside legend dots
+              svg.selectAll("mylabels")
+                .data(survival_group)
+                .enter()
+                .append("text")
+                  .attr("x", 350 + survival_size*.8)
+                  .attr("y", function(d,i){ return i * (survival_size + 5) + (survival_size/2)}) // 100 is where the first dot appears. 25 is the distance between dots
+                  .style("fill", function(d){ return color3(d)})
+                  .text(function(d){ return d})
+                  .attr("text-anchor", "left")
+                  .style("alignment-baseline", "middle")
+                  .on("mouseover", highlight)
+                  .on("mouseleave", noHighlight)
+
+
     function fade3(c, opacity) {
     svg.selectAll("circle")
             .filter(function (d) {
@@ -296,6 +431,34 @@ function bubbleplot(id, data){
             .attr("cx", function (d) { return x(d.x); })
             .attr("cy", function (d) { return y(d.y); })
                 .ease("bounce");
+
+                var t_size = 20;
+                var t_group = ["T1", "T2", "T3", "T4"];
+                svg.selectAll("myrect")
+                  .data(t_group)
+                  .enter()
+                  .append("circle")
+                      .attr("cx", 350)
+                      .attr("cy", function(d,i){ return 10 + i*(t_size+5)}) // 100 is where the first dot appears. 25 is the distance between dots
+                      .attr("r", 7)
+                      .style("fill", function(d){ return color4(d)})
+                      .on("mouseover", highlight)
+                      .on("mouseleave", noHighlight)
+          
+              // Add labels beside legend dots
+              svg.selectAll("mylabels")
+                .data(t_group)
+                .enter()
+                .append("text")
+                  .attr("x", 350 + t_size*.8)
+                  .attr("y", function(d,i){ return i * (t_size + 5) + (t_size/2)}) // 100 is where the first dot appears. 25 is the distance between dots
+                  .style("fill", function(d){ return color4(d)})
+                  .text(function(d){ return d})
+                  .attr("text-anchor", "left")
+                  .style("alignment-baseline", "middle")
+                  .on("mouseover", highlight)
+                  .on("mouseleave", noHighlight)
+
     function fade4(c, opacity) {
         svg.selectAll("circle")
             .filter(function (d) {
@@ -333,6 +496,36 @@ function bubbleplot(id, data){
             .attr("cx", function (d) { return x(d.x); })
             .attr("cy", function (d) { return y(d.y); })
                 .ease("bounce");
+
+                var tumor_size = 20;
+                var tumor_group = ["BOT", "GPS", "NOS", "Soft palate", "Tonsil"];
+                svg.selectAll("myrect")
+                  .data(tumor_group)
+                  .enter()
+                  .append("circle")
+                      .attr("cx", 350)
+                      .attr("cy", function(d,i){ return 10 + i*(tumor_size+5)}) // 100 is where the first dot appears. 25 is the distance between dots
+                      .attr("r", 7)
+                      .style("fill", function(d){ return color5(d)})
+                      .on("mouseover", highlight)
+                      .on("mouseleave", noHighlight)
+          
+              // Add labels beside legend dots
+              svg.selectAll("mylabels")
+                .data(tumor_group)
+                .enter()
+                .append("text")
+                  .attr("x", 350 + tumor_size*.8)
+                  .attr("y", function(d,i){ return i * (tumor_size + 5) + (tumor_size/2)}) // 100 is where the first dot appears. 25 is the distance between dots
+                  .style("fill", function(d){ return color5(d)})
+                  .text(function(d){ return d})
+                  .attr("text-anchor", "left")
+                  .style("alignment-baseline", "middle")
+                  .on("mouseover", highlight)
+                  .on("mouseleave", noHighlight)
+
+
+
     function fade5(c, opacity) {
         svg.selectAll("circle")
             .filter(function (d) {
