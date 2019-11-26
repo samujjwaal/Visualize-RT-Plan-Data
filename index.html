@@ -11,40 +11,14 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script> -->
 
 </head>
-<body>
-     <div class="row">
-      <!-- data distribution analysis -->
-      <!-- <div class="chart-wrapper col-6" id="chart-distro1"> -->
-        <!--Sorry about all the inline JS. It is a quick way to show what options are available-->
-        <!-- <div class="chart-options">
-            <center><p>Show: </p>
-            <button onclick="chart1.violinPlots.hide();chart1.boxPlots.show({reset:true});chart1.notchBoxes.hide();chart1.dataPlots.change({showPlot:false,showBeanLines:false})">Box Plot</button>
-            <button onclick="chart1.violinPlots.hide();chart1.notchBoxes.show({reset:true});chart1.boxPlots.show({reset:true, showBox:false,showOutliers:true,boxWidth:20,scatterOutliers:true});chart1.dataPlots.change({showPlot:false,showBeanLines:false})">Notched Box Plot</button>
-            <button onclick="chart1.violinPlots.show({reset:true,clamp:0});chart1.boxPlots.show({reset:true, showWhiskers:false,showOutliers:false,boxWidth:10,lineWidth:15,colors:['#555']});chart1.notchBoxes.hide();chart1.dataPlots.change({showPlot:false,showBeanLines:false})">Violin Plot Unbound</button>
-            <button onclick="chart1.violinPlots.show({reset:true, width:75, clamp:0, resolution:30, bandwidth:50});chart1.dataPlots.show({showBeanLines:true,beanWidth:15,showPlot:false,colors:['#555']});chart1.boxPlots.hide();chart1.notchBoxes.hide()">Bean Plot</button>
-            <button onclick="chart1.violinPlots.hide();chart1.dataPlots.show({showPlot:true, plotType:40, showBeanLines:false,colors:null});chart1.notchBoxes.hide();chart1.boxPlots.hide();">Scatter Plot</button>
-            </center>
-          </div> -->
-      </div>
+<body >
 
       <script src="https://d3js.org/d3.v3.min.js"></script>
       <!-- <script src="https://d3js.org/d3.v4.js"></script> -->
 
-      </div>
-      <!-- Radar plot images -->
-
-
-      </div>
-
-     <div class="row"></div>
-
-    <div>
-
-    </div>
-    <br>
-    <div>
-        <div class="row">
-          <div class="col-4" style="padding:20px;overflow:auto;">
+    <div style="height: 250;">
+        <div class="row" >
+          <div class="col-4" style="overflow:auto;">
               <div class="chart-wrapper col-6" id="chart-distro1">
                   <!--Sorry about all the inline JS. It is a quick way to show what options are available-->
                   <div class="chart-options">
@@ -83,21 +57,26 @@
 
                 </div>
           </div>
-          <div class="col-4" style="padding:20px;overflow:auto;">
+          <div class="col-4">
               <div id="bubble_dropdown"></div>
               <div id="bubble"></div>
           </div>
-          <div class="col-4" style="padding:20px;overflow:auto;">
+          <div class="col-4">
               <div id="dropDown"></div>
-              <div id="bar_chart" ></div>
+              <div class="row" style="overflow:auto;"><div id="bar_chart" ></div></div>
+
           </div>
         </div>
         <div class="row">
-          <div class="col-3" style="padding:20px;overflow:auto;"><h2>3D plot here</h2></div>
-          <div class="col-5" style="padding:20px;overflow:auto;"><h2>Similar 3D plots here</h2></div>
-          <div class="col-4" style="padding:20px;overflow-y:auto;">
+          <div class="col-3" style="overflow:auto;">
+              <div id="content">
+                  <canvas id="c"></canvas>
+              </div>
+          </div>
+          <div class="col-5" style="overflow:auto;"><h2>Similar 3D plots here</h2></div>
+          <div class="col-4" style="overflow-y:auto;">
               <div id="body_star" style="overflow-y:auto;">
-                <div id="target"></div>
+                <div id="target" style="overflow-y: auto;"></div>
               </div>
           </div>
         </div>

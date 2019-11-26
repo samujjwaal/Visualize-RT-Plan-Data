@@ -73,7 +73,7 @@ d3.csv(file, function(patients) {
 
 function bubbleplot(id, data){
     d3.select('#bubble').select('svg').remove();
-    var height = 300;
+    var height = 250;
     var width = 400;
     var margin = 20;
 

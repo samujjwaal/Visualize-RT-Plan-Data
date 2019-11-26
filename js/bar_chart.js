@@ -66,7 +66,7 @@ function bar_chart(orgList, meanDose){
     d3.select('#bar_chart').select('svg').remove();
     var margin = {top: 20, right: 20, bottom: 120, left: 20, spacing: 4},
     width = 1000 - margin.left - margin.right,
-    height = 500 - margin.top - margin.bottom;
+    height = 300 - margin.top - margin.bottom;
 
     var svg = d3.select("#bar_chart").append("svg")
         .attr("width", width + margin.left + margin.right)
