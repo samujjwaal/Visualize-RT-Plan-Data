@@ -6,15 +6,69 @@
     <link rel="stylesheet" type="text/css" href="css/distrochart.css">
     <link rel="stylesheet" href="css/bar_chart.css">
     <link rel="stylesheet" href="css/star_plot.css">
+    <!-- <link rel="stylesheet" href="css/style.css"> -->
 
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.10.0/d3.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script> -->
 
 </head>
+<!-- Import multiple D3 version scripts -->
+<script src="https://d3js.org/d3.v5.js"></script>
+    <script>
+      var d3v5 = window.d3;
+      window.d3 = null;
+    </script>
+
+    <script src="https://d3js.org/d3.v3.js"></script>
+
+    <script>
+        console.log(d3.version);
+        console.log(d3v5.version);
+    </script>
+
+<script src="js/3d/three/three.js"></script>
+    <script src="js/3d/controls/OrbitControls.js"></script>
+
+    <script src="js/3d/Detector.js"></script>
+    <script src="js/3d/renderers/Projector.js"></script>
+
+    <script src="js/3d/THREEx.KeyboardState.js"></script>
+    <script src="js/3d/loaders/VTKLoader.js"></script>
+    <script type="text/javascript" src="js/3d/controller.js"></script>
+	<script type="text/javascript" src="js/3d/DataModel.js"></script>
+	<script type="text/javascript" src="js/3d/colorScale.js"></script>
+    <script type="text/javascript" src="js/3d/camprt.js"></script>
 <body >
 
-      <script src="https://d3js.org/d3.v3.min.js"></script>
-      <!-- <script src="https://d3js.org/d3.v4.js"></script> -->
+    <div id="loadScreen">
+        <!-- <div style="position: relative; top: 200px;">loading...</div>
+        <div style="position: relative; top: 220px;" id="loadProgress">0 %</div> -->
+    </div>
+
+    <!-- <div id="details">
+        <div id="details_organName">name_of_organ</div>
+        <div id="details_dosePerVolume">dose_per_volume</div>
+        <div id="details_meanDose_val">N/A</div>
+        <div class="" id="details_line"></div>
+        <table class="" id="details_table">
+            <tr>
+                <td style="text-align: right; color: #ccc;">cc:</td>
+                <td id="details_volume_val">N/A</td>
+            </tr>
+            <tr>
+                <td style="text-align: right; color : #ccc;">GY / cc:</td>
+                <td id="details_dosePerVolume">N/A</td>
+            </tr>
+            <tr>
+                <td style="text-align: right; color: #ccc;">Min GY:</td>
+                <td id="details_minDose_val">N/A</td>
+            </tr>
+            <tr>
+                <td style="text-align: right; color: #ccc;">Max GY:</td>
+                <td id="details_maxDose_val">N/A</td>
+            </tr>
+        </table>
+    </div> -->
 
     <div style="height: 250;">
         <div class="row" >
@@ -67,23 +121,24 @@
 
           </div>
         </div>
-        <div class="row">
-          <div class="col-3" style="overflow:auto;">
+        <div class="row" style="height: 250;overflow:auto;">
+          <!-- <div class="col-3" style="overflow:auto;">
               <div id="content">
                   <canvas id="c"></canvas>
               </div>
-          </div>
-          <div class="col-5" style="overflow:auto;"><h2>Similar 3D plots here</h2></div>
-          <div class="col-4" style="overflow-y:auto;">
-              <div id="body_star" style="overflow-y:auto;">
+          </div> -->
+          <!-- <div class="col-5" style="overflow:auto;"><h2>Similar 3D plots here</h2></div> -->
+          <!-- <div class="col-4" style="overflow-y:auto;"> -->
+              <div id="body_star" style="height: 250;overflow-y:auto;">
                 <div id="target" style="overflow-y: auto;"></div>
               </div>
           </div>
         </div>
+        <div class="row"></div>
       </div>
 
     <div id="c">
-       <!-- <canvas id="c"></canvas> -->
+       <canvas id="c"></canvas>
      </div>
      <div id="footer"></div>
 
@@ -111,14 +166,23 @@
     <!-- <script src="js/DataModel.js"></script> -->
     <script src="js/bubble.js"></script>
 
-    <!-- star plot -->
-    <script src="https://d3js.org/d3.v3.js"></script>
-    <script src="https://d3js.org/d3.v3.min.js"></script>
     <script src="https://code.jquery.com/jquery.min.js"></script>
     <script src="js/star_plot.js"></script>
     <script src="js/d3-starPlot.js"></script>
 
-
+    <script id="template" type="notjs">
+        <div class='patientSceneTop'>
+            <!-- <div class="description">$</div> -->
+            <!-- <div class="pScore">!</div> -->
+        </div>
+        <div style="clear: both;"></div>
+        <div class="scene"></div>
+        <!-- <div class="info">
+            <div class="totDose"></div>
+            <div class="tVolume"></div>
+            <div class="laterality"></div>
+        </div> -->
+    </script>
     <!-- <script src="https://d3js.org/d3.v3.min.js"></script> -->
     <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
 

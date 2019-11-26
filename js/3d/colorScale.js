@@ -1,5 +1,5 @@
 var ColorScale = (function(){
-	
+
 	var numSegments = 20;
 	var svgs = [];
 	var drawScale = function(target, colorMap, domain){
@@ -16,7 +16,7 @@ var ColorScale = (function(){
 			currentDose = currentDose + doseInterval;
 			colors.push(newColor);
 		}
-		var svg = d3.select('#'+target).append('svg')
+		var svg = d3v5.select('#'+target).append('svg')
 			.attr('height', height + 10)
 			.attr('width', 1.5*width);
 		svg.selectAll('rect')
@@ -49,18 +49,18 @@ var ColorScale = (function(){
 			.text(function(x,i){ return Math.round(domain[i]) + ' Gy';});
 		svgs.push(svg);
 	}
-	
+
 	var setOpacity = function(opacity){
 		svgs.forEach(function(svg){
 			svg.selectAll('rect').attr('opacity', .4 + (opacity - .4)/2);
 		});
 	}
-	
+
 	var draw = function(){
 		drawScale('doseColorScale', Controller.getDoseColor, data.getMeanDoseExtents());
 		//drawScale('doseErrorColorScale', Controller.getDoseErrorColor, data.getDoseErrorExtents());
 	}
-	
+
 	return {
 		draw: draw,
 		setOpacity: setOpacity

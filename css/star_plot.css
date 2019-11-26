@@ -9,6 +9,7 @@
   .star_wrapper {
     position: relative;
     display: inline-block;
+
   }
   .star_chart {
     margin-bottom: 40px;
@@ -37,12 +38,12 @@
   .star-interaction {
     opacity: 0;
   }
-  
+
   .interaction {
     pointer-events: none;
   }
   .interaction.label {
-    position: relative;
+    position: absolute;
     font-size: 11px;
     text-align: center;
     text-shadow: 0 1px 0 #FFF, 0 -1px 0 #FFF, 1px 0 #FFF, -1px 0 #FFF;

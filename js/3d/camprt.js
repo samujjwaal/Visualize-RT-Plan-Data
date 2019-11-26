@@ -57,7 +57,7 @@ var master = document.getElementById("masterList");
 var materialArray;
 
 var canvas = document.getElementById("c");
-var template = document.getElementById("template").text;
+// var template = document.getElementById("template").text;
 
 var manager = new THREE.LoadingManager();
 var currentCamera = null;
@@ -69,11 +69,11 @@ var scatter;
 //var bubbleChart;
 var data;
 var meshes;
-var files = ["data/organAtlas.json", "data/patient_dataset.json"];
+var files = ["data1/organAtlas.json", "data1/patient_dataset.json"];
 var promises = [];
 
 files.forEach(function (url) {
-    promises.push(d3.json(url));
+    promises.push(d3v5.json(url));
 });
 
 Promise.all(promises).then(function (values) {

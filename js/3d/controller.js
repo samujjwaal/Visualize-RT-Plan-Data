@@ -4,7 +4,7 @@ var Controller = (function(){
 	var enableBrush = false;
 	var brushedOrgans = [];
 	var gtvRegex = RegExp('GTV*');
-	var doseColor = d3.scaleLinear()
+	var doseColor = d3v5.scaleLinear()
 		.domain([0,70])
 		.range(['#f7f7f7','#252525']);
 	// var doseErrorColor = d3.scaleLinear()
