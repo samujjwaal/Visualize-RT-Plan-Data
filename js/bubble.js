@@ -26,7 +26,7 @@ d3.csv(file, function(patients) {
 
     // }
 
-    var group_name = ['gender', 'race', 'hpv','overall_survival', 't_category', 'tumor_subsite'];
+    var group_name = ['Gender', 'Race', 'HPV','Overall Survival', 'T category', 'Tumor subsite'];
 
     //creating a dropdown patientList
     var div = document.querySelector("#bubble_dropdown"),
