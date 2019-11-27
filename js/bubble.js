@@ -5,26 +5,6 @@ d3.csv(file, function(patients) {
     var x = [];
     var y = [];
     var size = [];
-    //var id = [];
-    //console.log(patients)
-
-    // for(count = 0; count<patients.length; count++){
-    //     x[count] = patients[count].x;
-    //     y[count] = patients[count].y;
-    //     size[count] = patients[count].size;
-    //     data.push({
-    //         x: patients[count].x,
-    //         y:  patients[count].y,
-    //         size:  patients[count].size,
-    //         gender: patients[count].gender,
-    //         race: patients[count].race,
-    //         hpv: patients[count].hpv,
-    //         overall_survival: patients[count].overall_survival,
-    //         t_category: patients[count].t_category,
-    //         tumor_subsite: patients[count].tumor_subsite
-    //     })
-
-    // }
 
     var group_name = ['gender', 'race', 'hpv','overall_survival', 't_category', 'tumor_subsite'];
 
@@ -543,32 +523,3 @@ svg.selectAll("circle")
 .style("opacity", function (d) { opacity(d.size); });
 }
 }
-// function color(id, data){
-//     var color0 = d3.scale.ordinal()
-//             .range(['#ca0020',
-//                 '#0571b0']);
-//         d3.select('#bubble').select('svg').selectAll("circle")
-//             .data(data)
-//             .enter()
-//             .attr("fill", function (d) { return color0(d.gender); })
-//             .on('mouseover', function (d, i) {
-//                 fade0(d.gender, .1);
-//             })
-//             .on('mouseout', function (d, i) {
-//                 fadeOut();
-//             })
-//     function fade0(c, opacity) {
-//         d3.select('#bubble').select('svg').selectAll("circle")
-//             .filter(function (d) {
-//                 return d.gender != c;
-//             })
-//         .transition()
-//         .style("opacity", opacity);
-//     }
-
-//     function fadeOut() {
-//         d3.select('#bubble').select('svg').selectAll("circle")
-//         .transition()
-//         .style("opacity", function (d) { opacity(d.size); });
-//         }
-// }
