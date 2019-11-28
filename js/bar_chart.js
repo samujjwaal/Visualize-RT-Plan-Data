@@ -1,4 +1,4 @@
-d3.json("data/patient_dataset.json", function(patients) {
+d3.json("Data/patient_dataset.json", function(patients) {
     //getting all patients IDs
     var patientIDs = getPatientIDS(patients);
     var dose = getPatientDoses(patients);
