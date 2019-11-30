@@ -1,13 +1,6 @@
-d3.json("Data/patient_dataset.json", function(patients) {
+d3.json("data/patient_dataset.json", function(patients) {
     //getting all patients IDs
     var patientIDs = getPatientIDS(patients);
-    var dose = getPatientDoses(patients);
-    //singleBoxPlot(dose);
-    // box_plot(dose, patientIDs);
-    // console.log(dose);
-    // console.log(d3.min(dose));
-    // console.log(d3.max(dose));
-    //console.log(patientIDs);
     //creating a dropdown patientList
     var div = document.querySelector("#dropDown"),
     fragment = document.createDocumentFragment(),
@@ -47,7 +40,6 @@ d3.json("Data/patient_dataset.json", function(patients) {
         onChange = true
         //alert(this.selectedIndex);
         selectedIndex = this.selectedIndex;
-        console.log(selectedIndex);
         var selectedPatientId = patientIDs[selectedIndex];
         console.log(selectedPatientId);
 
@@ -61,14 +53,16 @@ d3.json("Data/patient_dataset.json", function(patients) {
     };
 });
 
+
     //creating the bar chart
 function bar_chart(orgList, meanDose){
     d3.select('#bar_chart').select('svg').remove();
-    var margin = {top: 20, right: 20, bottom: 120, left: 20, spacing: 4},
+    var margin = {top: 5, right: 20, bottom: 90, left: 30, spacing: 4},
     width = 1000 - margin.left - margin.right,
     height = 300 - margin.top - margin.bottom;
 
-    var svg = d3.select("#bar_chart").append("svg")
+    var svg = d3.select("#bar_chart")
+        .append("svg")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
         .append("g")
@@ -92,16 +86,36 @@ function bar_chart(orgList, meanDose){
 
     //var barwidth = width / meanDose.length;
 
+    var tooltip = d3.select("body").append("div")
+                .attr("class", "tooltip")
+                .style("position", "absolute")
+                .style("opacity", 0)
+                .style("background", "#CFCFCF");
+
+function mouseOver(d,i){
+
+    var tooltipString =  '<b>Dose Volume: '+ d + '</b>';
+    tooltipString +=  '<br><b>Organ Name: </b>' + orgList[i];
+    tooltip.style("opacity", .9);
+    tooltip.html(tooltipString)
+            .style("left", (d3.event.pageX ) + "px")
+            .style("top", (d3.event.pageY - 28) + "px");
+    console.log(d);
+  }
+
+  function mouseOut(d) {
+    tooltip.style("opacity", 0);
+  }
     svg.append("g")
         .attr("class", "x axis")
         .attr("transform", "translate(0," + height + ")")
         .call(xAxis)
         .selectAll("text")
-        .style("font-size", "10px")
+        .style("font-size", "9px")
         .style("text-anchor", "end")
         .attr("dx", "-.8em")
         .attr("dy", "-.55em")
-        .attr("transform", "rotate(-60)" );
+        .attr("transform", "rotate(-45)" );
 
     svg.append("g")
         .attr("class", "y axis")
@@ -119,15 +133,19 @@ function bar_chart(orgList, meanDose){
             return height - y(d);
         })
         .attr("x", function(d, i){
+            console.log(width / meanDose.length)
             return (width / meanDose.length * i );
         })
         .attr("y", function(d){
             return y(d);
-        });
+        })
+        .on("mouseover", mouseOver)
+        .on("mouseout", mouseOut)
+        .style("cursor", "pointer");
 
 }
 
-    //function for getting the organ list into an array
+
 function getOrganList(id, patients){
     var patient = patients[id].organData;
     var organs = Object.keys(patient);
@@ -170,17 +188,3 @@ function getPatientDoses(patients) {
     }
     return dose;
 }
-
-// function tooltipHover(patientID, volume) {
-//     var tooltipString = "Patient: " + groupName;
-//     tooltipString += "<br\>Max: " + formatAsFloat(metrics.max, 0.1);
-//     tooltipString += "<br\>Q3: " + formatAsFloat(metrics.quartile3);
-//     tooltipString += "<br\>Median: " + formatAsFloat(metrics.median);
-//     tooltipString += "<br\>Q1: " + formatAsFloat(metrics.quartile1);
-//     tooltipString += "<br\>Min: " + formatAsFloat(metrics.min);
-//     return function () {
-//         chart.objs.tooltip.transition().duration(200).style("opacity", 0.9);
-//         chart.objs.tooltip.html(tooltipString)
-//     };
-
-
