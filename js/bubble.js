@@ -129,6 +129,7 @@ function bubbleplot(id, data){
             .insert("circle")
             .attr("cx", width / 2)
             .attr("cy", height / 2)
+            .attr("id", "circle")
             .attr("class", function(d){ return "bubbles " + d.gender })
             .attr("opacity", function (d) { return opacity(d.size); })
             .attr("r", function (d) { return scale(d.size); })
@@ -187,18 +188,18 @@ function bubbleplot(id, data){
     }
 
 
-    //     // What to do when one group is hovered
-    var highlight = function(d){
-        // reduce opacity of all groups
-        d3.select("#bubble").style("opacity", .05)
-        // expect the one that is hovered
-        d3.select("."+d).style("opacity", 1)
-    }
+    // //     // What to do when one group is hovered
+    // function highlight(d){
+    //     // reduce opacity of all groups
+    //     d3.select("#bubble").select("svg").selectAll("circle").style("opacity", .05)
+    //     // expect the one that is hovered
+    //     d3.select("#bubble").select("svg").selectAll("."+d).style("opacity", 1)
+    // }
 
-    // And when it is not hovered anymore
-    var noHighlight = function(d){
-        d3.select("#bubble").style("opacity", 1)
-    }
+    // // And when it is not hovered anymore
+    // function noHighlight(d){
+    //     d3.select("#bubble").select("svg").selectAll("circle").style("opacity", 1)
+    // }
 
     }else if(id == 1){//race
         var color1 = d3.scale.ordinal()
@@ -213,6 +214,8 @@ function bubbleplot(id, data){
             .insert("circle")
             .attr("cx", width / 2)
             .attr("cy", height / 2)
+            .attr("id", "circle")
+            .attr("class", function(d){ return "bubbles " + d.race })
             .attr("opacity", function (d) { return opacity(d.size); })
             .attr("r", function (d) { return scale(d.size); })
             .style("fill", function (d) { return color1(d.race); })
@@ -281,6 +284,8 @@ function bubbleplot(id, data){
             .insert("circle")
             .attr("cx", width / 2)
             .attr("cy", height / 2)
+            .attr("id", "circle")
+            .attr("class", function(d){ return "bubbles " + d.hpv })
             .attr("opacity", function (d) { return opacity(d.size); })
             .attr("r", function (d) { return scale(d.size); })
             .style("fill", function (d) { return color2(d.hpv); })
@@ -344,6 +349,8 @@ function bubbleplot(id, data){
             .insert("circle")
             .attr("cx", width / 2)
             .attr("cy", height / 2)
+            .attr("id", "circle")
+            .attr("class", function(d){ return "bubbles_survive" + d.overall_survival })
             .attr("opacity", function (d) { return opacity(d.size); })
             .attr("r", function (d) { return scale(d.size); })
             .style("fill", function (d) { return color3(d.overall_survival); })
@@ -370,8 +377,8 @@ function bubbleplot(id, data){
                     .attr("cy", function(d,i){ return 10 + i*(survival_size+5)}) // 100 is where the first dot appears. 25 is the distance between dots
                     .attr("r", 7)
                     .style("fill", function(d){ return color3(d)})
-                    .on("mouseover", highlight)
-                    .on("mouseleave", noHighlight)
+                    .on("mouseover", highlight_survive)
+                    .on("mouseleave", noHighlight_survive)
 
             // Add labels beside legend dots
             d3.select("#bubble").select("svg").append("svg").selectAll("mylabels")
@@ -384,8 +391,8 @@ function bubbleplot(id, data){
                 .text(function(d){ return d})
                 .attr("text-anchor", "left")
                 .style("alignment-baseline", "middle")
-                .on("mouseover", highlight)
-                .on("mouseleave", noHighlight)
+                .on("mouseover", highlight_survive)
+                .on("mouseleave", noHighlight_survive)
 
 
     function fade3(c, opacity) {
@@ -395,6 +402,19 @@ function bubbleplot(id, data){
             })
         .transition()
         .style("opacity", opacity);
+    }
+
+    //     // What to do when one group is hovered
+    function highlight_survive(d){
+        // reduce opacity of all groups
+        d3.select("#bubble").select("svg").selectAll("#circle").style("opacity", .05)
+        // expect the one that is hovered
+        d3.select("#bubble").select("svg").selectAll(".bubbles_survive"+d).style("opacity", 1)
+    }
+
+    // And when it is not hovered anymore
+    function noHighlight_survive(d){
+        d3.select("#bubble").select("svg").selectAll("#circle").style("opacity", 1)
     }
 
     }else if(id == 4){//t_category
@@ -409,6 +429,8 @@ function bubbleplot(id, data){
             .insert("circle")
             .attr("cx", width / 2)
             .attr("cy", height / 2)
+            .attr("id", "circle")
+            .attr("class", function(d){ return "bubbles " + d.t_category })
             .attr("opacity", function (d) { return opacity(d.size); })
             .attr("r", function (d) { return scale(d.size); })
             .style("fill", function (d) { return color4(d.t_category); })
@@ -474,6 +496,8 @@ function bubbleplot(id, data){
             .insert("circle")
             .attr("cx", width / 2)
             .attr("cy", height / 2)
+            .attr("id", "circle")
+            .attr("class", function(d){ return "bubbles " + d.tumor_subsite })
             .attr("opacity", function (d) { return opacity(d.size); })
             .attr("r", function (d) { return scale(d.size); })
             .style("fill", function (d) { return color5(d.tumor_subsite); })
@@ -528,6 +552,19 @@ function bubbleplot(id, data){
         .style("opacity", opacity);
         }
 
+    }
+
+    //     // What to do when one group is hovered
+    function highlight(d){
+        // reduce opacity of all groups
+        d3.select("#bubble").select("svg").selectAll("#circle").style("opacity", .05)
+        // expect the one that is hovered
+        d3.select("#bubble").select("svg").selectAll("."+d).style("opacity", 1)
+    }
+
+    // And when it is not hovered anymore
+    function noHighlight(d){
+        d3.select("#bubble").select("svg").selectAll("#circle").style("opacity", 1)
     }
 
 function fadeOut() {
