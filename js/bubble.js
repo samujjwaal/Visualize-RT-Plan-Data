@@ -54,6 +54,93 @@ d3.csv(file, function(patients) {
 
 function bubbleplot(id, data){
     d3.select('#bubble').select('svg').remove();
+    var male_count = 0;
+    var female_count = 0;
+    var asian_count = 0;
+    var hispanic_count = 0;
+    var black_count = 0;
+    var native_count = 0;
+    var white_count = 0;
+    var positive_count = 0;
+    var negative_count = 0;
+    var unknown_count = 0;
+    var alive_count = 0;
+    var dead_count = 0;
+    var t1_count = 0;
+    var t2_count = 0;
+    var t3_count = 0;
+    var t4_count = 0;
+    var bot_count = 0;
+    var gps_count = 0;
+    var nos_count = 0;
+    var tonsil_count = 0;
+    var softPalate_count = 0;
+
+    var count = 0
+    //console.log(data[5].gender)
+    for(count = 0 ; count < data.length ; count++){
+        //counting gender
+        if(data[count].gender == "Male"){
+            male_count = male_count + 1 ;
+        }else{
+            female_count = female_count + 1;
+        }
+
+        //counting race
+        if(data[count].race == "White"){
+            white_count = white_count + 1 ;
+        }else if (data[count].race == "Hispanic"){
+            hispanic_count = hispanic_count + 1 ;
+        }else if (data[count].race == "Black"){
+            black_count = black_count + 1 ;
+        }else if (data[count].race == "Native"){
+            native_count = native_count + 1 ;
+        }else if(data[count].race == "Asian"){
+            asian_count = asian_count + 1;
+        }
+
+        //counting hpv
+        if(data[count].hpv == "Positive"){
+            positive_count = positive_count + 1 ;
+        }else if (data[count].hpv == "Negative"){
+            negative_count = negative_count + 1 ;
+        }else{
+            unknown_count = unknown_count + 1;
+        }        
+
+        //counting overall_surviva;
+        if(data[count].overall_survival == 0){
+            dead_count = dead_count + 1 ;
+        }else if (data[count].overall_survival == 1){
+            alive_count = alive_count + 1 ;
+        }
+
+        //counting t_category
+        if(data[count].t_category == "T1"){
+            t1_count = t1_count + 1 ;
+        }else if (data[count].t_category == "T2"){
+            t2_count = t2_count + 1 ;
+        }else if (data[count].t_category == "T3"){
+            t3_count = t3_count + 1 ;
+        }else{
+            t4_count = t4_count + 1;
+        }
+
+        //counting tumor_subsite
+        if(data[count].tumor_subsite == "Tonsil"){
+            tonsil_count = tonsil_count + 1 ;
+        }else if (data[count].tumor_subsite == "BOT"){
+            bot_count = bot_count + 1 ;
+        }else if (data[count].tumor_subsite == "NOS"){
+            nos_count = nos_count + 1 ;
+        }else if (data[count].tumor_subsite == "GPS"){
+            gps_count = gps_count + 1 ;
+        }else{
+            softPalate_count = softPalate_count + 1;
+        }
+
+    }
+
     var height = 250;
     var width = 400;
     var margin = 20;
@@ -75,6 +162,10 @@ function bubbleplot(id, data){
                 .append("g");
 
     d3.select("#bubble").style("stroke", "black").style("stroke-width", .5);
+
+    var tooltip = d3.select("#bubble").append('div')
+                        .attr("class", "tooltip_bubble")
+                        .style('opacity', 0);
 
     var x = d3.scale.linear()
             .domain([-38, 30])
@@ -123,6 +214,8 @@ function bubbleplot(id, data){
         var color0 = d3.scale.ordinal()
             .range(['#D81B60',
                 '#1E88E5']);
+
+        
         svg.selectAll("circle")
             .data(data)
             .enter()
@@ -135,9 +228,16 @@ function bubbleplot(id, data){
             .attr("r", function (d) { return scale(d.size); })
             .style("fill", function (d) { return color0(d.gender); })
             .on('mouseover', function (d, i) {
+                tooltip.transition().duration(200)
+                    .style("opacity", .9)
+                tooltip.html('<strong> ID: ' + d.dummy_id + "<br>"
+                    + "Gender: " + d.gender + "</strong>")
+                        .style('left', (d3.select(this).attr("cx") + 20) + 'px')
+                        .style('top', (d3.select(this).attr("cy")) + 'px')
                 fade0(d.gender, .1);
             })
             .on('mouseout', function (d, i) {
+                tooltip.transition().duration(200).style("opacity", 0)
                 fadeOut();
             })
             .on('click', function(d){
@@ -161,8 +261,26 @@ function bubbleplot(id, data){
             .attr("cy", function(d,i){ return 10 + i*(gender_size+5)}) // 100 is where the first dot appears. 25 is the distance between dots
             .attr("r", 7)
             .style("fill", function(d){ return color0(d)})
-            .on("mouseover", highlight)
-            .on("mouseleave", noHighlight)
+            .on("mouseover", function(d){
+                tooltip.transition().duration(200)
+                    .style("opacity", .9)
+                if(d == "Male"){
+                    console.log(male_count)
+                    tooltip.html('<strong> Total ' + d + " : " + male_count + "</strong>")
+                        .style('left', (d3.select(this).attr("cx")) + 'px')
+                        .style('top', (d3.select(this).attr("cy")) + 'px')
+                }else{
+                    console.log(female_count)
+                    tooltip.html('<strong> Total ' + d + " : " + female_count + "</strong>")
+                        .style('left', (d3.select(this).attr("cx")) + 'px')
+                        .style('top', (d3.select(this).attr("cy")) + 'px')
+                }
+                highlight(d);
+            })
+            .on("mouseleave", function(d, i){
+                tooltip.transition().duration(200).style("opacity", 0)
+                noHighlight(d);
+            })
 
     // Add labels beside legend dots
     d3.select("#bubble").select("svg").append("svg").selectAll("mylabels")
@@ -175,8 +293,26 @@ function bubbleplot(id, data){
         .text(function(d){ return d})
         .attr("text-anchor", "left")
         .style("alignment-baseline", "middle")
-        .on("mouseover", highlight)
-        .on("mouseleave", noHighlight)
+        .on("mouseover", function(d){
+            tooltip.transition().duration(200)
+                .style("opacity", .9)
+            if(d == "Male"){
+                console.log(male_count)
+                tooltip.html('<strong> Total ' + d + " : " + male_count + "</strong>")
+                    .style('left', (d3.select(this).attr("cx")) + 'px')
+                    .style('top', (d3.select(this).attr("cy")) + 'px')
+            }else{
+                console.log(female_count)
+                tooltip.html('<strong> Total ' + d + " : " + female_count + "</strong>")
+                    .style('left', (d3.select(this).attr("cx")) + 'px')
+                    .style('top', (d3.select(this).attr("cy")) + 'px')
+            }
+            highlight(d);
+        })
+        .on("mouseleave", function(d, i){
+            tooltip.transition().duration(200).style("opacity", 0)
+            noHighlight(d);
+        })
 
     function fade0(c, opacity) {
         svg.selectAll("circle")
@@ -220,9 +356,16 @@ function bubbleplot(id, data){
             .attr("r", function (d) { return scale(d.size); })
             .style("fill", function (d) { return color1(d.race); })
             .on('mouseover', function (d, i) {
+                tooltip.transition().duration(200)
+                .style("opacity", .9)
+                tooltip.html('<strong> ID: ' + d.dummy_id + "<br>"
+                    + "Race: " + d.race + "</strong>")
+                        .style('left', (d3.select(this).attr("cx") + 20) + 'px')
+                        .style('top', (d3.select(this).attr("cy")) + 'px')
                 fade1(d.race, .1);
             })
             .on('mouseout', function (d, i) {
+                tooltip.transition().duration(200).style("opacity", 0)
                 fadeOut();
             })
             .transition()
@@ -243,8 +386,36 @@ function bubbleplot(id, data){
                 .attr("cy", 15) // 100 is where the first dot appears. 25 is the distance between dots
                 .attr("r", 7)
                 .style("fill", function(d){ return color1(d)})
-                .on("mouseover", highlight)
-                .on("mouseleave", noHighlight)
+                .on("mouseover", function(d){
+                    tooltip.transition().duration(200)
+                        .style("opacity", .9)
+                    if(d == "Asian"){
+                        tooltip.html('<strong> Total ' + d + " : " + asian_count + "</strong>")
+                            .style('left', (d3.select(this).attr("cx")) + 'px')
+                            .style('top', (d3.select(this).attr("cy")) + 'px')
+                    }else if(d == "Hispanic"){
+                        tooltip.html('<strong> Total ' + d + " : " + hispanic_count + "</strong>")
+                            .style('left', (d3.select(this).attr("cx")) + 'px')
+                            .style('top', (d3.select(this).attr("cy")) + 'px')
+                    }else if(d == "Black"){
+                        tooltip.html('<strong> Total ' + d + " : " + black_count + "</strong>")
+                            .style('left', (d3.select(this).attr("cx")) + 'px')
+                            .style('top', (d3.select(this).attr("cy")) + 'px')
+                    }else if(d == "Native"){
+                        tooltip.html('<strong> Total ' + d + " : " + native_count + "</strong>")
+                            .style('left', (d3.select(this).attr("cx")) + 'px')
+                            .style('top', (d3.select(this).attr("cy")) + 'px')
+                    }else if(d == "White"){
+                        tooltip.html('<strong> Total ' + d + " : " + white_count + "</strong>")
+                            .style('left', (d3.select(this).attr("cx")) + 'px')
+                            .style('top', (d3.select(this).attr("cy")) + 'px')
+                    }
+                    highlight(d);
+                })
+                .on("mouseleave", function(d, i){
+                    tooltip.transition().duration(200).style("opacity", 0)
+                    noHighlight(d);
+                })
 
               // Add labels beside legend dots
               d3.select("#bubble").select("svg").append("svg").selectAll("mylabels")
@@ -257,8 +428,36 @@ function bubbleplot(id, data){
                     .text(function(d){ return d})
                     .attr("text-anchor", "left")
                     .style("alignment-baseline", "middle")
-                    .on("mouseover", highlight)
-                    .on("mouseleave", noHighlight)
+                    .on("mouseover", function(d){
+                        tooltip.transition().duration(200)
+                            .style("opacity", .9)
+                        if(d == "Asian"){
+                            tooltip.html('<strong> Total ' + d + " : " + asian_count + "</strong>")
+                                .style('left', (d3.select(this).attr("cx")) + 'px')
+                                .style('top', (d3.select(this).attr("cy")) + 'px')
+                        }else if(d == "Hispanic"){
+                            tooltip.html('<strong> Total ' + d + " : " + hispanic_count + "</strong>")
+                                .style('left', (d3.select(this).attr("cx")) + 'px')
+                                .style('top', (d3.select(this).attr("cy")) + 'px')
+                        }else if(d == "Black"){
+                            tooltip.html('<strong> Total ' + d + " : " + black_count + "</strong>")
+                                .style('left', (d3.select(this).attr("cx")) + 'px')
+                                .style('top', (d3.select(this).attr("cy")) + 'px')
+                        }else if(d == "Native"){
+                            tooltip.html('<strong> Total ' + d + " : " + native_count + "</strong>")
+                                .style('left', (d3.select(this).attr("cx")) + 'px')
+                                .style('top', (d3.select(this).attr("cy")) + 'px')
+                        }else if(d == "White"){
+                            tooltip.html('<strong> Total ' + d + " : " + white_count + "</strong>")
+                                .style('left', (d3.select(this).attr("cx")) + 'px')
+                                .style('top', (d3.select(this).attr("cy")) + 'px')
+                        }
+                        highlight(d);
+                    })
+                    .on("mouseleave", function(d, i){
+                        tooltip.transition().duration(200).style("opacity", 0)
+                        noHighlight(d);
+                    })
 
 
 
@@ -290,9 +489,16 @@ function bubbleplot(id, data){
             .attr("r", function (d) { return scale(d.size); })
             .style("fill", function (d) { return color2(d.hpv); })
             .on('mouseover', function (d, i) {
+                tooltip.transition().duration(200)
+                .style("opacity", .9)
+                tooltip.html('<strong> ID: ' + d.dummy_id + "<br>"
+                    + "HPV: " + d.hpv + "</strong>")
+                        .style('left', (d3.select(this).attr("cx") + 20) + 'px')
+                        .style('top', (d3.select(this).attr("cy")) + 'px')
                 fade2(d.hpv, .1);
             })
             .on('mouseout', function (d, i) {
+                tooltip.transition().duration(200).style("opacity", 0)
                 fadeOut();
             })
             .transition()
@@ -313,8 +519,28 @@ function bubbleplot(id, data){
             .attr("cy", 15) // 100 is where the first dot appears. 25 is the distance between dots
             .attr("r", 7)
             .style("fill", function(d){ return color2(d)})
-            .on("mouseover", highlight)
-            .on("mouseleave", noHighlight)
+            .on("mouseover", function(d){
+                tooltip.transition().duration(200)
+                    .style("opacity", .9)
+                if(d == "Positive"){
+                    tooltip.html('<strong> Total ' + d + " : " + positive_count + "</strong>")
+                        .style('left', (d3.select(this).attr("cx")) + 'px')
+                        .style('top', (d3.select(this).attr("cy")) + 'px')
+                }else if(d == "Negative"){
+                    tooltip.html('<strong> Total ' + d + " : " + negative_count + "</strong>")
+                        .style('left', (d3.select(this).attr("cx")) + 'px')
+                        .style('top', (d3.select(this).attr("cy")) + 'px')
+                }else if(d == "Unknown"){
+                    tooltip.html('<strong> Total ' + d + " : " + unknown_count + "</strong>")
+                        .style('left', (d3.select(this).attr("cx")) + 'px')
+                        .style('top', (d3.select(this).attr("cy")) + 'px')
+                }
+                highlight(d);
+            })
+            .on("mouseleave", function(d, i){
+                tooltip.transition().duration(200).style("opacity", 0)
+                noHighlight(d);
+            })
 
             // Add labels beside legend dots
         d3.select("#bubble").select("svg").append("svg").selectAll("mylabels")
@@ -327,8 +553,28 @@ function bubbleplot(id, data){
             .text(function(d){ return d})
             .attr("text-anchor", "left")
             .style("alignment-baseline", "middle")
-            .on("mouseover", highlight)
-            .on("mouseleave", noHighlight)
+            .on("mouseover", function(d){
+                tooltip.transition().duration(200)
+                    .style("opacity", .9)
+                if(d == "Positive"){
+                    tooltip.html('<strong> Total ' + d + " : " + positive_count + "</strong>")
+                        .style('left', (d3.select(this).attr("cx")) + 'px')
+                        .style('top', (d3.select(this).attr("cy")) + 'px')
+                }else if(d == "Negative"){
+                    tooltip.html('<strong> Total ' + d + " : " + negative_count + "</strong>")
+                        .style('left', (d3.select(this).attr("cx")) + 'px')
+                        .style('top', (d3.select(this).attr("cy")) + 'px')
+                }else if(d == "Unknown"){
+                    tooltip.html('<strong> Total ' + d + " : " + unknown_count + "</strong>")
+                        .style('left', (d3.select(this).attr("cx")) + 'px')
+                        .style('top', (d3.select(this).attr("cy")) + 'px')
+                }
+                highlight(d);
+            })
+            .on("mouseleave", function(d, i){
+                tooltip.transition().duration(200).style("opacity", 0)
+                noHighlight(d);
+            })
 
     function fade2(c, opacity) {
         svg.selectAll("circle")
@@ -355,9 +601,16 @@ function bubbleplot(id, data){
             .attr("r", function (d) { return scale(d.size); })
             .style("fill", function (d) { return color3(d.overall_survival); })
             .on('mouseover', function (d, i) {
+                tooltip.transition().duration(200)
+                .style("opacity", .9)
+                tooltip.html('<strong> ID: ' + d.dummy_id + "<br>"
+                    + "Survive: " + d.overall_survival + "</strong>")
+                        .style('left', (d3.select(this).attr("cx") + 20) + 'px')
+                        .style('top', (d3.select(this).attr("cy")) + 'px')
                 fade3(d.overall_survival, .1);
             })
             .on('mouseout', function (d, i) {
+                tooltip.transition().duration(200).style("opacity", 0)
                 fadeOut();
             })
             .transition()
@@ -377,8 +630,24 @@ function bubbleplot(id, data){
                     .attr("cy", function(d,i){ return 10 + i*(survival_size+5)}) // 100 is where the first dot appears. 25 is the distance between dots
                     .attr("r", 7)
                     .style("fill", function(d){ return color3(d)})
-                    .on("mouseover", highlight_survive)
-                    .on("mouseleave", noHighlight_survive)
+                    .on("mouseover", function(d){
+                        tooltip.transition().duration(200)
+                            .style("opacity", .9)
+                        if(d == "0"){
+                            tooltip.html('<strong> Total Dead' + " : " + dead_count + "</strong>")
+                                .style('left', (d3.select(this).attr("cx")) + 'px')
+                                .style('top', (d3.select(this).attr("cy")) + 'px')
+                        }else if(d == "1"){
+                            tooltip.html('<strong> Total Alive' + d + " : " + alive_count + "</strong>")
+                                .style('left', (d3.select(this).attr("cx")) + 'px')
+                                .style('top', (d3.select(this).attr("cy")) + 'px')
+                        }
+                        highlight_survive(d);
+                    })
+                    .on("mouseleave", function(d, i){
+                        tooltip.transition().duration(200).style("opacity", 0)
+                        noHighlight_survive(d);
+                    })
 
             // Add labels beside legend dots
             d3.select("#bubble").select("svg").append("svg").selectAll("mylabels")
@@ -391,8 +660,24 @@ function bubbleplot(id, data){
                 .text(function(d){ return d})
                 .attr("text-anchor", "left")
                 .style("alignment-baseline", "middle")
-                .on("mouseover", highlight_survive)
-                .on("mouseleave", noHighlight_survive)
+                .on("mouseover", function(d){
+                    tooltip.transition().duration(200)
+                        .style("opacity", .9)
+                    if(d == "0"){
+                        tooltip.html('<strong> Total Dead' + " : " + dead_count + "</strong>")
+                            .style('left', (d3.select(this).attr("cx")) + 'px')
+                            .style('top', (d3.select(this).attr("cy")) + 'px')
+                    }else if(d == "1"){
+                        tooltip.html('<strong> Total Alive' + d + " : " + alive_count + "</strong>")
+                            .style('left', (d3.select(this).attr("cx")) + 'px')
+                            .style('top', (d3.select(this).attr("cy")) + 'px')
+                    }
+                    highlight_survive(d);
+                })
+                .on("mouseleave", function(d, i){
+                    tooltip.transition().duration(200).style("opacity", 0)
+                    noHighlight_survive(d);
+                })
 
 
     function fade3(c, opacity) {
@@ -435,9 +720,16 @@ function bubbleplot(id, data){
             .attr("r", function (d) { return scale(d.size); })
             .style("fill", function (d) { return color4(d.t_category); })
             .on('mouseover', function (d, i) {
+                tooltip.transition().duration(200)
+                .style("opacity", .9)
+                tooltip.html('<strong> ID: ' + d.dummy_id + "<br>"
+                    + "T_Cat: " + d.t_category + "</strong>")
+                        .style('left', (d3.select(this).attr("cx") + 20) + 'px')
+                        .style('top', (d3.select(this).attr("cy")) + 'px')
                 fade4(d.t_category, .1);
             })
             .on('mouseout', function (d, i) {
+                tooltip.transition().duration(200).style("opacity", 0)
                 fadeOut();
             })
             .transition()
@@ -457,8 +749,32 @@ function bubbleplot(id, data){
             .attr("cy", 15)  // 100 is where the first dot appears. 25 is the distance between dots
             .attr("r", 7)
             .style("fill", function(d){ return color4(d)})
-            .on("mouseover", highlight)
-            .on("mouseleave", noHighlight)
+            .on("mouseover", function(d){
+                tooltip.transition().duration(200)
+                    .style("opacity", .9)
+                if(d == "T1"){
+                    tooltip.html('<strong> Total ' + d + " : " + t1_count + "</strong>")
+                        .style('left', (d3.select(this).attr("cx")) + 'px')
+                        .style('top', (d3.select(this).attr("cy")) + 'px')
+                }else if(d == "T2"){
+                    tooltip.html('<strong> Total ' + d + " : " + t2_count + "</strong>")
+                        .style('left', (d3.select(this).attr("cx")) + 'px')
+                        .style('top', (d3.select(this).attr("cy")) + 'px')
+                }else if(d == "T3"){
+                    tooltip.html('<strong> Total ' + d + " : " + t3_count + "</strong>")
+                        .style('left', (d3.select(this).attr("cx")) + 'px')
+                        .style('top', (d3.select(this).attr("cy")) + 'px')
+                }else if(d == "T4"){
+                    tooltip.html('<strong> Total ' + d + " : " + t4_count + "</strong>")
+                        .style('left', (d3.select(this).attr("cx")) + 'px')
+                        .style('top', (d3.select(this).attr("cy")) + 'px')
+                }
+                highlight(d);
+            })
+            .on("mouseleave", function(d, i){
+                tooltip.transition().duration(200).style("opacity", 0)
+                noHighlight(d);
+            })
 
         // Add labels beside legend dots
         d3.select("#bubble").select("svg").append("svg").selectAll("mylabels")
@@ -471,8 +787,32 @@ function bubbleplot(id, data){
             .text(function(d){ return d})
             .attr("text-anchor", "left")
             .style("alignment-baseline", "middle")
-            .on("mouseover", highlight)
-            .on("mouseleave", noHighlight)
+            .on("mouseover", function(d){
+                tooltip.transition().duration(200)
+                    .style("opacity", .9)
+                if(d == "T1"){
+                    tooltip.html('<strong> Total ' + d + " : " + t1_count + "</strong>")
+                        .style('left', (d3.select(this).attr("cx")) + 'px')
+                        .style('top', (d3.select(this).attr("cy")) + 'px')
+                }else if(d == "T2"){
+                    tooltip.html('<strong> Total ' + d + " : " + t2_count + "</strong>")
+                        .style('left', (d3.select(this).attr("cx")) + 'px')
+                        .style('top', (d3.select(this).attr("cy")) + 'px')
+                }else if(d == "T3"){
+                    tooltip.html('<strong> Total ' + d + " : " + t3_count + "</strong>")
+                        .style('left', (d3.select(this).attr("cx")) + 'px')
+                        .style('top', (d3.select(this).attr("cy")) + 'px')
+                }else if(d == "T4"){
+                    tooltip.html('<strong> Total ' + d + " : " + t4_count + "</strong>")
+                        .style('left', (d3.select(this).attr("cx")) + 'px')
+                        .style('top', (d3.select(this).attr("cy")) + 'px')
+                }
+                highlight(d);
+            })
+            .on("mouseleave", function(d, i){
+                tooltip.transition().duration(200).style("opacity", 0)
+                noHighlight(d);
+            })
 
     function fade4(c, opacity) {
         svg.selectAll("circle")
@@ -502,9 +842,16 @@ function bubbleplot(id, data){
             .attr("r", function (d) { return scale(d.size); })
             .style("fill", function (d) { return color5(d.tumor_subsite); })
             .on('mouseover', function (d, i) {
+                tooltip.transition().duration(200)
+                .style("opacity", .9)
+                tooltip.html('<strong> ID: ' + d.dummy_id + "<br>"
+                    + "Tumor: " + d.tumor_subsite + "</strong>")
+                        .style('left', (d3.select(this).attr("cx") + 20) + 'px')
+                        .style('top', (d3.select(this).attr("cy")) + 'px')
                 fade5(d.tumor_subsite, .1);
             })
             .on('mouseout', function (d, i) {
+                tooltip.transition().duration(200).style("opacity", 0)
                 fadeOut();
             })
             .transition()
@@ -524,8 +871,36 @@ function bubbleplot(id, data){
             .attr("cy", 15) 
             .attr("r", 7)
             .style("fill", function(d){ return color5(d)})
-            .on("mouseover", highlight)
-            .on("mouseleave", noHighlight)
+            .on("mouseover", function(d){
+                tooltip.transition().duration(200)
+                    .style("opacity", .9)
+                if(d == "BOT"){
+                    tooltip.html('<strong> Total ' + d + " : " + bot_count + "</strong>")
+                        .style('left', (d3.select(this).attr("cx")) + 'px')
+                        .style('top', (d3.select(this).attr("cy")) + 'px')
+                }else if(d == "GPS"){
+                    tooltip.html('<strong> Total ' + d + " : " + gps_count + "</strong>")
+                        .style('left', (d3.select(this).attr("cx")) + 'px')
+                        .style('top', (d3.select(this).attr("cy")) + 'px')
+                }else if(d == "NOS"){
+                    tooltip.html('<strong> Total ' + d + " : " + nos_count + "</strong>")
+                        .style('left', (d3.select(this).attr("cx")) + 'px')
+                        .style('top', (d3.select(this).attr("cy")) + 'px')
+                }else if(d == "Tonsil"){
+                    tooltip.html('<strong> Total ' + d + " : " + tonsil_count + "</strong>")
+                        .style('left', (d3.select(this).attr("cx")) + 'px')
+                        .style('top', (d3.select(this).attr("cy")) + 'px')
+                }else if(d == "Soft palate"){
+                    tooltip.html('<strong> Total ' + d + " : " + softPalate_count + "</strong>")
+                        .style('left', (d3.select(this).attr("cx")) + 'px')
+                        .style('top', (d3.select(this).attr("cy")) + 'px')
+                }
+                highlight(d);
+            })
+            .on("mouseleave", function(d, i){
+                tooltip.transition().duration(200).style("opacity", 0)
+                noHighlight(d);
+            })
 
         // Add labels beside legend dots
         d3.select("#bubble").select("svg").append("svg").selectAll("mylabels")
@@ -538,8 +913,36 @@ function bubbleplot(id, data){
             .text(function(d){ return d})
             .attr("text-anchor", "left")
             .style("alignment-baseline", "middle")
-            .on("mouseover", highlight)
-            .on("mouseleave", noHighlight)
+            .on("mouseover", function(d){
+                tooltip.transition().duration(200)
+                    .style("opacity", .9)
+                if(d == "BOT"){
+                    tooltip.html('<strong> Total ' + d + " : " + bot_count + "</strong>")
+                        .style('left', (d3.select(this).attr("cx")) + 'px')
+                        .style('top', (d3.select(this).attr("cy")) + 'px')
+                }else if(d == "GPS"){
+                    tooltip.html('<strong> Total ' + d + " : " + gps_count + "</strong>")
+                        .style('left', (d3.select(this).attr("cx")) + 'px')
+                        .style('top', (d3.select(this).attr("cy")) + 'px')
+                }else if(d == "NOS"){
+                    tooltip.html('<strong> Total ' + d + " : " + nos_count + "</strong>")
+                        .style('left', (d3.select(this).attr("cx")) + 'px')
+                        .style('top', (d3.select(this).attr("cy")) + 'px')
+                }else if(d == "Tonsil"){
+                    tooltip.html('<strong> Total ' + d + " : " + tonsil_count + "</strong>")
+                        .style('left', (d3.select(this).attr("cx")) + 'px')
+                        .style('top', (d3.select(this).attr("cy")) + 'px')
+                }else if(d == "Soft palate"){
+                    tooltip.html('<strong> Total ' + d + " : " + softPalate_count + "</strong>")
+                        .style('left', (d3.select(this).attr("cx")) + 'px')
+                        .style('top', (d3.select(this).attr("cy")) + 'px')
+                }
+                highlight(d);
+            })
+            .on("mouseleave", function(d, i){
+                tooltip.transition().duration(200).style("opacity", 0)
+                noHighlight(d);
+            })
 
 
 
