@@ -1,11 +1,12 @@
 var margin = {
     top: 32,
-    right: 50,
+    right: 20,
     bottom: 20,
-    left: 100
+    left:30
   };
-  var width = 300 - margin.left - margin.right;
-  var height = 300 - margin.top - margin.bottom;
+  //top - 32 , right - 50 , bottom - 20 , left - 100
+  var width = 100 - margin.left;
+  var height = 200 - 32 - 20;
   var labelMargin = 8;
 
   var patientID = 10;
@@ -57,7 +58,7 @@ var margin = {
         ])
         .scales(scale)
         .labels([
-          'Age at diagnosis',
+          'Age',
           'Smoking status (Packs/Year)',
           'Total dose',
           'Treatment duration',
@@ -75,8 +76,8 @@ var margin = {
 
         var svg = star_wrapper.append('svg')
           .attr('class', 'star_chart')
-          .attr('width', width + margin.left + margin.right)
-          .attr('height', width + margin.top + margin.bottom)
+          .attr('width', width + margin.left + 10 )
+          .attr('height', width + margin.top )
 
         var starG = svg.append('g')
           .datum(d)
@@ -113,8 +114,8 @@ var margin = {
               }
               else  return d.key + ': ' + d.datum[d.key]}
               )
-              .style('left', d.xExtent - ($interactionLabel.width() / 4))
-              .style('top', d.yExtent - ($interactionLabel.height() / 4))
+              .style('left', d.x + 'px')
+              .style('top', d.y + 'px')
           })
           .on('mouseout', function(d) {
             interaction

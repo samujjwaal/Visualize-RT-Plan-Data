@@ -3,22 +3,22 @@
     margin: auto;
     font-family: Arial;
   } */
-  #target {
+  /* #target {
     margin: 40px 0;
-  }
+  } */
   .star_wrapper {
     position: relative;
     display: inline-block;
 
   }
-  .star_chart {
+  /* .star_chart {
     margin-bottom: 40px;
-  }
+  } */
   .star-title {
-    font-size: 14px;
+    font-size: 10px;
   }
   .star-label {
-    font-size: 11px;
+    font-size: 7px;
     pointer-events: none;
   }
   .star-origin {

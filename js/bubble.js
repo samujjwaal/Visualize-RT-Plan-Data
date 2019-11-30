@@ -183,32 +183,6 @@ function bubbleplot(id, data){
     var opacity = d3.scale.sqrt()
                 .domain([0, 97])
                 .range([1, .5]);
-    // var xAxis = d3.svg.axis().scale(x);
-    // var yAxis = d3.svg.axis().scale(y).orient("left");
-
-    // svg.append("g")
-    //     .attr("class", "y axis")
-    //     .call(yAxis)
-    //     .append("text")
-    //         .attr("transform", "rotate(-90)")
-    //         .attr("x", 20)
-    //         .attr("y", -margin)
-    //         .attr("dy", ".71em")
-    //         .style("text-anchor", "end")
-    //         .text(labelY);
-    // // x axis and label
-    // svg.append("g")
-    //     .attr("class", "x axis")
-    //     .attr("transform", "translate(0," + height + ")")
-    //     .call(xAxis)
-    //     .append("text")
-    //         .attr("x", width + 20)
-    //         .attr("y", margin - 10)
-    //         .attr("dy", ".71em")
-    //         .style("text-anchor", "end")
-    //         .text(labelX);
-
-
 
    if(id == 0 ){//gender
         var color0 = d3.scale.ordinal()
@@ -322,20 +296,6 @@ function bubbleplot(id, data){
         .transition()
         .style("opacity", opacity);
     }
-
-
-    // //     // What to do when one group is hovered
-    // function highlight(d){
-    //     // reduce opacity of all groups
-    //     d3.select("#bubble").select("svg").selectAll("circle").style("opacity", .05)
-    //     // expect the one that is hovered
-    //     d3.select("#bubble").select("svg").selectAll("."+d).style("opacity", 1)
-    // }
-
-    // // And when it is not hovered anymore
-    // function noHighlight(d){
-    //     d3.select("#bubble").select("svg").selectAll("circle").style("opacity", 1)
-    // }
 
     }else if(id == 1){//race
         var color1 = d3.scale.ordinal()
