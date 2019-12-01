@@ -32,7 +32,7 @@ var margin = {
   });
 
 
-  d3.csv('data/test1.csv')
+  d3.csv('data/Preprocess/modified_patient_info_mdacc.csv')
     .row(function(d) {
       //console.log(similarPatients);
       //if(d.dummy_id== 10183)

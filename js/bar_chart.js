@@ -57,7 +57,7 @@ d3.json("data/patient_dataset.json", function(patients) {
     //creating the bar chart
 function bar_chart(orgList, meanDose){
     d3.select('#bar_chart').select('svg').remove();
-    var margin = {top: 5, right: 20, bottom: 90, left: 30, spacing: 4},
+    var margin = {top: 5, right: 100, bottom: 90, left: 30, spacing: 4},
     width = 1000 - margin.left - margin.right,
     height = 300 - margin.top - margin.bottom;
 
@@ -98,9 +98,9 @@ function mouseOver(d,i){
     tooltipString +=  '<br><b>Organ Name: </b>' + orgList[i];
     tooltip.style("opacity", .9);
     tooltip.html(tooltipString)
-            .style("left", (d3.event.pageX ) + "px")
-            .style("top", (d3.event.pageY - 28) + "px");
-    console.log(d);
+            .style("left", (d3.event.pageX + 30 ) + "px")
+            .style("top", (d3.event.pageY - 30) + "px");
+    //console.log(d);
   }
 
   function mouseOut(d) {
@@ -133,7 +133,7 @@ function mouseOver(d,i){
             return height - y(d);
         })
         .attr("x", function(d, i){
-            console.log(width / meanDose.length)
+            //console.log(width / meanDose.length)
             return (width / meanDose.length * i );
         })
         .attr("y", function(d){
