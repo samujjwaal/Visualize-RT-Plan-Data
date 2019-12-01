@@ -11,39 +11,48 @@ var margin = {
 
   var patientID = 10;
   var similarPatients = [];
-  var count = 0;
+  var count = 1;
 
   var scale = d3.scale.linear()
     .domain([0, 4])
     .range([0, 5])
 
 
-  d3.json("data/patient_dataset.json", function(patients) {
-      for(var patientcount = 0; patientcount<patients.length; patientcount++)
-      {
-        if (patients[patientcount].ID === patientID)
-          {
-            similarPatients.push(patients[patientcount].similar_patients);
-            count++;
-            //console.log(similarPatients);
-          }
-      }
 
+  d3.json("data/patient_dataset.json", function(patients) {
+  	console.log('count1');
+      for(var patientcount = 0; patientcount<patients.length; patientcount++)
+    {
+      if (patients[patientcount].ID === patientID)
+        {
+         console.log(patients[patientcount].similar_patients); 
+          similarPatients[0] = patientID;
+          for(var j=0; j<patients[patientcount].similar_patients.length; j++)
+          {
+            similarPatients[count] = patients[patientcount].similar_patients[j];
+            //console.log('similar patient ' + count + ' is ' + similarPatients[count]);
+            count++;
+          }
+        }
+    }
+    console.log('similar patient is ' + similarPatients);
+   
   });
 
 
-  d3.csv('data/test1.csv')
+  d3.csv('data/patient_info_mdacc.csv')
     .row(function(d) {
-      //console.log(similarPatients);
-      //if(d.dummy_id== 10183)
-       //{
+    	console.log('count2');
+      console.log(similarPatients.length);
+      //if(d.dummy_id== similarPatients[2])
+       {
         d.age_at_diagnosis = +d.age_at_diagnosis;
-        d.smoking_status_packs = +d.smoking_status_packs;
         d.total_dose = +d.total_dose;
         d.treatment_duration = +d.treatment_duration;
+        d.t_category = +d.t_category*20;
         d.overall_survival = +d.overall_survival*80;
         return d;
-       //}
+       }
     })
 
     .get(function(error, rows) {
@@ -51,17 +60,17 @@ var margin = {
         .width(width)
         .properties([
           'age_at_diagnosis',
-          'smoking_status_packs',
           'total_dose',
           'treatment_duration',
+          't_category',
           'overall_survival'
         ])
         .scales(scale)
         .labels([
           'Age',
-          'Smoking status (Packs/Year)',
           'Total dose',
           'Treatment duration',
+          'T_category',
           'Overall survival'
         ])
         .title(function(d) { return "Patient ID: " + d.dummy_id; })
@@ -112,6 +121,9 @@ var margin = {
               .text( function() { if (d.key==='overall_survival') {
                 return d.key + ': ' + d.datum[d.key]/80;
               }
+              else if (d.key==='t_category') {
+              return d.key + ': ' + d.datum[d.key]/20;
+            }
               else  return d.key + ': ' + d.datum[d.key]}
               )
               .style('left', d.x + 'px')
