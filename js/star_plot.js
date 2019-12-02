@@ -10,15 +10,15 @@ var margin = {
   var labelMargin = 8;
 
   var patientID = 10;
-  var similarPatients = [];
+  
   var count = 1;
 
   var scale = d3.scale.linear()
     .domain([0, 4])
     .range([0, 5])
 
-
-
+function similarPatients(){
+  var similarPatients = [];
   d3.json("data/patient_dataset.json", function(patients) {
   	console.log('count1');
       for(var patientcount = 0; patientcount<patients.length; patientcount++)
@@ -35,16 +35,25 @@ var margin = {
           }
         }
     }
-    console.log('similar patient is ' + similarPatients);
+    //console.log('similar patient is ' + similarPatients);
+    
    
   });
+  return similarPatients;
+  
+}
 
 
-  d3.csv('data/Preprocess/modified_patient_info_mdacc.csv')
+
+
+  d3.csv('data/patient_info_mdacc.csv')
     .row(function(d) {
-    	console.log('count2');
-      console.log(similarPatients.length);
-      //if(d.dummy_id== similarPatients[2])
+      var similar = similarPatients();
+    	//console.log('count2');
+      console.log(similar);
+      for (var i = 0; i < count ; i++){
+
+        if(d.dummy_id == similar[i])
        {
         d.age_at_diagnosis = +d.age_at_diagnosis;
         d.total_dose = +d.total_dose;
@@ -53,6 +62,17 @@ var margin = {
         d.overall_survival = +d.overall_survival*80;
         return d;
        }
+
+      }
+      // if(d.dummy_id == similarPatients)
+      //  {
+      //   d.age_at_diagnosis = +d.age_at_diagnosis;
+      //   d.total_dose = +d.total_dose;
+      //   d.treatment_duration = +d.treatment_duration;
+      //   d.t_category = +d.t_category*20;
+      //   d.overall_survival = +d.overall_survival*80;
+      //   return d;
+      //  }
     })
 
     .get(function(error, rows) {

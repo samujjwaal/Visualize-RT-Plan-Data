@@ -1,5 +1,6 @@
 var Data = function(patientData, oAtlas) {
 	var pData = patientData;
+	console.log(pData[5]);
 	var oAtlas = oAtlas;
 	var public = {};
 	var patientCount = pData.length;
