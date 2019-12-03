@@ -1,57 +1,69 @@
-d3.json("data/patient_dataset.json", function(patients) {
-    //getting all patients IDs
-    var patientIDs = getPatientIDS(patients);
-    //creating a dropdown patientList
-    var div = document.querySelector("#dropDown"),
-    fragment = document.createDocumentFragment(),
-    create_select = document.createElement("select");
-    create_select.setAttribute("id", "select");
-    create_select.setAttribute("name", "Select Patients")
-    //creating counter for all the loops
-    var count;
-    for (count = 0 ; count < patientIDs.length ; count ++){
-        //var optionElementReference = new Option(text, value, defaultSelected, selected);
-        if(count === 0){
-            create_select.options.add( new Option("Patient ID : " + patientIDs[count], patientIDs[count]) );
-        }else{
-            create_select.options.add( new Option("Patient ID : " + patientIDs[count], patientIDs[count]) );
-        }
+var bar = (function(){
+    function bar_graph(){
+        var self = this;
     }
-    fragment.appendChild(create_select);
-    div.appendChild(fragment);
+    bar_graph.init = function(){
+        d3.json("data/patient_dataset.json", function(patients) {
+            //getting all patients IDs
+            var patientIDs = getPatientIDS(patients);
+            //creating a dropdown patientList
+            var div = document.querySelector("#dropDown"),
+            fragment = document.createDocumentFragment(),
+            create_select = document.createElement("select");
+            create_select.setAttribute("id", "select");
+            create_select.setAttribute("name", "Select Patients")
+            //creating counter for all the loops
+            var count;
+            for (count = 0 ; count < patientIDs.length ; count ++){
+                //var optionElementReference = new Option(text, value, defaultSelected, selected);
+                if(count === 0){
+                    create_select.options.add( new Option("Patient ID : " + patientIDs[count], patientIDs[count]) );
+                }else{
+                    create_select.options.add( new Option("Patient ID : " + patientIDs[count], patientIDs[count]) );
+                }
+            }
+            fragment.appendChild(create_select);
+            div.appendChild(fragment);
+        
+            //by default show patient ID 3's information
+            var onChange = false;
+            if (onChange === false){
+                var organList = getOrganList(0, patients);
+                //console.log(organList);
+                //mean dose of the organs
+                var organMeanDose = getOrganMeanDose(0, organList, patients);
+        
+                bar_chart(organList, organMeanDose);
+        
+                //organ_threeD(0, patients, organList)
+                //console.log(patients[2].organData.Brainstem);
+            }
+        
+            //getting the selected patient index from the drop down
+            var selectedIndex = 0;
+            document.getElementById("select").onchange = function(){
+                onChange = true
+                //alert(this.selectedIndex);
+                selectedIndex = this.selectedIndex;
+                var selectedPatientId = patientIDs[selectedIndex];
+                console.log(selectedPatientId);
+        
+                //console.log(patients.keys(patients[0].organData));
+                organList = getOrganList(selectedIndex, patients);
+                //console.log(organList);
+                //mean dose of the organs
+                organMeanDose = getOrganMeanDose(selectedIndex, organList, patients);
+                bar_chart(organList, organMeanDose);
+        
+            };
+        });
+    
 
-    //by default show patient ID 3's information
-    var onChange = false;
-    if (onChange === false){
-        var organList = getOrganList(0, patients);
-        //console.log(organList);
-        //mean dose of the organs
-        var organMeanDose = getOrganMeanDose(0, organList, patients);
-
-        bar_chart(organList, organMeanDose);
-
-        //organ_threeD(0, patients, organList)
-        //console.log(patients[2].organData.Brainstem);
     }
+    return bar_graph;
+    
+}());
 
-    //getting the selected patient index from the drop down
-    var selectedIndex = 0;
-    document.getElementById("select").onchange = function(){
-        onChange = true
-        //alert(this.selectedIndex);
-        selectedIndex = this.selectedIndex;
-        var selectedPatientId = patientIDs[selectedIndex];
-        console.log(selectedPatientId);
-
-        //console.log(patients.keys(patients[0].organData));
-        organList = getOrganList(selectedIndex, patients);
-        //console.log(organList);
-        //mean dose of the organs
-        organMeanDose = getOrganMeanDose(selectedIndex, organList, patients);
-        bar_chart(organList, organMeanDose);
-
-    };
-});
 
 
     //creating the bar chart

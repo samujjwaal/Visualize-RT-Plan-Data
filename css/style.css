@@ -18,7 +18,7 @@ body {
 	overflow-x: visible;
 	padding-top: 4em;
 }
-
+/* 
 #rightContent {
 	position: absolute;
 	width: 5%;
@@ -26,7 +26,7 @@ body {
 	margin-left: -2%;
 	height:100%;
 	padding-top: 4em;
-}
+} */
 
 #leftContent {
 	position: absolute;
@@ -37,15 +37,25 @@ body {
 	padding: 4em 0 0em 0;
 }
 
+/* #container{
+	position: relative;
+}
+#container  */
+#overlay{
+	position: relative;
+}
+
 #c {
 	position: fixed;
 	left: 0px;
-	top: 0;
+	top: 200px;
 	width: 100%;
 	height: 100%;
+	/* background-color: black;
+	//opacity: 0; */
 }
 
-
+/* 
 #loadScreen {
 	position: fixed;
 	top: 0;
@@ -60,37 +70,8 @@ body {
 	text-align: center;
 	background-color: rgba(68, 68, 68, 0.99);
 	z-index: 100;
-}
+} */
 
-select {
-	cursor: pointer;
-	color: #eee;
-	background-color: rgb(50, 50, 50);
-	font-family: sans-serif;
-	font-size: medium;
-	font-weight: lighter;
-	/*text-align: center;*/
-	padding: 5px 5px;
-	width: 160px;
-	height: 31px;
-	/* -webkit-border-radius: 0px; */
-	border: 2px solid rgb(30, 30, 30);
-	outline: 0px solid rgb(30, 30, 30);
-	outline-offset: -2px;
-}
-
-select:active,
-select:hover {
-	background-color: #666;
-	outline-color: #666;
-	/*text-align: center;*/
-}
-
-option:checked,
-option:hover {
-	color: #eee;
-	background-color: #666;
-}
 
 .colorBar{
 	position: relative;
@@ -102,7 +83,7 @@ option:hover {
 	margin-top: 3em;
 }
 
-.tooltip, .bubbletooltip {
+.tooltip {
   color: white;
   position: absolute;
   padding: 3px;
@@ -177,51 +158,7 @@ option:hover {
 	border: 0px solid red;
 }
 
-#alt_details_organName {
-	width: 100%;
-	height: 25px;
-	text-align: center;
-	font-family: sans-serif;
-	font-size: small;
-	color: #eee;
-	padding: 10px 0px;
-	margin-right: 30px;
-}
 
-#alt_details_dosePerVolume {
-	width: 100%;
-	height: 25px;
-	text-align: center;
-	font-family: sans-serif;
-	font-size: medium;
-	color: #eee;
-	padding: 9px 0px;
-	margin-right: 30px;
-}
-
-#alt_details_line {
-	display: block;
-	margin-top: 10px;
-	margin-bottom: 5px;
-	margin-left: 10px;
-	margin-right: 10px;
-	border-top: 1px solid black;
-}
-
-#alt_details_table {
-	margin: 0px 2px 5px 2px;
-	width: 95%;
-	border-collapse: collapse;
-	border-top: 0px solid red;
-}
-
-#alt_details_table td {
-	font-family: sans-serif;
-	font-size: small;
-	color: #eee;
-	padding: 1px 5px;
-	border: 0px solid red;
-}
 
 .list-item {
 	position: relative;
@@ -239,32 +176,6 @@ option:hover {
 	width: 100%;
 	overflow: hidden;
 	height: calc(99% - 3em);
-}
-
-
-.info {
-	color: #343434;
-	background-color: var(--plot-background-color);
-	width: 100%;
-	font-family: sans-serif;
-	font-size: 1.1em;
-	padding: .2em;
-	overflow: hidden;
-	height: 1.3em;
-	display: grid;
-	white-space: nowrap;
-	grid-template-columns: 1fr 1fr 1fr;
-}
-
-.totDose {
-	height: 100%;
-	grid-column-start: 1;
-}
-
-.tVolume {
-	height: 100%;
-	grid-column-start: 2;
-	text-align: center;
 }
 
 

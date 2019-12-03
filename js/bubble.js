@@ -1,56 +1,65 @@
-var file = "data/bubble_chart.csv"
-d3.csv(file, function(patients) {
-    var data = []
-    var count = 0;
-    var x = [];
-    var y = [];
-    var size = [];
+var bubble = (function(){
+    function bubble_graph(){
+        var self = this;
+    }
+    bubble_graph.init = function(){
+        var file = "data/bubble_chart.csv"
+    d3.csv(file, function(patients) {
+        var data = []
+        var count = 0;
+        var x = [];
+        var y = [];
+        var size = [];
 
 
-    var group_name = ['gender', 'race', 'hpv','overall_survival', 't_category', 'tumor_subsite'];
+        var group_name = ['gender', 'race', 'hpv','overall_survival', 't_category', 'tumor_subsite'];
 
-    //creating a dropdown patientList
-    var div = document.querySelector("#bubble_dropdown"),
-    fragment = document.createDocumentFragment(),
-    create_select = document.createElement("select");
-    create_select.setAttribute("id", "bubble_select");
-    create_select.setAttribute("name", "Select Groups")
-    //creating counter for all the loops
-    var count;
-    for (count = 0 ; count < group_name.length ; count ++){
-        //var optionElementReference = new Option(text, value, defaultSelected, selected);
-        if(count === 0){
-            create_select.options.add( new Option(group_name[count], group_name[count]) );
-        }else{
-            create_select.options.add( new Option(group_name[count], group_name[count]) );
+        //creating a dropdown patientList
+        var div = document.querySelector("#bubble_dropdown"),
+        fragment = document.createDocumentFragment(),
+        create_select = document.createElement("select");
+        create_select.setAttribute("id", "bubble_select");
+        create_select.setAttribute("name", "Select Groups")
+        //creating counter for all the loops
+        var count;
+        for (count = 0 ; count < group_name.length ; count ++){
+            //var optionElementReference = new Option(text, value, defaultSelected, selected);
+            if(count === 0){
+                create_select.options.add( new Option(group_name[count], group_name[count]) );
+            }else{
+                create_select.options.add( new Option(group_name[count], group_name[count]) );
+            }
         }
+        fragment.appendChild(create_select);
+        div.appendChild(fragment);
+
+
+        //bubbleplot(0, patients);
+        //by default show group of gender
+        var onChange = false;
+        if (onChange === false){
+            //color(0, patients);
+            bubbleplot(0, patients);
+
+        }
+
+        var selectedIndex = 0;
+        document.getElementById("bubble_select").onchange = function(){
+            onChange = true
+            //alert(this.selectedIndex);
+            selectedIndex = this.selectedIndex;
+            console.log(selectedIndex);
+            bubbleplot(selectedIndex, patients);
+        };
+
+    });
+
     }
-    fragment.appendChild(create_select);
-    div.appendChild(fragment);
+    return bubble_graph;
+    
 
+})();
 
-    //bubbleplot(0, patients);
-    //by default show group of gender
-    var onChange = false;
-    if (onChange === false){
-        //color(0, patients);
-        bubbleplot(0, patients);
-
-    }
-
-    var selectedIndex = 0;
-    document.getElementById("bubble_select").onchange = function(){
-        onChange = true
-        //alert(this.selectedIndex);
-        selectedIndex = this.selectedIndex;
-        console.log(selectedIndex);
-        bubbleplot(selectedIndex, patients);
-    };
-
-
-
-
-});
 
 function bubbleplot(id, data){
     d3.select('#bubble').select('svg').remove();

@@ -23,7 +23,7 @@ var organName = document.getElementById("details_organName"),
 var scenes = [],
     renderer;
 
-var selectedPatient = 1;
+var selectedPatient = 99992;
 //patients shown on load screen?
 var patientsToShow = 5;
 
@@ -57,6 +57,8 @@ var master = document.getElementById("masterList");
 var materialArray;
 
 var canvas = document.getElementById("c");
+canvas.width  = window.innerWidth;
+canvas.height = window.innerHeight;
 //console.log(document.getElementById("template").text())
 var template = document.getElementById("template").text;
 
@@ -66,8 +68,9 @@ var currentCamera = null;
 // 	document.getElementById("loadScreen").style.display = "block";
 // }
 
-var scatter;
-//var bubbleChart;
+var barChart;
+var bubbleChart;
+var distributionChart;
 var data;
 var meshes;
 //var files = ["data1/organAtlas.json", "data1/patient_dataset.json"];
@@ -121,11 +124,17 @@ d3.json("data/organAtlas.json", function(organs){
 			document.addEventListener("mousemove", onDocumentMouseMove, false);
 		
 			animate(); // render
+			bar.init()	;
+			bubble.init();		
+			// distribution.init();
+
 			
 			Controller.setup();
 			
 			window.addEventListener('resize', function(d){
-				
+				bar.init()	;
+				bubble.init();		
+				// distribution.init();	
 				Controller.setup();
 			});
 			//initializeRiskPrediction(selectedPatient);
@@ -193,11 +202,25 @@ d3.json("data/organAtlas.json", function(organs){
 		
 			raycaster = new THREE.Raycaster();
 		
-			var target = "content";
-			var id = 10;
-			var newScene = showPatient(id, target);
-			scenes.push(newScene);
-			return scenes;
+			// var target = "content";
+			// var id = 10;
+			// var newScene = showPatient(id, target);
+			// scenes.push(newScene);
+			// return scenes;
+			var selectedPatient = 1;
+			scenes = updateScenes(selectedPatient);
+		}
+
+		function updateScenes(selectedPatient){
+			var scenes = []; //scenes is a wonderful global for now
+			var matches = data.getPatientMatches(selectedPatient);
+			for (var i = 0; i < patientsToShow && i < matches.length; i++) {
+				var id = matches[i];
+				var target = (i == 0)? "leftContent" : "content";
+				var newScene = showPatient(id, target);
+				scenes.push(newScene);
+			}
+			return scenes
 		}
 		
 		
