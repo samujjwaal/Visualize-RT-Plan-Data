@@ -281,7 +281,7 @@ d3.json("data/organAtlas.json", function(organs){
 			var scenes = []; //scenes is a wonderful global for now
 			console.log(similarPatients(selectedPatient))
 			var matches = similarPatients(selectedPatient);
-			// var matches2 = data.getPatientMatches(selectedPatient);
+			// var matches = data.getPatientMatches(selectedPatient);
 			// console.log(matches2)
 			for (var i = 0; i < patientsToShow && i < matches.length; i++) {
 				var id = matches[i];
@@ -754,8 +754,21 @@ d3.json("data/organAtlas.json", function(organs){
 		
 		function getSceneIndex(internalId){
 			//gets the index in the scene list from a given internal id
-			var index = data.getPatientMatches(selectedPatient).indexOf( +internalId )
-			return(index)
+			//console.log(selectedPatient);
+			console.log(internalId)
+
+			var similar = similarPatients(selectedPatient);
+			console.log(similar)
+			// var index = data.getPatientMatches(selectedPatient).indexOf( +internalId )
+			var index2 = 0;
+
+			for (var count = 0 ; count < similar.length ; count++){
+				if(similar[count] == internalId){
+					index2 = count;
+				}
+			}
+			console.log(index2)
+			return(index2)
 		}
 		
 		function handleInputRotate(event) {
