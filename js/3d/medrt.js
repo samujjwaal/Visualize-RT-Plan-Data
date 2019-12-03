@@ -21,11 +21,14 @@ var organName = document.getElementById("details_organName"),
 
 
 var scenes = [],
-    renderer;
+	renderer;
+	
+var selectedPatient = 3;
 
-var selectedPatient = 99992;
+
+
 //patients shown on load screen?
-var patientsToShow = 5;
+var patientsToShow = 12;
 
 var totalModelCount;
 
@@ -57,8 +60,9 @@ var master = document.getElementById("masterList");
 var materialArray;
 
 var canvas = document.getElementById("c");
-canvas.width  = window.innerWidth;
-canvas.height = window.innerHeight;
+console.log(canvas.clientHeight)
+// canvas.width  = window.innerWidth;
+// canvas.height = window.innerHeight;
 //console.log(document.getElementById("template").text())
 var template = document.getElementById("template").text;
 
@@ -108,10 +112,54 @@ d3.json("data/organAtlas.json", function(organs){
 		}
 		
 		function start() {
+			bar.init()	;
+			bubble.init();
+			var ids = getPatientIDS(patients);
+			console.log(ids)
+			bar.dropdown(ids);		 
+		 
+			 //by default show patient ID 3's information
+			 var onChange = false;
+			 if (onChange === false){
+				 var organList = getOrganList(0, patients);
+				 //console.log(organList);
+				 //mean dose of the organs
+				 var organMeanDose = getOrganMeanDose(0, organList, patients);
+		 
+				 bar_chart(organList, organMeanDose);
+				 selectedPatient = 3;
+				 init();
+		 
+				 //organ_threeD(0, patients, organList)
+				 //console.log(patients[2].organData.Brainstem);
+			 }
+		 
+			 //getting the selected patient index from the drop down
+			 var selectedIndex = 0;
+			 document.getElementById("select").onchange = function(){
+				 onChange = true
+				 //alert(this.selectedIndex);
+				 selectedIndex = this.selectedIndex;
+				 console.log(ids[selectedIndex])
+				//  selectedPatient = ids[selectedIndex];
+				selectedPatient = ids[selectedIndex];
+				 init(); 
+				 // console.log(selectedPatientId);
+		 
+				 //console.log(patients.keys(patients[0].organData));
+				 organList = getOrganList(selectedIndex, patients);
+				 //console.log(organList);
+				 //mean dose of the organs
+				 organMeanDose = getOrganMeanDose(selectedIndex, organList, patients);
+				 bar_chart(organList, organMeanDose);
+		 
+			 };
+			
 		
 			//selectedPatient = populateDropDownMenu();
-			console.log(selectedPatient);
-			init(); // initialize
+			// console.log(selectedPatient);
+			
+			// initialize
 			
 			currScene = scenes[0];
 		
@@ -124,9 +172,9 @@ d3.json("data/organAtlas.json", function(organs){
 			document.addEventListener("mousemove", onDocumentMouseMove, false);
 		
 			animate(); // render
-			bar.init()	;
-			bubble.init();		
+					
 			// distribution.init();
+			
 
 			
 			Controller.setup();
@@ -141,6 +189,7 @@ d3.json("data/organAtlas.json", function(organs){
 			//document.getElementById("loadScreen").style.display = "none";
 			Controller.toggleBrush(true);
 		}
+		
 		
 		// ----------------------------------------------------------------
 		
@@ -207,22 +256,64 @@ d3.json("data/organAtlas.json", function(organs){
 			// var newScene = showPatient(id, target);
 			// scenes.push(newScene);
 			// return scenes;
-			var selectedPatient = 1;
+			// var index = getIndex();
+			// console.log(index)
+			
+			// var selectedPatient = 1;
 			scenes = updateScenes(selectedPatient);
+			//updateOrder(selectedPatient);
 		}
 
+		function removeOldViews(patient){
+			//remove list-items not matched to the patient
+			// var matches = similarPatients(patient);
+			var patientViews = document.getElementsByClassName('list-item');
+			var element;
+			for(var i = patientViews.length - 1; i >= 0; i--){
+				element = patientViews[i];
+				element.parentElement.removeChild(element);
+			}
+		}
+		
+
 		function updateScenes(selectedPatient){
+			removeOldViews(selectedPatient)
 			var scenes = []; //scenes is a wonderful global for now
-			var matches = data.getPatientMatches(selectedPatient);
+			console.log(similarPatients(selectedPatient))
+			var matches = similarPatients(selectedPatient);
+			// var matches2 = data.getPatientMatches(selectedPatient);
+			// console.log(matches2)
 			for (var i = 0; i < patientsToShow && i < matches.length; i++) {
 				var id = matches[i];
 				var target = (i == 0)? "leftContent" : "content";
+				// var target = (i == 0)? "leftContent" : "content";
 				var newScene = showPatient(id, target);
 				scenes.push(newScene);
 			}
 			return scenes
 		}
-		
+		function similarPatients(selectedPatient){
+			var count = 1;
+			var similarPatients = [];			
+				//console.log('count1');
+				for(var patientcount = 0; patientcount < patients.length; patientcount++)
+			  {
+				if (patients[patientcount].ID === selectedPatient)
+				  {
+				   //console.log(patients[patientcount].similar_patients); 
+					similarPatients[0] = patients[patientcount].ID_internal;
+					for(var j=0; j < patients[patientcount].similar_patients.length; j++)
+					{
+					  similarPatients[count] = patients[patientcount].similar_patients[j];
+					  //console.log('similar patient ' + count + ' is ' + similarPatients[count]);
+					  count++;
+					}
+				  }
+			  }
+			  //console.log('similar patient is ' + similarPatients);		
+			return similarPatients;
+			
+		  }
 		
 		function placeOrganModels(pOrgan, organProperties, scene, nodeColor) {
 			if (!Controller.isTumor(pOrgan)) {
@@ -278,7 +369,7 @@ d3.json("data/organAtlas.json", function(organs){
 		function showPatient(/*materialArray,*/id, parentDivId, camera = null){
 			//adds a patient view I think
 			var scene = new THREE.Scene();
-			var patient = data.getPatient(id);
+			// var patient = data.getPatient(id);
 			var patientOrganList = data.getPatientOrganData(id);
 		
 			// make a list item
@@ -584,6 +675,7 @@ d3.json("data/organAtlas.json", function(organs){
 		function updateSize() {
 			//pretty sure this makes the canvas always the same size as the main thing
 			var width = canvas.clientWidth;
+			//console.log(canvas.clientwidth)
 			var height = canvas.clientHeight;
 		
 			if (canvas.width !== width || canvas.height != height)

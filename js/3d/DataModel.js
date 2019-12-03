@@ -207,6 +207,7 @@ var Data = function(patientData, oAtlas) {
 			var patient = this.getPatient(id);
 			//double check that the patient is it's first match
 			let matches = patient.similar_patients;
+			// console.log(matches)
 			let position = matches.indexOf(+id);
 			if(position != 0){
 				matches.splice(position, 1);

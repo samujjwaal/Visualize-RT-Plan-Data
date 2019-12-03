@@ -15,130 +15,138 @@
 </head>
     
 <body >
-        <script src="https://d3js.org/d3.v3.js"></script>
-        <!-- <div id="loadScreen">
-            </div> -->
-            
-
-    <div id="container">
-            <canvas id="c"></canvas>             
-
-            <div style="height: 250;" id="overlay">
-               <div class="row" >
-                 <div class="col-4" style="overflow:auto;">
-                     <div class="chart-wrapper col-6" id="chart-distro1">
-                         <!--Sorry about all the inline JS. It is a quick way to show what options are available-->
-                         <div class="chart-options">
-                             <center><p>Show: </p>
-                             <button onclick="chart1.violinPlots.hide();chart1.boxPlots.show({reset:true});chart1.notchBoxes.hide();chart1.dataPlots.change({showPlot:false,showBeanLines:false})">Box Plot</button>
-                             <button onclick="chart1.violinPlots.hide();chart1.notchBoxes.show({reset:true});chart1.boxPlots.show({reset:true, showBox:false,showOutliers:true,boxWidth:20,scatterOutliers:true});chart1.dataPlots.change({showPlot:false,showBeanLines:false})">Notched Box Plot</button>
-                             <button onclick="chart1.violinPlots.show({reset:true,clamp:0});chart1.boxPlots.show({reset:true, showWhiskers:false,showOutliers:false,boxWidth:10,lineWidth:15,colors:['#555']});chart1.notchBoxes.hide();chart1.dataPlots.change({showPlot:false,showBeanLines:false})">Violin Plot Unbound</button>
-                             <!-- <button onclick="chart1.violinPlots.show({reset:true,clamp:1});chart1.boxPlots.show({reset:true, showWhiskers:false,showOutliers:false,boxWidth:10,lineWidth:15,colors:['#555']});chart1.notchBoxes.hide();chart1.dataPlots.change({showPlot:false,showBeanLines:false})">Violin Plot Clamp to Data</button> -->
-                             <button onclick="chart1.violinPlots.show({reset:true, width:75, clamp:0, resolution:30, bandwidth:50});chart1.dataPlots.show({showBeanLines:true,beanWidth:15,showPlot:false,colors:['#555']});chart1.boxPlots.hide();chart1.notchBoxes.hide()">Bean Plot</button>
-                             <!-- <button onclick="chart1.violinPlots.hide();chart1.dataPlots.show({showPlot:true, plotType:'beeswarm',showBeanLines:false, colors:null});chart1.notchBoxes.hide();chart1.boxPlots.hide();">Beeswarm Plot</button> -->
-                             <button onclick="chart1.violinPlots.hide();chart1.dataPlots.show({showPlot:true, plotType:40, showBeanLines:false,colors:null});chart1.notchBoxes.hide();chart1.boxPlots.hide();">Scatter Plot</button>
-                             <!-- <button onclick="if(chart1.dataPlots.options.showLines){chart1.dataPlots.change({showLines:false});} else {chart1.dataPlots.change({showLines:['median','quartile1','quartile3']});}">Trend Lines</button> -->
-                             </center>
-                           </div>
-                           <script src="js/distrochart.js" charset="utf-8"></script>
-                           <script type="text/javascript">
-                               var chart1;
-                               d3.csv('data/distribution.csv', function(error, data) {
-                                   data.forEach(function (d) {d.value = +d.value;});
-       
-                                   chart1 = makeDistroChart({
-                                       data:data,
-                                       xName:'name',
-                                       yName:'value',
-                                       axisLabels: {xAxis: null, yAxis: 'Values'},
-                                       selector:"#chart-distro1",
-                                       chartSize:{height:460, width:960},
-                                       constrainExtremes:true});
-                                   chart1.renderBoxPlot();
-                                   chart1.renderDataPlots();
-                                   chart1.renderNotchBoxes({showNotchBox:false});
-                                   chart1.renderViolinPlot({showViolinPlot:false});
-       
-                               });
-                           </script>
-       
-                       </div>
-                 </div>
-                 <div class="col-4">
-                     <div id="bubble_dropdown"></div>
-                     <div id="bubble"></div>
-                 </div>
-                 <div class="col-4">
-                     <div id="dropDown"></div>
-                     <div class="row" style="overflow:auto;"><div id="bar_chart" ></div></div>
-       
-                 </div>
-               </div>
-              
-
-               <div class="row" style="height: 250;overflow:auto;">
-                 <div class="col-3" id= "content" style="overflow:auto;">
-                    <!-- tooltip -->                   
-                 </div>
-       
-                 <div class="col-5"  id= "leftContent" style="overflow:auto;">
-                        <div id="details">
-                                <div id="details_organName">name_of_organ</div>
-                                
-                                <div id="details_meanDose_val">N/A</div>
-                                <div class="" id="details_line"></div>
-                                <table class="" id="details_table">
-                                    <tr>
-                                        <td style="text-align: right; color: #ccc;">cc:</td>
-                                        <td id="details_volume_val">N/A</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="text-align: right; color: #ccc;">GY / cc:</td>
-                                        <td id="details_dosePerVolume">N/A</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="text-align: right; color: #ccc;">Min GY:</td>
-                                        <td id="details_minDose_val">N/A</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="text-align: right; color: #ccc;">Max GY:</td>
-                                        <td id="details_maxDose_val">N/A</td>
-                                    </tr>
-                                </table>
-                            </div> 
-                        <!-- <div id="leftContent">
-                            </div>
- 
-                             <div id="content">
-                                 
-                             </div> -->
-               </div>
-       
-           </div>
-               <script id="template" type="notjs">
-                       <div class="scene"></div>
-                   </script> 
-       
-       
-       
-       
-                 <div class="col-4" style="overflow-y:auto; height: 350px;">
-                     <div id="body_star" style="height: 250;overflow-y:auto;">
-                       <div id="target" style="overflow-y: auto;"></div>
-                     </div>
-                 </div>
-               
-               <div class="row"></div>
-             </div>     
 
 
-             
-       
+    <script src="https://d3js.org/d3.v3.js"></script>
+    <!-- <div id="loadScreen">
+        </div> -->
+    
+    
+    <div id="details">
+        <div id="details_organName">name_of_organ</div>
+
+        <div id="details_meanDose_val">N/A</div>
+        <div class="" id="details_line"></div>
+        <table class="" id="details_table">
+            <tr>
+                <td style="text-align: right; color: #ccc;">cc:</td>
+                <td id="details_volume_val">N/A</td>
+            </tr>
+            <tr>
+                <td style="text-align: right; color: #ccc;">GY / cc:</td>
+                <td id="details_dosePerVolume">N/A</td>
+            </tr>
+            <tr>
+                <td style="text-align: right; color: #ccc;">Min GY:</td>
+                <td id="details_minDose_val">N/A</td>
+            </tr>
+            <tr>
+                <td style="text-align: right; color: #ccc;">Max GY:</td>
+                <td id="details_maxDose_val">N/A</td>
+            </tr>
+        </table>
+    </div> 
+
+    <div id="leftContent">
+        <!-- <div style="height: 250;" id="overlay"> -->
+            <!-- <div class="row" > -->
+                <!-- <div class="col-4" style="overflow:auto;"> -->
+
+        <div id="chart_holder">
+            <div class="chart-wrapper" id="chart-distro1">
+                <!--Sorry about all the inline JS. It is a quick way to show what options are available-->
+                <div class="chart-options">
+                    <center><p>Show: </p>
+                    <button onclick="chart1.violinPlots.hide();chart1.boxPlots.show({reset:true});chart1.notchBoxes.hide();chart1.dataPlots.change({showPlot:false,showBeanLines:false})">Box Plot</button>
+                    <button onclick="chart1.violinPlots.hide();chart1.notchBoxes.show({reset:true});chart1.boxPlots.show({reset:true, showBox:false,showOutliers:true,boxWidth:20,scatterOutliers:true});chart1.dataPlots.change({showPlot:false,showBeanLines:false})">Notched Box Plot</button>
+                    <button onclick="chart1.violinPlots.show({reset:true,clamp:0});chart1.boxPlots.show({reset:true, showWhiskers:false,showOutliers:false,boxWidth:10,lineWidth:15,colors:['#555']});chart1.notchBoxes.hide();chart1.dataPlots.change({showPlot:false,showBeanLines:false})">Violin Plot Unbound</button>
+                    <!-- <button onclick="chart1.violinPlots.show({reset:true,clamp:1});chart1.boxPlots.show({reset:true, showWhiskers:false,showOutliers:false,boxWidth:10,lineWidth:15,colors:['#555']});chart1.notchBoxes.hide();chart1.dataPlots.change({showPlot:false,showBeanLines:false})">Violin Plot Clamp to Data</button> -->
+                    <button onclick="chart1.violinPlots.show({reset:true, width:75, clamp:0, resolution:30, bandwidth:50});chart1.dataPlots.show({showBeanLines:true,beanWidth:15,showPlot:false,colors:['#555']});chart1.boxPlots.hide();chart1.notchBoxes.hide()">Bean Plot</button>
+                    <!-- <button onclick="chart1.violinPlots.hide();chart1.dataPlots.show({showPlot:true, plotType:'beeswarm',showBeanLines:false, colors:null});chart1.notchBoxes.hide();chart1.boxPlots.hide();">Beeswarm Plot</button> -->
+                    <button onclick="chart1.violinPlots.hide();chart1.dataPlots.show({showPlot:true, plotType:40, showBeanLines:false,colors:null});chart1.notchBoxes.hide();chart1.boxPlots.hide();">Scatter Plot</button>
+                    <!-- <button onclick="if(chart1.dataPlots.options.showLines){chart1.dataPlots.change({showLines:false});} else {chart1.dataPlots.change({showLines:['median','quartile1','quartile3']});}">Trend Lines</button> -->
+                    </center>
+                </div>
+                <script src="js/distrochart.js" charset="utf-8"></script>
+                <script type="text/javascript">
+                    var chart1;
+                    d3.csv('data/distribution.csv', function(error, data) {
+                        data.forEach(function (d) {d.value = +d.value;});
+
+                        chart1 = makeDistroChart({
+                            data:data,
+                            xName:'name',
+                            yName:'value',
+                            axisLabels: {xAxis: null, yAxis: 'Values'},
+                            selector:"#chart-distro1",
+                            chartSize:{height:460, width:960},
+                            constrainExtremes:true});
+                        chart1.renderBoxPlot();
+                        chart1.renderDataPlots();
+                        chart1.renderNotchBoxes({showNotchBox:false});
+                        chart1.renderViolinPlot({showViolinPlot:false});
+
+                    });
+                </script>
+
+            </div>
+        </div>
+                    
+                <!-- </div> -->
+                <!-- <div class="col-4"> -->
+        <div id="bubble_holder">
+            <div id="bubble_dropdown"></div>
+            <div id="bubble"></div>
+        </div>
+                    
+                <!-- </div> -->
+                <!-- <div class="col-4"> -->
+        <div id="bar_holder">
+            <div id="dropDown"></div>
+            <div id="bar_chart" style="overflow: auto;"></div>
+        </div>
+                    
+
+                <!-- </div> -->
+            <!-- </div> -->
+        <!-- </div> -->
+    </div>    
+
+        <!-- <div class="row" style="height: 250;overflow:auto;"> -->
+    <div  id= "rightcontent" >
+          
     </div>
 
-    
+    <div  id= "content" >
+        <canvas id="c"></canvas> 
+                <!-- tooltip -->                   
+                <!-- </div> -->
 
-      
+                <!-- <div  style="overflow:auto;"> -->
+                    
+                    <!-- <div id="leftContent">
+                        </div>
+
+                            <div id="content">
+                                
+                            </div> -->
+            <!-- </div> -->
+
+    </div>
+    <script id="template" type="notjs">
+            <div class="scene"></div>
+    </script> 
+
+
+
+
+    <!-- <div class="col-4" style="overflow-y:auto; height: 350px;">
+        <div id="body_star" style="height: 250;overflow-y:auto;">
+        <div id="target" style="overflow-y: auto;"></div>
+        </div>
+    </div> -->
+        
+        
     <!-- 3d plotting -->
     <script src="js/3d/three/three.js"></script>
     <script src="js/3d/controls/OrbitControls.js"></script>
@@ -147,8 +155,8 @@
     <script src="js/3d/THREEx.KeyboardState.js"></script>
     <script src="js/3d/loaders/VTKLoader.js"></script>
     <script type="text/javascript" src="js/3d/controller.js"></script>
-	<script type="text/javascript" src="js/3d/DataModel.js"></script>
-	<script type="text/javascript" src="js/3d/colorScale.js"></script>
+    <script type="text/javascript" src="js/3d/DataModel.js"></script>
+    <script type="text/javascript" src="js/3d/colorScale.js"></script>
     <script type="text/javascript" src="js/3d/medrt.js"></script>
 
 
@@ -168,7 +176,7 @@
     <!-- <script src="https://code.jquery.com/jquery.min.js"></script>
     <script src="js/star_plot.js"></script>
     <script src="js/d3-starPlot.js"></script> -->
-    
+
     <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
 
 </body>
