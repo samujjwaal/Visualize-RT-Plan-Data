@@ -1,6 +1,6 @@
 var Controller = (function(){
-	var scatterData = {};
-	var bubbleData = {};
+	// var scatterData = {};
+	// var bubbleData = {};
 	var enableBrush = false;
 	var brushedOrgans = [];
 	var gtvRegex = RegExp('GTV*');
