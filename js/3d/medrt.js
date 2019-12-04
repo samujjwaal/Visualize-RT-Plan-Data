@@ -28,7 +28,7 @@ var selectedPatient = 3;
 
 
 //patients shown on load screen?
-var patientsToShow = 12;
+var patientsToShow = 5;
 
 var totalModelCount;
 
