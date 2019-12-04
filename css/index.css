@@ -87,6 +87,19 @@ body {
 	/* box-shadow: 1px 1px 12px 1px rgba(0, 0, 0, 0.25); */
 }
 
+#popup{
+	position: relative;
+	background-color: var(--plot-background-color);
+	display: inline-block;
+	width: calc(100% - 25em);
+	/* margin: var(--scene-margin); */
+	/* margin-top: 0 auto; */
+	height: calc( var(--scene-height) - 10*var(--scene-margin));
+	z-index: 2;
+	vertical-align: top;
+	/* box-shadow: 1px 1px 12px 1px rgba(0, 0, 0, 0.25); */
+}
+
 /* 
 #loadScreen {
 	position: fixed;
