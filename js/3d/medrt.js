@@ -1,9 +1,3 @@
-// 'use strict';
-
-if (!Detector.webgl) {
-    Detector.addGetWebGLMessage();
-}
-
 var parent = document.getElementById("content");
 var nodeDetails = document.getElementById("details");
 
@@ -44,7 +38,7 @@ var mouseNorm = new THREE.Vector2(-500, -500),
     nodeHover = null;
 
 var cameraDistZ = 500;
-// data
+
 var organs,  links;
 var organModels = new THREE.Group();
 
@@ -65,10 +59,6 @@ var template = document.getElementById("template").text;
 var manager = new THREE.LoadingManager();
 var currentCamera = null;
 
-
-// var barChart;
-// var bubbleChart;
-// var distributionChart;
 var data;
 var meshes;
 var json_patients;
@@ -79,17 +69,12 @@ var promises = [];
 d3.json("data/organAtlas.json", function(organs){
 	d3.json("data/patient_dataset.json", function(patients){
 		json_patients = patients;
-		// console.log(json_patients);
 		data = Data(patients, organs);
 		meshes = loadOrganMeshes();
 
-		// console.log(data)
-
 		manager.onLoad = function () {
 			start();
-		};
-		
-		
+		};	
 		
 		function loadOrganMeshes(){
 			let loader = new THREE.VTKLoader(manager);
@@ -110,7 +95,6 @@ d3.json("data/organAtlas.json", function(organs){
 			bar.init()	;
 			bubble.init();
 			allPatientDropdownIds = getPatientIDS(patients);
-			// console.log(ids)
 			bar.dropdown(allPatientDropdownIds);	          
 		 
 			 //by default show patient ID 3's information
@@ -130,22 +114,15 @@ d3.json("data/organAtlas.json", function(organs){
 			 document.getElementById("select").onchange = function(){
 				 onChange = true
 				 selectedIndex = this.selectedIndex;
-				//  console.log(ids[selectedIndex])
 				 selectedPatient = allPatientDropdownIds[selectedIndex];
-				 medrtobj.init(); 
-				//  console.log(selectedPatient);
-		 
-				 //console.log(patients.keys(patients[0].organData));
+				 medrtobj.init();
 				 organList = getOrganList(selectedIndex, patients);
-				 //console.log(organList);
-				 //mean dose of the organs
-				 organMeanDose = getOrganMeanDose(selectedIndex, organList, patients);
+			     //mean dose of the organs
+				organMeanDose = getOrganMeanDose(selectedIndex, organList, patients);
 				 bar_chart(organList, organMeanDose);
 		 
 			 };
-			 //console.log(selectedPatient)
-			// initialize
-			
+
 			currScene = scenes[0];
 		
 			document.addEventListener("mousedown", onMouseDown, false);
@@ -157,22 +134,15 @@ d3.json("data/organAtlas.json", function(organs){
 			document.addEventListener("mousemove", onDocumentMouseMove, false);
 		
 			animate(); // render
-					
-			// distribution.init();
-			
 
-			
-			Controller.setup();
+			scene_control.setup();
 			
 			window.addEventListener('resize', function(d){
 				bar.init()	;
-				bubble.init();		
-				// distribution.init();	
-				Controller.setup();
+				bubble.init();
+				scene_control.setup();
 			});
-			//initializeRiskPrediction(selectedPatient);
-			//document.getElementById("loadScreen").style.display = "none";
-			Controller.toggleBrush(true);
+			scene_control.toggleBrush(true);
 		}
 		medrtobj = (function(){
 			function medrt(){
@@ -180,7 +150,7 @@ d3.json("data/organAtlas.json", function(organs){
 	
 			}
 			medrt.init = function() {
-				//renderer for main views?
+				
 				var getRenderer = function(canvas, isAlpha){
 					var r = new THREE.WebGLRenderer({
 						canvas: canvas,
@@ -196,85 +166,56 @@ d3.json("data/organAtlas.json", function(organs){
 				renderer = getRenderer(canvas, false);
 			
 				raycaster = new THREE.Raycaster();
-			
-				// var target = "content";
-				// var id = 10;
-				// var newScene = showPatient(id, target);
-				// scenes.push(newScene);
-				// return scenes;
-				// var index = getIndex();
-				// console.log(index)
-				
-				// var selectedPatient = 1;
-				// console.log(selectedPatient)
 				scenes = updateScenes(selectedPatient);
-				//updateOrder(selectedPatient);
 			}
 			return medrt;
 		})();
 		
 
 		function removeOldViews(patient){
-			//remove list-items not matched to the patient
-			// var matches = similarPatients(patient);
 			var patientViews = document.getElementsByClassName('list-item');
 			var element;
 			for(var i = patientViews.length - 1; i >= 0; i--){
 				element = patientViews[i];
 				element.parentElement.removeChild(element);
 			}
-		}
-		
+		}		
 
 		function updateScenes(selectedPatient){
-			removeOldViews(selectedPatient)
-			// console.log("update scene " + selectedPatient)
-			var scenes = []; //scenes is a wonderful global for now
-			// console.log(similarPatients(selectedPatient))
+			removeOldViews(selectedPatient);
+			var scenes = [];
 			var matches = similarPatients(selectedPatient);
-			// var matches = data.getPatientMatches(selectedPatient);
-			// console.log(matches)
 			for (var i = 0; i < patientsToShow && i < matches.length; i++) {
 				var id = matches[i];
 				var target = (i == 0)? "leftContent" : "content";
-				// var target = (i == 0)? "leftContent" : "content";
 				var newScene = showPatient(id, target);
 				scenes.push(newScene);
 			}
 			return scenes
 		}
 		function similarPatients(selectedPatient){
-			// console.log("similarpatients " + selectedPatient)
-			// console.log(typeof selectedPatient)
 			var count = 1;
-			var similarPatients = [];			
-			// console.log(patients.length + " patients length");
+			var similarPatients = [];
 				for(var patientcount = 0; patientcount < patients.length; patientcount++)
 			  {
 				if (selectedPatient === patients[patientcount].ID)
 				  {
-					//   console.log(true)
-				   //console.log(patients[patientcount].similar_patients); 
 					similarPatients[0] = patients[patientcount].ID_internal;
 					for(var j=0; j < patients[patientcount].similar_patients.length; j++)
 					{
 					  similarPatients[count] = patients[patientcount].similar_patients[j];
-					  //console.log('similar patient ' + count + ' is ' + similarPatients[count]);
 					  count++;
 					}
 				  }
-			  }
-			//   console.log("patientCOunter" + patientcount)
-			  //console.log('similar patient is ' + similarPatients);		
+			  }	
 			return similarPatients;
 			
 		  }
 		
 		function placeOrganModels(pOrgan, organProperties, scene, nodeColor) {
-			if (!Controller.isTumor(pOrgan)) {
+			if (!scene_control.isTumor(pOrgan)) {
 				var geometry = meshes[String(pOrgan)];
-				// let currentOpacity = document.getElementById('opacSlider').value / 100.0;
-				let currentOpacity = 0.8;
+				let currentOpacity = 1;
 				let material = new THREE.MeshBasicMaterial({
 						color: nodeColor,
 						opacity: currentOpacity,
@@ -321,12 +262,10 @@ d3.json("data/organAtlas.json", function(organs){
 			}
 		}
 		
-		function showPatient(/*materialArray,*/id, parentDivId, camera = null){
-			//adds a patient view I think
+		function showPatient(id, parentDivId, camera = null){
 			var scene = new THREE.Scene();
-			// var patient = data.getPatient(id);
 			var patientOrganList = data.getPatientOrganData(id);
-		
+
 			// make a list item
 			var element = document.createElement("div");
 			element.className = "list-item";
@@ -341,7 +280,7 @@ d3.json("data/organAtlas.json", function(organs){
 				document.getElementById(parentDivId).appendChild(element);
 			}
 		
-			var scalarVal = 2.4; //4.1
+			var scalarVal = 2.4; 
 		
 			var camera = new THREE.OrthographicCamera(scene.userData.element.offsetWidth / -scalarVal,
 				scene.userData.element.offsetWidth / scalarVal,
@@ -368,7 +307,7 @@ d3.json("data/organAtlas.json", function(organs){
 			var outlineGeometry = new THREE.SphereGeometry(outlineSize, 16);
 		
 			var material = new THREE.MeshStandardMaterial({
-				color: new THREE.Color().setHex(0xffffff), //changed from 0xa0a0a0
+				color: new THREE.Color().setHex(0xffffff), 
 				roughness: 0.5,
 				metalness: 0,
 				shading: THREE.FlatShading
@@ -381,7 +320,7 @@ d3.json("data/organAtlas.json", function(organs){
 		
 			var gtvs = [];
 			for (var pOrgan in patientOrganList) {
-				//this looks like it draws the organs in each patient?
+				//this looks like it draws the organs in each patient
 				if(data.getOrganVolume(id, pOrgan) <= 0){
 					continue;
 				}
@@ -390,6 +329,7 @@ d3.json("data/organAtlas.json", function(organs){
 				organSphere.position.x = (patientOrganList[pOrgan].x);
 				organSphere.position.y = (patientOrganList[pOrgan].y);
 				organSphere.position.z = (patientOrganList[pOrgan].z);
+				
 		
 				organSphere.name = pOrgan;
 				organSphere.userData.type = "node";
@@ -406,24 +346,20 @@ d3.json("data/organAtlas.json", function(organs){
 				organSphere.userData.minDose = data.getMinDose(id, pOrgan);
 				organSphere.userData.meanDose = data.getMeanDose(id, pOrgan);
 				organSphere.userData.maxDose = data.getMaxDose(id, pOrgan);
-				organSphere.userData.estimatedDose = data.getEstimatedDose(id, pOrgan);
-				// do this in python script maybe
-				//grays are already in joules per kilogram?!?!? I might want to delete this because it's misleading to users
-				organSphere.userData.dosePerVolume = (data.getMeanDose(id, pOrgan) / data.getOrganVolume(id, pOrgan)).toFixed(3);
 		
 				//format the tumors in the data differently
-				if( Controller.isTumor(organSphere.name) ){
+				if( scene_control.isTumor(organSphere.name) ){
 					gtvs.push(organSphere);
-					nodeColor = '#542788';
+					nodeColor = '#4169e1';
 					//using real scaling doesn't seem to really work so it's just porportional now
-					outlineMesh.scale.multiplyScalar( Math.pow(organSphere.userData.volume, .5));
-					let tumorOutline = Controller.getDoseColor(organSphere.userData.meanDose);
+					outlineMesh.scale.multiplyScalar( Math.pow(organSphere.userData.volume, .4));
+					let tumorOutline = scene_control.getDoseColor(organSphere.userData.meanDose);
 					outlineMesh.material.color.set( tumorOutline );
 					outlineMesh.material.transparent = true;
-					outlineMesh.material.opacity = .5;
+					outlineMesh.material.opacity = 0.5;
 					outlineMesh.renderOrder = -11;
-				} else if (organSphere.userData.meanDose >= 0.0){ //null == -1 in json, pearson problems
-					nodeColor = Controller.getDoseColor(organSphere.userData.meanDose);
+				} else if (organSphere.userData.meanDose >= 0.0){ 
+					nodeColor = scene_control.getDoseColor(organSphere.userData.meanDose);
 				}else {
 					nodeColor = '#fffff';
 					organSphere.userData.meanDose = undefined;
@@ -431,6 +367,8 @@ d3.json("data/organAtlas.json", function(organs){
 				}
 		
 				organSphere.material.color.setStyle(nodeColor);
+				// outlineMesh.material.transparent = true;
+				// organSphere.material.opacity = 0;
 		
 				scene.add(organSphere);
 				organSphere.add(outlineMesh);
@@ -438,15 +376,13 @@ d3.json("data/organAtlas.json", function(organs){
 				placeOrganModels(pOrgan, patientOrganList[pOrgan], scene, nodeColor);
 			}
 		
-			var linkMaterial = new THREE.LineBasicMaterial({
-				color: 0x3d3d3d,
-				opacity: 1,
-				linewidth: 2
-			});
+			// var linkMaterial = new THREE.LineBasicMaterial({
+			// 	color: 0x3d3d3d,
+			// 	opacity: 1,
+			// 	linewidth: 2
+			// });
 		
-			var tmp_geo = new THREE.Geometry();
-		
-		
+			// var tmp_geo = new THREE.Geometry();
 		
 			// check for missing data
 			for (var organ in organs) {
@@ -499,7 +435,7 @@ d3.json("data/organAtlas.json", function(organs){
 			scene.add(camera);
 		
 			// light
-			var light = new THREE.AmbientLight(0xffffff, 1.0); // white light
+			var light = new THREE.AmbientLight(0xffffff, 1.0); 
 		
 			scene.add(light);
 			return scene;
@@ -517,9 +453,6 @@ d3.json("data/organAtlas.json", function(organs){
 			renderer.setClearColor(0xffffff);//will be background color
 			renderer.setScissorTest(false);
 			renderer.clear();
-			let plotBackgroundColor = getComputedStyle(document.body).getPropertyValue('--plot-background-color');
-			plotBackgroundColor = parseInt( plotBackgroundColor.replace('#','0x'), 16);
-			renderer.setClearColor( plotBackgroundColor );//will be color in viewport?
 			renderer.setScissorTest(true);
 		
 			updateMainView();
@@ -535,25 +468,10 @@ d3.json("data/organAtlas.json", function(organs){
 				var scene = scenes[index];
 				var controls = scene.userData.controls;
 				var camera = scene.userData.camera;
-		
-				//var orientMarkerCube = camera.children[0];
-		
-				// get the element that is a place holder for where we want to
-				// draw the scene
 				var element = scene.userData.element;
 		
 				// get its position relative to the page's viewport
 				var rect = element.getBoundingClientRect();
-		
-				// check if it's offscreen. If so skip it
-				if (rect.bottom < 0 || rect.top > renderer.domElement.clientHeight ||
-					rect.right < 0 || rect.left > renderer.domElement.clientWidth) {
-					continue; // it's off screen
-				}
-		
-				// update orientation marker
-				rotMatrix.extractRotation(controls.object.matrix);
-				//orientMarkerCube.rotation.setFromRotationMatrix(rotMatrix.transpose());
 		
 				// set the viewport
 				var width = rect.right - rect.left;
@@ -568,7 +486,6 @@ d3.json("data/organAtlas.json", function(organs){
 				raycaster.setFromCamera(mouseNorm, currScene.userData.camera);
 		
 				var intersects = raycaster.intersectObjects(currScene.children);
-				// console.log(intersects)
 				//this uses raycasting to find hover events for the organ centroids
 				//I've adapted the orignal code so it passes normal organs to a controller brush function
 				//I've changed outlines from turning blue to being opaque so it works on tumors since those are just spheres with outlines
@@ -576,7 +493,7 @@ d3.json("data/organAtlas.json", function(organs){
 					for (var i = intersects.length - 1; i >= 0; i--) {
 		
 						if (intersects[i].object.userData.type == "node") {
-							Controller.brushOrgan(intersects[i].object.name);	
+							scene_control.brushOrgan(intersects[i].object.name);	
 		
 							nodeHover = intersects[i].object;
 							var tempObject = scene.getObjectByName(nodeHover.name + "_outline");
@@ -604,7 +521,7 @@ d3.json("data/organAtlas.json", function(organs){
 		
 						} else {
 							if(nodeHover != null){
-								Controller.unbrushOrgan(nodeHover.name);
+								scene_control.unbrushOrgan(nodeHover.name);
 							}
 							populateAndPlaceDetails("HIDE");
 						}
@@ -614,7 +531,7 @@ d3.json("data/organAtlas.json", function(organs){
 				} else {
 		
 					if (INTERSECTED) {
-						Controller.unbrushOrgan(INTERSECTED.parent.name);
+						scene_control.unbrushOrgan(INTERSECTED.parent.name);
 						INTERSECTED.material.opacity = INTERSECTED.currentOpacity;
 						// details
 						populateAndPlaceDetails("HIDE");
@@ -630,7 +547,6 @@ d3.json("data/organAtlas.json", function(organs){
 		function updateSize() {
 			//pretty sure this makes the canvas always the same size as the main thing
 			var width = canvas.clientWidth;
-			//console.log(canvas.clientwidth)
 			var height = canvas.clientHeight;
 		
 			if (canvas.width !== width || canvas.height != height)
@@ -638,7 +554,6 @@ d3.json("data/organAtlas.json", function(organs){
 		}
 		
 		function populateAndPlaceDetails(state) {
-			//I think this is hte organ-centroid tooltip
 			if (state == "SHOW") {
 				nodeDetails.style.display = "block";
 				// PLACEMENT
@@ -667,13 +582,6 @@ d3.json("data/organAtlas.json", function(organs){
 				}
 				// Organ name
 				organName.innerHTML = "<b>"+ nodeHover.name + "</b>";
-		
-				// Dose Per Volume
-				// dosePerVolume.innerHTML = nodeHover.userData.dosePerVolume;
-		
-				// line separator
-				// lineSeparator.style["borderColor"] = "#" + nodeHover.material.color.getHexString();
-		
 				// Volume
 				volumeVal.innerHTML = rounded(nodeHover.userData.volume) + " cc";
 		
@@ -708,13 +616,7 @@ d3.json("data/organAtlas.json", function(organs){
 		}
 		
 		function getSceneIndex(internalId){
-			//gets the index in the scene list from a given internal id
-			//console.log(selectedPatient);
-			// console.log(internalId)
-
 			var similar = similarPatients(selectedPatient);
-			// console.log(similar)
-			// var index = data.getPatientMatches(selectedPatient).indexOf( +internalId )
 			var index2 = 0;
 
 			for (var count = 0 ; count < similar.length ; count++){
@@ -722,7 +624,6 @@ d3.json("data/organAtlas.json", function(organs){
 					index2 = count;
 				}
 			}
-			// console.log(index2)
 			return(index2)
 		}
 		
@@ -740,12 +641,10 @@ d3.json("data/organAtlas.json", function(organs){
 				else{
 					cameraToCopy = scenes[scenes.length - 1].userData.camera;
 				}
-				Controller.setCamera(cameraToCopy);
-				// 20 milliseconds interval => 50 FPS
-				syncCamerasInterval = setInterval(Controller.syncAllCameras, 20, scenes);
+				scene_control.setCamera(cameraToCopy);
+				syncCamerasInterval = setInterval(scene_control.syncAllCameras, 20, scenes);
 			}
-		}
-		
+		}		
 		
 		function onMouseUp(event) {
 			detailsOnRotate = true;
@@ -779,6 +678,3 @@ d3.json("data/organAtlas.json", function(organs){
 	});
 	
 });
-
-
-

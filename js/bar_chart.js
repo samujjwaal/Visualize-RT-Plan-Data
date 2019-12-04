@@ -3,11 +3,6 @@ var bar = (function(){
         var self = this;
     }
     bar_graph.init = function(){
-        // d3.json("data/patient_dataset.json", function(patients) {
-           
-            
-        // });
-    
 
     }
     bar_graph.dropdown = function(id){
@@ -20,7 +15,6 @@ var bar = (function(){
         //creating counter for all the loops
         var count;
         for (count = 0 ; count < id.length ; count ++){
-            //var optionElementReference = new Option(text, value, defaultSelected, selected);
             if(count === 0){
                 create_select.options.add( new Option("Patient ID : " + id[count], id[count]) );
             }else{
@@ -33,8 +27,6 @@ var bar = (function(){
     return bar_graph;
     
 }());
-
-
 
     //creating the bar chart
 function bar_chart(orgList, meanDose){
@@ -66,8 +58,6 @@ function bar_chart(orgList, meanDose){
                 .scale(y)
                 .orient("left");
 
-    //var barwidth = width / meanDose.length;
-
     var tooltip = d3.select("body").append("div")
                 .attr("class", "tooltip")
                 .style("position", "absolute")
@@ -82,7 +72,6 @@ function mouseOver(d,i){
     tooltip.html(tooltipString)
             .style("left", (d3.event.pageX + 30 ) + "px")
             .style("top", (d3.event.pageY - 30) + "px");
-    //console.log(d);
   }
 
   function mouseOut(d) {
@@ -115,7 +104,6 @@ function mouseOver(d,i){
             return height - y(d);
         })
         .attr("x", function(d, i){
-            //console.log(width / meanDose.length)
             return (width / meanDose.length * i );
         })
         .attr("y", function(d){

@@ -24,9 +24,10 @@ body {
 	position: absolute;
 	top: 0;
 	height: 100%;
-	width: calc(10% + 2*var(--scene-width) + 4*var(--scene-margin));
+	width: calc(0% + 2*var(--scene-width) + 4*var(--scene-margin));
 	left: calc(100% - 2*var(--scene-width) - 4*var(--scene-margin));
 	overflow-y: scroll;
+	
 	overflow-x: visible;
 	/* padding-top: 4em; */
 }
@@ -225,27 +226,27 @@ body {
 }
 
 
-.hide {
+/* .hide {
 	display: none !important;
-}
+} */
 
-.noselect {
+/* .noselect {
 	-webkit-touch-callout: none;
 	/* iOS Safari */
-	-webkit-user-select: none;
+	/* -webkit-user-select: none; */
 	/* Safari */
-	-khtml-user-select: none;
+	/* -khtml-user-select: none; */
 	/* Konqueror HTML */
-	-moz-user-select: none;
+	/* -moz-user-select: none; */
 	/* Firefox */
-	-ms-user-select: none;
+	/* -ms-user-select: none; */
 	/* Internet Explorer/Edge */
-	user-select: none;
+	/* user-select: none; */
 	/* Non-prefixed version, currently
 						  supported by Chrome and Opera */
-}
+} */
 
-#showHide {
+/* #showHide {
 
 	color: #444;
 	font-size: 14px;
@@ -264,9 +265,9 @@ body {
 .dot text {
 	text-anchor: middle;
 	text-shadow: 0 1px 0 #a5a5a5, 1px 0 0 #a5a5a5, 0 -1px 0 #a5a5a5, -1px 0 0 #a5a5a5;
-}
+} */
 
 ::-webkit-scrollbar {
 	width: 0 !important;
-	background: transparent;
+	background: grey;
 }
