@@ -138,12 +138,12 @@ function makeDistroChart(settings) {
      * @returns {Function} A function that provides the values for the tooltip
      */
     function tooltipHover(groupName, metrics) {
-        var tooltipString = "Group: " + groupName;
+        var tooltipString = "<strong>Group: " + groupName;
         tooltipString += "<br\>Max: " + formatAsFloat(metrics.max, 0.1);
         tooltipString += "<br\>Q3: " + formatAsFloat(metrics.quartile3);
         tooltipString += "<br\>Median: " + formatAsFloat(metrics.median);
         tooltipString += "<br\>Q1: " + formatAsFloat(metrics.quartile1);
-        tooltipString += "<br\>Min: " + formatAsFloat(metrics.min);
+        tooltipString += "<br\>Min: " + formatAsFloat(metrics.min) + "</strong>";
         return function () {
             chart.objs.tooltip.transition().duration(200).style("opacity", 0.9);
             chart.objs.tooltip.html(tooltipString)
@@ -367,13 +367,25 @@ function makeDistroChart(settings) {
             .text(chart.yAxisLable);
 
         // Create tooltip div
-        chart.objs.tooltip = chart.objs.mainDiv.append('div').attr('class', 'tooltip');
+        chart.objs.tooltip = chart.objs.mainDiv
+                            .append('div')
+                            .attr('class', 'tooltip')
+                            .style("position", "absolute")
+                            .style("font","14px sans-serif")
+                            .style("background", "#ffffff")
+                            .style("border","1px solid black")
+                            .style("border-radius","8px")
+                            .style("text-align","center");
+
         for (var cName in chart.groupObjs) {
-            chart.groupObjs[cName].g = chart.objs.g.append("g").attr("class", "group");
+            chart.groupObjs[cName].g = chart.objs.g
+                                        .append("g")
+                                        .attr("class", "group")
+                                        .style("cursor", "pointer");
             chart.groupObjs[cName].g.on("mouseover", function () {
                 chart.objs.tooltip
                     .style("display", null)
-                    .style("left", (d3.event.pageX) + "px")
+                    .style("left", (d3.event.pageX + 15) + "px")
                     .style("top", (d3.event.pageY - 28) + "px");
             }).on("mouseout", function () {
                 chart.objs.tooltip.style("display", "none");

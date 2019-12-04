@@ -14,7 +14,8 @@ var bubble = (function(){
         var size = [];
 
 
-        var group_name = ['gender', 'race', 'hpv','overall_survival', 't_category', 'tumor_subsite'];
+        var groups = ['gender', 'race', 'hpv','overall_survival', 't_category', 'tumor_subsite'];
+        var group_name = ['Gender','Race','HPV','Overall Survival','T Category','Tumor Subsite'];
 
         //creating a dropdown patientList
         var div = document.querySelector("#bubble_dropdown"),
@@ -24,12 +25,12 @@ var bubble = (function(){
         create_select.setAttribute("name", "Select Groups")
         //creating counter for all the loops
         var count;
-        for (count = 0 ; count < group_name.length ; count ++){
+        for (count = 0 ; count < groups.length ; count ++){
             //var optionElementReference = new Option(text, value, defaultSelected, selected);
             if(count === 0){
-                create_select.options.add( new Option(group_name[count], group_name[count]) );
+                create_select.options.add( new Option(group_name[count], groups[count]) );
             }else{
-                create_select.options.add( new Option(group_name[count], group_name[count]) );
+                create_select.options.add( new Option(group_name[count], groups[count]) );
             }
         }
         fragment.appendChild(create_select);
@@ -58,7 +59,7 @@ var bubble = (function(){
 
     }
     return bubble_graph;
-    
+
 
 })();
 
@@ -118,7 +119,7 @@ function bubbleplot(id, data){
             negative_count = negative_count + 1 ;
         }else{
             unknown_count = unknown_count + 1;
-        }        
+        }
 
         //counting overall_surviva;
         if(data[count].overall_survival == 0){
@@ -177,7 +178,7 @@ function bubbleplot(id, data){
 
     var tooltip = d3.select("#bubble").append('div')
                         .attr("class", "tooltip_bubble")
-                        .style('opacity', 0);
+                        .style('opacity', 0.9);
 
     var x = d3.scale.linear()
             .domain([-38, 30])
@@ -201,7 +202,7 @@ function bubbleplot(id, data){
             .range(['#D81B60',
                 '#1E88E5']);
 
-        
+
         svg.selectAll("circle")
             .data(data)
             .enter()
@@ -213,6 +214,7 @@ function bubbleplot(id, data){
             .attr("opacity", function (d) { return opacity(d.size); })
             .attr("r", function (d) { return scale(d.size); })
             .style("fill", function (d) { return color0(d.gender); })
+            .style("cursor", "pointer")
             .on('mouseover', function (d, i) {
                 tooltip.transition().duration(200)
                     .style("opacity", .9)
@@ -334,6 +336,7 @@ function bubbleplot(id, data){
             .attr("opacity", function (d) { return opacity(d.size); })
             .attr("r", function (d) { return scale(d.size); })
             .style("fill", function (d) { return color1(d.race); })
+            .style("cursor", "pointer")
             .on('mouseover', function (d, i) {
                 tooltip.transition().duration(200)
                 .style("opacity", .9)
@@ -477,6 +480,7 @@ function bubbleplot(id, data){
             .attr("opacity", function (d) { return opacity(d.size); })
             .attr("r", function (d) { return scale(d.size); })
             .style("fill", function (d) { return color2(d.hpv); })
+            .style("cursor", "pointer")
             .on('mouseover', function (d, i) {
                 tooltip.transition().duration(200)
                 .style("opacity", .9)
@@ -599,6 +603,7 @@ function bubbleplot(id, data){
             .attr("opacity", function (d) { return opacity(d.size); })
             .attr("r", function (d) { return scale(d.size); })
             .style("fill", function (d) { return color3(d.overall_survival); })
+            .style("cursor", "pointer")
             .on('mouseover', function (d, i) {
                 tooltip.transition().duration(200)
                 .style("opacity", .9)
@@ -728,6 +733,7 @@ function bubbleplot(id, data){
             .attr("opacity", function (d) { return opacity(d.size); })
             .attr("r", function (d) { return scale(d.size); })
             .style("fill", function (d) { return color4(d.t_category); })
+            .style("cursor", "pointer")
             .on('mouseover', function (d, i) {
                 tooltip.transition().duration(200)
                 .style("opacity", .9)
@@ -860,6 +866,7 @@ function bubbleplot(id, data){
             .attr("opacity", function (d) { return opacity(d.size); })
             .attr("r", function (d) { return scale(d.size); })
             .style("fill", function (d) { return color5(d.tumor_subsite); })
+            .style("cursor", "pointer")
             .on('mouseover', function (d, i) {
                 tooltip.transition().duration(200)
                 .style("opacity", .9)
@@ -897,7 +904,7 @@ function bubbleplot(id, data){
             .enter()
             .append("circle")
             .attr("cx", function(d,i){ return 10 + i * (tumor_size + 5)})
-            .attr("cy", 15) 
+            .attr("cy", 15)
             .attr("r", 7)
             .style("fill", function(d){ return color5(d)})
             .on("mouseover", function(d){
@@ -937,7 +944,7 @@ function bubbleplot(id, data){
             .enter()
             .append("text")
             .attr("x", function(d,i){ return i * (tumor_size + 5) + (tumor_size/4)})
-            .attr("y", 15 ) 
+            .attr("y", 15 )
             .style("fill", function(d){ return color5(d)})
             .text(function(d){ return d})
             .attr("text-anchor", "left")

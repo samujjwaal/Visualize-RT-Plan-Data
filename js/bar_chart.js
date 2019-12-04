@@ -25,7 +25,7 @@ var bar = (function(){
         div.appendChild(fragment);
     }
     return bar_graph;
-    
+
 }());
 
     //creating the bar chart
@@ -61,13 +61,17 @@ function bar_chart(orgList, meanDose){
     var tooltip = d3.select("body").append("div")
                 .attr("class", "tooltip")
                 .style("position", "absolute")
-                .style("opacity", 0)
-                .style("background", "#CFCFCF");
+                .style("font","15px sans-serif")
+                .style("background", "#ffffff")
+                .style("border","1px solid black")
+                .style("border-radius","8px")
+                .style("text-align","center")
+                .style("padding","5px");
 
 function mouseOver(d,i){
 
-    var tooltipString =  '<b>Dose Volume: '+ d + '</b>';
-    tooltipString +=  '<br><b>Organ Name: </b>' + orgList[i];
+    var tooltipString =  '<strong>Organ Name : ' + orgList[i] ;
+    tooltipString +=  '<br>Dose Volume : '+ d  + '</strong>';
     tooltip.style("opacity", .9);
     tooltip.html(tooltipString)
             .style("left", (d3.event.pageX + 30 ) + "px")

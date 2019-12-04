@@ -1,13 +1,11 @@
-.tooltip_bubble {
-      position: absolute;
-      text-align: center;
-      width: 60px;
-      height: 55px;
-      padding: 2px;
-      font: 12px sans-serif;
-      background: rgb(255, 255, 255);
-      border: 2px;
-      border-color: black;
-      border-radius: 8px;
-      pointer-events: none;
-  }
+.tooltip_bubble  {
+    position: absolute;
+    text-align: center;
+    padding: 2px;
+    font: 15px sans-serif;
+    background: rgb(255, 255, 255);
+    border: 1px solid black;
+    border-radius: 8px;
+    pointer-events: none;
+    padding: 2px;
+}
