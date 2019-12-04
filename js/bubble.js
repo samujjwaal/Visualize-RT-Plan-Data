@@ -148,7 +148,7 @@ function bubbleplot(id, data){
             nos_count = nos_count + 1 ;
         }else if (data[count].tumor_subsite == "GPS"){
             gps_count = gps_count + 1 ;
-        }else{
+        }else if (data[count].tumor_subsite == "Softpalate"){
             softPalate_count = softPalate_count + 1;
         }
 
@@ -898,7 +898,7 @@ function bubbleplot(id, data){
                 .ease("bounce");
 
         var tumor_size = 80;
-        var tumor_group = ["BOT", "GPS", "NOS", "Tonsil", "Soft palate"];
+        var tumor_group = ["BOT", "GPS", "NOS", "Tonsil", "Softpalate"];
         d3.select("#bubble").select("svg").append("svg").selectAll("myrect")
             .data(tumor_group)
             .enter()
@@ -926,7 +926,7 @@ function bubbleplot(id, data){
                     tooltip.html('<strong> Total ' + d + " : " + tonsil_count + "</strong>")
                         .style('left', (d3.select(this).attr("cx")) + 'px')
                         .style('top', (d3.select(this).attr("cy")) + 'px')
-                }else if(d == "Soft palate"){
+                }else if(d == "Softpalate"){
                     tooltip.html('<strong> Total ' + d + " : " + softPalate_count + "</strong>")
                         .style('left', (d3.select(this).attr("cx")) + 'px')
                         .style('top', (d3.select(this).attr("cy")) + 'px')
