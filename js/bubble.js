@@ -1,3 +1,5 @@
+
+// var medrtobj = medrtobj.init();
 var bubble = (function(){
     function bubble_graph(){
         var self = this;
@@ -63,6 +65,7 @@ var bubble = (function(){
 
 function bubbleplot(id, data){
     d3.select('#bubble').select('svg').remove();
+    // var c = new medrtobj.medrt()
     var male_count = 0;
     var female_count = 0;
     var asian_count = 0;
@@ -224,8 +227,15 @@ function bubbleplot(id, data){
                 fadeOut();
             })
             .on('click', function(d){
-                
-                console.log(d.dummy_id);
+                var id = Number(d.dummy_id);
+                selectedPatient = id;
+                var selctedPatientIndex = getIndex(selectedPatient);
+                // console.log(json_patients);
+                bar.init();
+				var organList = getOrganList(selctedPatientIndex, json_patients);
+				var organMeanDose = getOrganMeanDose(selctedPatientIndex, organList, json_patients);
+				bar_chart(organList, organMeanDose);
+                medrtobj.init();
             })
             .transition()
             .delay(function (d, i) { return x(d.x) - y(d.y); })
@@ -248,12 +258,12 @@ function bubbleplot(id, data){
                 tooltip.transition().duration(200)
                     .style("opacity", .9)
                 if(d == "Male"){
-                    console.log(male_count)
+                    // console.log(male_count)
                     tooltip.html('<strong> Total ' + d + " : " + male_count + "</strong>")
                         .style('left', (d3.select(this).attr("cx")) + 'px')
                         .style('top', (d3.select(this).attr("cy")) + 'px')
                 }else{
-                    console.log(female_count)
+                    // console.log(female_count)
                     tooltip.html('<strong> Total ' + d + " : " + female_count + "</strong>")
                         .style('left', (d3.select(this).attr("cx")) + 'px')
                         .style('top', (d3.select(this).attr("cy")) + 'px')
@@ -336,6 +346,16 @@ function bubbleplot(id, data){
             .on('mouseout', function (d, i) {
                 tooltip.transition().duration(200).style("opacity", 0)
                 fadeOut();
+            })
+            .on('click', function(d){
+                var id = Number(d.dummy_id);
+                selectedPatient = id;
+                var selctedPatientIndex = getIndex(selectedPatient);
+                bar.init();
+				var organList = getOrganList(selctedPatientIndex, json_patients);
+				var organMeanDose = getOrganMeanDose(selctedPatientIndex, organList, json_patients);
+				bar_chart(organList, organMeanDose);
+                medrtobj.init();
             })
             .transition()
             .delay(function (d, i) { return x(d.x) - y(d.y); })
@@ -470,6 +490,16 @@ function bubbleplot(id, data){
                 tooltip.transition().duration(200).style("opacity", 0)
                 fadeOut();
             })
+            .on('click', function(d){
+                var id = Number(d.dummy_id);
+                selectedPatient = id;
+                var selctedPatientIndex = getIndex(selectedPatient);
+                bar.init();
+				var organList = getOrganList(selctedPatientIndex, json_patients);
+				var organMeanDose = getOrganMeanDose(selctedPatientIndex, organList, json_patients);
+				bar_chart(organList, organMeanDose);
+                medrtobj.init();
+            })
             .transition()
             .delay(function (d, i) { return x(d.x) - y(d.y); })
             .duration(500)
@@ -581,6 +611,16 @@ function bubbleplot(id, data){
             .on('mouseout', function (d, i) {
                 tooltip.transition().duration(200).style("opacity", 0)
                 fadeOut();
+            })
+            .on('click', function(d){
+                var id = Number(d.dummy_id);
+                selectedPatient = id;
+                var selctedPatientIndex = getIndex(selectedPatient);
+                bar.init();
+				var organList = getOrganList(selctedPatientIndex, json_patients);
+				var organMeanDose = getOrganMeanDose(selctedPatientIndex, organList, json_patients);
+				bar_chart(organList, organMeanDose);
+                medrtobj.init();
             })
             .transition()
             .delay(function (d, i) { return x(d.x) - y(d.y); })
@@ -700,6 +740,16 @@ function bubbleplot(id, data){
             .on('mouseout', function (d, i) {
                 tooltip.transition().duration(200).style("opacity", 0)
                 fadeOut();
+            })
+            .on('click', function(d){
+                var id = Number(d.dummy_id);
+                selectedPatient = id;
+                var selctedPatientIndex = getIndex(selectedPatient);
+                bar.init();
+				var organList = getOrganList(selctedPatientIndex, json_patients);
+				var organMeanDose = getOrganMeanDose(selctedPatientIndex, organList, json_patients);
+				bar_chart(organList, organMeanDose);
+                medrtobj.init();
             })
             .transition()
             .delay(function (d, i) { return x(d.x) - y(d.y); })
@@ -823,6 +873,16 @@ function bubbleplot(id, data){
                 tooltip.transition().duration(200).style("opacity", 0)
                 fadeOut();
             })
+            .on('click', function(d){
+                var id = Number(d.dummy_id);
+                selectedPatient = id;
+                var selctedPatientIndex = getIndex(selectedPatient);
+                bar.init();
+				var organList = getOrganList(selctedPatientIndex, json_patients);
+				var organMeanDose = getOrganMeanDose(selctedPatientIndex, organList, json_patients);
+				bar_chart(organList, organMeanDose);
+                medrtobj.init();
+            })
             .transition()
             .delay(function (d, i) { return x(d.x) - y(d.y); })
             .duration(500)
@@ -944,4 +1004,14 @@ svg.selectAll("circle")
 .transition()
 .style("opacity", function (d) { opacity(d.size); });
 }
+}
+function getIndex(patientID){
+    var setIndex = 0;
+    for (var count = 0 ; count < allPatientDropdownIds.length ; count ++){
+        if(patientID == allPatientDropdownIds[count]){
+            setIndex = count;
+            break;
+        }
+    }
+    return setIndex;
 }

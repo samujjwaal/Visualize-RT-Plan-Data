@@ -1,4 +1,4 @@
-'use strict';
+// 'use strict';
 
 if (!Detector.webgl) {
     Detector.addGetWebGLMessage();
@@ -22,6 +22,8 @@ var organName = document.getElementById("details_organName"),
 
 var scenes = [],
 	renderer;
+var medrtobj;
+var allPatientDropdownIds;
 	
 var selectedPatient = 3;
 
@@ -64,22 +66,24 @@ var manager = new THREE.LoadingManager();
 var currentCamera = null;
 
 
-var barChart;
-var bubbleChart;
-var distributionChart;
+// var barChart;
+// var bubbleChart;
+// var distributionChart;
 var data;
 var meshes;
+var json_patients;
 
 var promises = [];
 
 
 d3.json("data/organAtlas.json", function(organs){
 	d3.json("data/patient_dataset.json", function(patients){
-		
+		json_patients = patients;
+		// console.log(json_patients);
 		data = Data(patients, organs);
 		meshes = loadOrganMeshes();
 
-		console.log(data)
+		// console.log(data)
 
 		manager.onLoad = function () {
 			start();
@@ -105,9 +109,9 @@ d3.json("data/organAtlas.json", function(organs){
 		function start() {
 			bar.init()	;
 			bubble.init();
-			var ids = getPatientIDS(patients);
-			console.log(ids)
-			bar.dropdown(ids);		 
+			allPatientDropdownIds = getPatientIDS(patients);
+			// console.log(ids)
+			bar.dropdown(allPatientDropdownIds);	          
 		 
 			 //by default show patient ID 3's information
 			 var onChange = false;
@@ -118,7 +122,7 @@ d3.json("data/organAtlas.json", function(organs){
 		 
 				 bar_chart(organList, organMeanDose);
 				 selectedPatient = 3;
-				 init();
+				 medrtobj.init();
 			 }
 		 
 			 //getting the selected patient index from the drop down
@@ -126,10 +130,10 @@ d3.json("data/organAtlas.json", function(organs){
 			 document.getElementById("select").onchange = function(){
 				 onChange = true
 				 selectedIndex = this.selectedIndex;
-				 console.log(ids[selectedIndex])
-				selectedPatient = ids[selectedIndex];
-				 init(); 
-				 // console.log(selectedPatientId);
+				//  console.log(ids[selectedIndex])
+				 selectedPatient = allPatientDropdownIds[selectedIndex];
+				 medrtobj.init(); 
+				//  console.log(selectedPatient);
 		 
 				 //console.log(patients.keys(patients[0].organData));
 				 organList = getOrganList(selectedIndex, patients);
@@ -139,11 +143,7 @@ d3.json("data/organAtlas.json", function(organs){
 				 bar_chart(organList, organMeanDose);
 		 
 			 };
-			
-		
-			//selectedPatient = populateDropDownMenu();
-			// console.log(selectedPatient);
-			
+			 //console.log(selectedPatient)
 			// initialize
 			
 			currScene = scenes[0];
@@ -174,80 +174,45 @@ d3.json("data/organAtlas.json", function(organs){
 			//document.getElementById("loadScreen").style.display = "none";
 			Controller.toggleBrush(true);
 		}
-		
-		
-		// ----------------------------------------------------------------
-		
-		// function populateDropDownMenu() {
-		// 	//holds an array of patient internal ids
-		// 	var menu = document.getElementById("patientMenu");
-		// 	// copy of patients sorted
-		// 	console.log(menu)
-		// 	var patients_sorted = data.getInternalIdList();
-		// 	patients_sorted.forEach(function (patient) {
-		// 		var tempOption = document.createElement("option");
-		// 		tempOption.value = patient;
-		// 		tempOption.innerHTML = data.getPatientName(patient);
-		// 		menu.appendChild(tempOption);
-		// 	});
-		
-		// 	// first patient
-		// 	var firstPatient = patients_sorted[0];
-		// 	//THis appears to look at the url to see if a patient is selected there
-		// 	//if so, sets "first patient" to this guy? otherwise, uses the lowest id (above)
-		// 	var patientURL = getQueryVariable("id");
-		// 	if (patientURL > -1) {
-		// 		let newId = data.getInternalId(+patientURL);
-		// 		if(newId > -1){
-		// 			firstPatient = newId;
-		// 		}
-		// 	}
-		// 	menu.value = firstPatient;
-		// 	return firstPatient;
-		// }
-		//getting patients id
-		// function getQueryVariable(variable) {
-		// 	var query = window.location.search.substring(1);
-		// 	var vars = query.split("?");
-		// 	for (var i = 0; i < vars.length; i++) {
-		// 		var pair = vars[i].split("=");
-		// 		if (pair[0] == variable) {
-		// 			return +pair[1];
-		// 		}
-		// 	}
-		// 	return -1;
-		// }
-		
-		function init() {
-			//renderer for main views?
-			var getRenderer = function(canvas, isAlpha){
-				var r = new THREE.WebGLRenderer({
-					canvas: canvas,
-					antialias: true,
-					alpha: isAlpha
-				});
-				r.setClearColor(0x888888, 1);
-				r.setPixelRatio(window.devicePixelRatio);
-				r.sortObjects = true;
-				return r
+		medrtobj = (function(){
+			function medrt(){
+				var self = this;
+	
 			}
-		
-			renderer = getRenderer(canvas, false);
-		
-			raycaster = new THREE.Raycaster();
-		
-			// var target = "content";
-			// var id = 10;
-			// var newScene = showPatient(id, target);
-			// scenes.push(newScene);
-			// return scenes;
-			// var index = getIndex();
-			// console.log(index)
+			medrt.init = function() {
+				//renderer for main views?
+				var getRenderer = function(canvas, isAlpha){
+					var r = new THREE.WebGLRenderer({
+						canvas: canvas,
+						antialias: true,
+						alpha: isAlpha
+					});
+					r.setClearColor(0x888888, 1);
+					r.setPixelRatio(window.devicePixelRatio);
+					r.sortObjects = true;
+					return r
+				}
 			
-			// var selectedPatient = 1;
-			scenes = updateScenes(selectedPatient);
-			//updateOrder(selectedPatient);
-		}
+				renderer = getRenderer(canvas, false);
+			
+				raycaster = new THREE.Raycaster();
+			
+				// var target = "content";
+				// var id = 10;
+				// var newScene = showPatient(id, target);
+				// scenes.push(newScene);
+				// return scenes;
+				// var index = getIndex();
+				// console.log(index)
+				
+				// var selectedPatient = 1;
+				// console.log(selectedPatient)
+				scenes = updateScenes(selectedPatient);
+				//updateOrder(selectedPatient);
+			}
+			return medrt;
+		})();
+		
 
 		function removeOldViews(patient){
 			//remove list-items not matched to the patient
@@ -263,11 +228,12 @@ d3.json("data/organAtlas.json", function(organs){
 
 		function updateScenes(selectedPatient){
 			removeOldViews(selectedPatient)
+			// console.log("update scene " + selectedPatient)
 			var scenes = []; //scenes is a wonderful global for now
-			console.log(similarPatients(selectedPatient))
+			// console.log(similarPatients(selectedPatient))
 			var matches = similarPatients(selectedPatient);
 			// var matches = data.getPatientMatches(selectedPatient);
-			// console.log(matches2)
+			// console.log(matches)
 			for (var i = 0; i < patientsToShow && i < matches.length; i++) {
 				var id = matches[i];
 				var target = (i == 0)? "leftContent" : "content";
@@ -278,13 +244,16 @@ d3.json("data/organAtlas.json", function(organs){
 			return scenes
 		}
 		function similarPatients(selectedPatient){
+			// console.log("similarpatients " + selectedPatient)
+			// console.log(typeof selectedPatient)
 			var count = 1;
 			var similarPatients = [];			
-				//console.log('count1');
+			// console.log(patients.length + " patients length");
 				for(var patientcount = 0; patientcount < patients.length; patientcount++)
 			  {
-				if (patients[patientcount].ID === selectedPatient)
+				if (selectedPatient === patients[patientcount].ID)
 				  {
+					//   console.log(true)
 				   //console.log(patients[patientcount].similar_patients); 
 					similarPatients[0] = patients[patientcount].ID_internal;
 					for(var j=0; j < patients[patientcount].similar_patients.length; j++)
@@ -295,6 +264,7 @@ d3.json("data/organAtlas.json", function(organs){
 					}
 				  }
 			  }
+			//   console.log("patientCOunter" + patientcount)
 			  //console.log('similar patient is ' + similarPatients);		
 			return similarPatients;
 			
