@@ -285,6 +285,7 @@ function bubbleplot(id, data){
         .attr("x", 350 + gender_size*.8)
         .attr("y", function(d,i){ return i * (gender_size + 5) + (gender_size/2)}) // 100 is where the first dot appears. 25 is the distance between dots
         .style("fill", function(d){ return color0(d)})
+        .style("cursor", "pointer")
         .text(function(d){ return d})
         .attr("text-anchor", "left")
         .style("alignment-baseline", "middle")
@@ -378,6 +379,7 @@ function bubbleplot(id, data){
                 .attr("cy", 15) // 100 is where the first dot appears. 25 is the distance between dots
                 .attr("r", 7)
                 .style("fill", function(d){ return color1(d)})
+                .style("cursor", "pointer")
                 .on("mouseover", function(d){
                     tooltip.transition().duration(200)
                         .style("opacity", .9)
@@ -420,6 +422,7 @@ function bubbleplot(id, data){
                     .text(function(d){ return d})
                     .attr("text-anchor", "left")
                     .style("alignment-baseline", "middle")
+                    .style("cursor", "pointer")
                     .on("mouseover", function(d){
                         tooltip.transition().duration(200)
                             .style("opacity", .9)
@@ -522,6 +525,7 @@ function bubbleplot(id, data){
             .attr("cy", 15) // 100 is where the first dot appears. 25 is the distance between dots
             .attr("r", 7)
             .style("fill", function(d){ return color2(d)})
+            .style("cursor", "pointer")
             .on("mouseover", function(d){
                 tooltip.transition().duration(200)
                     .style("opacity", .9)
@@ -556,6 +560,7 @@ function bubbleplot(id, data){
             .text(function(d){ return d})
             .attr("text-anchor", "left")
             .style("alignment-baseline", "middle")
+            .style("cursor", "pointer")
             .on("mouseover", function(d){
                 tooltip.transition().duration(200)
                     .style("opacity", .9)
@@ -644,6 +649,7 @@ function bubbleplot(id, data){
                     .attr("cy", function(d,i){ return 10 + i*(survival_size+5)}) // 100 is where the first dot appears. 25 is the distance between dots
                     .attr("r", 7)
                     .style("fill", function(d){ return color3(d)})
+                    .style("cursor", "pointer")
                     .on("mouseover", function(d){
                         tooltip.transition().duration(200)
                             .style("opacity", .9)
@@ -674,6 +680,7 @@ function bubbleplot(id, data){
                 .text(function(d){ return d})
                 .attr("text-anchor", "left")
                 .style("alignment-baseline", "middle")
+                .style("cursor", "pointer")
                 .on("mouseover", function(d){
                     tooltip.transition().duration(200)
                         .style("opacity", .9)
@@ -774,6 +781,7 @@ function bubbleplot(id, data){
             .attr("cy", 15)  // 100 is where the first dot appears. 25 is the distance between dots
             .attr("r", 7)
             .style("fill", function(d){ return color4(d)})
+            .style("cursor", "pointer")
             .on("mouseover", function(d){
                 tooltip.transition().duration(200)
                     .style("opacity", .9)
@@ -812,6 +820,7 @@ function bubbleplot(id, data){
             .text(function(d){ return d})
             .attr("text-anchor", "left")
             .style("alignment-baseline", "middle")
+            .style("cursor", "pointer")
             .on("mouseover", function(d){
                 tooltip.transition().duration(200)
                     .style("opacity", .9)
@@ -907,6 +916,7 @@ function bubbleplot(id, data){
             .attr("cy", 15)
             .attr("r", 7)
             .style("fill", function(d){ return color5(d)})
+            .style("cursor", "pointer")
             .on("mouseover", function(d){
                 tooltip.transition().duration(200)
                     .style("opacity", .9)
@@ -949,6 +959,7 @@ function bubbleplot(id, data){
             .text(function(d){ return d})
             .attr("text-anchor", "left")
             .style("alignment-baseline", "middle")
+            .style("cursor", "pointer")
             .on("mouseover", function(d){
                 tooltip.transition().duration(200)
                     .style("opacity", .9)

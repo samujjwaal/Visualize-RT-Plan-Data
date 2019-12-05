@@ -43,7 +43,7 @@
                 <div class="chart-options">
                     <center>
                     <!-- <p>Show: </p> -->
-                    <button id="myBtn">Overview</button>
+                    <button id="myBtn" style="height: 50px;width: 75px;background-color: steelblue;color: azure;">Overview</button>
                     <button onclick="chart1.violinPlots.hide();chart1.boxPlots.show({reset:true});chart1.notchBoxes.hide();chart1.dataPlots.change({showPlot:false,showBeanLines:false})">Box Plot</button>
                     <!-- <button onclick="chart1.violinPlots.hide();chart1.notchBoxes.show({reset:true});chart1.boxPlots.show({reset:true, showBox:false,showOutliers:true,boxWidth:20,scatterOutliers:true});chart1.dataPlots.change({showPlot:false,showBeanLines:false})">Notched Box Plot</button> -->
                     <button onclick="chart1.violinPlots.show({reset:true,clamp:0});chart1.boxPlots.show({reset:true, showWhiskers:false,showOutliers:false,boxWidth:10,lineWidth:15,colors:['#555']});chart1.notchBoxes.hide();chart1.dataPlots.change({showPlot:false,showBeanLines:false})">Violin Plot Unbound</button>
@@ -88,7 +88,7 @@
         <div id="bar_holder">
             <div id="dropDown"></div>
             <div id="bar_chart" style="overflow: auto;"></div>
-        </div>           
+        </div>
 
         </div>
     </div>
@@ -99,7 +99,7 @@
 
 
     <!-- popup -->
-        
+
     <div id="myModal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
@@ -118,7 +118,7 @@
             <p>For 3D view, we have plotted the organs and distributed the color range depending upon the dose amount each organ received. For one patient (selected from the dropdown / clicking on the patient from the bubble chart), four most similar patients according to dose pattern are showing on the right side. Hovering the mouse on the organs, a tooltip shows the organ name and dose value. User can rotate the 3D view for their convenence</p>
         </div>
     </div>
-        
+
 
     <script id="template" type="notjs">
             <div class="scene"></div>
