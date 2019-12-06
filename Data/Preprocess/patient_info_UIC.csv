@@ -1,3 +1,0 @@
-Dummy ID,Age at Diagnosis (Calculated),Gender,Race,Tm Laterality (R/L),Tumor subsite (BOT/Tonsil/Soft Palate/Pharyngeal wall/GPS/NOS),HPV/P16 status,T-category,Smoking status at Diagnosis (Never/Former/Current),Smoking status (Packs/Year),Total dose,Treatment duration (Days),"Overall Survival (1=alive, 0=dead)"
-99992,57,Male,White/Caucasion,Left,Soft Palate,Unknown,T4,Never,0,69.95,45,1
-99996,57,Male,African American/Black,Left,Pharyngeal wall,Unknown,T3,Current,365,16.96,48,1
