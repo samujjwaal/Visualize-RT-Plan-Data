@@ -4,7 +4,7 @@ var scene_control = (function(){
 	var gtvRegex = RegExp('GTV*');
 	var doseColor = d3.scale.linear()
 		.domain([0,70])
-		.range(['#f7f7f7','#252525']);
+		.range(['#fef0d9','#b30000']);
 	var currentCamera = null;
 	var currentScene = 'Real';
 	var isTumor = (string) => gtvRegex.test(string);

@@ -5,7 +5,7 @@
     max-width: 800px;  /*Overwritten by the JS*/
     min-width: 310px;
     /* margin-bottom: 8px; */
-    background-color: #FAF7F7;
+    /* background-color: #FAF7F7; */
     position: relative;
 }
 .chart-wrapper .inner-wrapper {

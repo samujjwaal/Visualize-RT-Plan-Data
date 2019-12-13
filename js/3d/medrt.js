@@ -137,12 +137,12 @@ d3.json("data/organAtlas.json", function(organs){
 
 			scene_control.setup();
 			
-			window.addEventListener('resize', function(d){
-				bar.init()	;
-				bubble.init();
-				scene_control.setup();
-			});
-			scene_control.toggleBrush(true);
+			// window.addEventListener('resize', function(d){
+			// 	bar.init()	;
+			// 	//bubble.init();
+			// 	scene_control.setup();
+			// });
+			// scene_control.toggleBrush(true);
 		}
 		medrtobj = (function(){
 			function medrt(){
@@ -450,7 +450,7 @@ d3.json("data/organAtlas.json", function(organs){
 		
 			updateSize();
 		
-			renderer.setClearColor(0xffffff);//will be background color
+			renderer.setClearColor(0xd9d9d9);//will be background color
 			renderer.setScissorTest(false);
 			renderer.clear();
 			renderer.setScissorTest(true);

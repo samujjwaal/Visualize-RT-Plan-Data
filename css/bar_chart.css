@@ -1,5 +1,5 @@
 .rectangle {
-	fill: steelblue;
+	fill: #08306b;
 }
 .rectangle:hover {
 	fill: orange;
