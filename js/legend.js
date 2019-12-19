@@ -16,7 +16,7 @@ var w = 300, h = 30;
 
     legend.append("stop")
       .attr("offset", "0%")
-      .attr("stop-color", "#fef0d9")
+      .attr("stop-color", "#fee391")
       .attr("stop-opacity", 1);
 
     // legend.append("stop")
@@ -31,7 +31,7 @@ var w = 300, h = 30;
 
     legend.append("stop")
       .attr("offset", "100%")
-      .attr("stop-color", "#b30000")
+      .attr("stop-color", "#662506")
       .attr("stop-opacity", 1);
 
     key.append("rect")

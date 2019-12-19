@@ -4,7 +4,7 @@ var scene_control = (function(){
 	var gtvRegex = RegExp('GTV*');
 	var doseColor = d3.scale.linear()
 		.domain([0,70])
-		.range(['#fef0d9','#b30000']);
+		.range(['#fee391','#662506']);
 	var currentCamera = null;
 	var currentScene = 'Real';
 	var isTumor = (string) => gtvRegex.test(string);
@@ -81,17 +81,17 @@ var scene_control = (function(){
 
 		setup: function(){
 			//setup general listenrs
-			var self = this;
-			d3.selectAll('.description').on('mouseover', function(d){
-				var id = this.parentNode.parentNode.id;
-				self.brush(id);
-			}).on('mouseout', function(d){
-				var id = this.parentNode.parentNode.id;
-				self.unbrush(id);
-			}).on('click', function(d){
-				var id = this.parentNode.parentNode.id;
-				//switchPatient(id); //switching patient after clicking a div of 3D
-			});
+			// var self = this;
+			// d3.selectAll('.description').on('mouseover', function(d){
+			// 	var id = this.parentNode.parentNode.id;
+			// 	self.brush(id);
+			// }).on('mouseout', function(d){
+			// 	var id = this.parentNode.parentNode.id;
+			// 	self.unbrush(id);
+			// }).on('click', function(d){
+			// 	var id = this.parentNode.parentNode.id;
+			// 	//switchPatient(id); //switching patient after clicking a div of 3D
+			// });
 
 		},
 

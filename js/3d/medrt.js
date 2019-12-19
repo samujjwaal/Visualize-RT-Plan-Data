@@ -302,8 +302,9 @@ d3.json("data/organAtlas.json", function(organs){
 		
 			scene.userData.controls = controls;
 		
-			var outlineSize = 5.5;
-			var nodeSize = 4;
+			 //creates the bubbles on the organs
+			var outlineSize = 5.5; //makes a border around the bubbles
+			var nodeSize = 4; //size of the bubbles
 			var geometry = new THREE.SphereGeometry(nodeSize, 16);
 			var outlineGeometry = new THREE.SphereGeometry(outlineSize, 16);
 		
