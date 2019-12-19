@@ -137,12 +137,12 @@ d3.json("data/organAtlas.json", function(organs){
 
 			scene_control.setup();
 			
-			// window.addEventListener('resize', function(d){
-			// 	bar.init()	;
-			// 	//bubble.init();
-			// 	scene_control.setup();
-			// });
-			// scene_control.toggleBrush(true);
+			window.addEventListener('resize', function(d){
+				bar.init()	;
+				//bubble.init();
+				scene_control.setup();
+			});
+			scene_control.toggleBrush(true);
 		}
 		medrtobj = (function(){
 			function medrt(){
@@ -188,6 +188,7 @@ d3.json("data/organAtlas.json", function(organs){
 			for (var i = 0; i < patientsToShow && i < matches.length; i++) {
 				var id = matches[i];
 				var target = (i == 0)? "leftContent" : "content";
+				// var target =  "content";
 				var newScene = showPatient(id, target);
 				scenes.push(newScene);
 			}
@@ -215,7 +216,7 @@ d3.json("data/organAtlas.json", function(organs){
 		function placeOrganModels(pOrgan, organProperties, scene, nodeColor) {
 			if (!scene_control.isTumor(pOrgan)) {
 				var geometry = meshes[String(pOrgan)];
-				let currentOpacity = 1;
+				let currentOpacity = 0.5;
 				let material = new THREE.MeshBasicMaterial({
 						color: nodeColor,
 						opacity: currentOpacity,

@@ -19,7 +19,7 @@ var scene_control = (function(){
 				scenes.forEach(function(scene){
 					var node = scene.getObjectByName(organ);
 					var model = scene.getObjectByName(organ + '_model');
-					model.material.opacity = 1;
+					model.material.opacity = 0.5;
 				});
 				brushedOrgans.push(organ);
 			} catch{
@@ -35,7 +35,7 @@ var scene_control = (function(){
 						var model = scene.getObjectByName(organ + '_model');
 						var organColor = doseColor(node.userData.meanDose);
 						var currentOpacity = document.getElementById("opacSlider").value/100.0;
-						model.material.opacity = 0.1;
+						model.material.opacity = 1;
 					} catch{}
 				});
 			});

@@ -165,8 +165,8 @@ function bubbleplot(id, data){
                 .attr('class', 'chart')
                 .attr("width", width + margin + margin)
                 .attr("height", height + margin + margin)
-                .style("border", "black")
-                .style("border-style", "solid")
+                // .style("border", "black")
+                // .style("border-style", "solid")
                 .append("g")
                 .attr("transform", "translate(" + margin + "," + margin + ")")
                 .call(d3.behavior.zoom().on("zoom", function(){
