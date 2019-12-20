@@ -19,7 +19,7 @@ var scenes = [],
 var medrtobj;
 var allPatientDropdownIds;
 	
-var selectedPatient = 3;
+var selectedPatient = 99992;
 
 var patientsToShow = 5;
 
@@ -97,15 +97,15 @@ d3.json("data/organAtlas.json", function(organs){
 			allPatientDropdownIds = getPatientIDS(patients);
 			bar.dropdown(allPatientDropdownIds);	          
 		 
-			 //by default show patient ID 3's information
+			 //by default show patient ID 99992's information
 			 var onChange = false;
 			 if (onChange === false){
-				 var organList = getOrganList(0, patients);
+				 var organList = getOrganList(200, patients);
 				 //mean dose of the organs
-				 var organMeanDose = getOrganMeanDose(0, organList, patients);
+				 var organMeanDose = getOrganMeanDose(200, organList, patients);
 		 
 				 bar_chart(organList, organMeanDose);
-				 selectedPatient = 3;
+				 selectedPatient = 99992;
 				 medrtobj.init();
 			 }
 		 

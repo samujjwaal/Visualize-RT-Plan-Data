@@ -14,11 +14,12 @@ var bar = (function(){
         create_select.setAttribute("name", "Select Patients")
         //creating counter for all the loops
         var count;
-        for (count = 0 ; count < id.length ; count ++){
-            if(count === 0){
-                create_select.options.add( new Option("Patient ID : " + id[count], id[count]) );
+        for (count = id.length - 1 ; count >= 0 ; count--){
+            // console.log(count)
+            if(count === id.length - 1){
+                create_select.options.add( new Option("UIC ID : " + id[count], id[count]) );
             }else{
-                create_select.options.add( new Option("Patient ID : " + id[count], id[count]) );
+                create_select.options.add( new Option("MDACC ID : " + id[count], id[count]) );
             }
         }
         fragment.appendChild(create_select);
