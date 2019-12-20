@@ -51,7 +51,7 @@ var bubble = (function(){
             onChange = true
             //alert(this.selectedIndex);
             selectedIndex = this.selectedIndex;
-            console.log(selectedIndex);
+            // console.log(selectedIndex);
             bubbleplot(selectedIndex, patients);
         };
 
@@ -202,7 +202,6 @@ function bubbleplot(id, data){
             .range(['#D81B60',
                 '#1E88E5']);
 
-
         svg.selectAll("circle")
             .data(data)
             .enter()
@@ -212,8 +211,11 @@ function bubbleplot(id, data){
             .attr("id", "circle")
             .attr("class", function(d){ return "bubbles " + d.gender })
             .attr("opacity", function (d) { return opacity(d.size); })
+            // .attr("r", function(d){return d.size;})
             .attr("r", function (d) { return scale(d.size); })
-            .style("fill", function (d) { return color0(d.gender); })
+            .style("fill", function (d) {
+                // console.log(d)
+                return color0(d.gender); })
             .style("cursor", "pointer")
             .on('mouseover', function (d, i) {
                 tooltip.transition().duration(200)
@@ -228,7 +230,9 @@ function bubbleplot(id, data){
                 tooltip.transition().duration(200).style("opacity", 0)
                 fadeOut();
             })
-            .on('click', function(d){
+            .on('click', function(d){                
+                genderColorRevert();    
+                d3.select(this).style("fill", "#ffffbf");            
                 var id = Number(d.dummy_id);
                 selectedPatient = id;
                 var selctedPatientIndex = getIndex(selectedPatient);
@@ -245,6 +249,13 @@ function bubbleplot(id, data){
             .attr("cx", function (d) { return x(d.x); })
             .attr("cy", function (d) { return y(d.y); })
                 .ease("bounce");
+
+    function genderColorRevert(){
+        svg.selectAll("circle").style("fill", function(d){
+            return color0(d.gender);
+        });
+        
+    }
 
       var gender_size = 20;
       var gender_group = ["Male", "Female"];
@@ -352,6 +363,8 @@ function bubbleplot(id, data){
                 fadeOut();
             })
             .on('click', function(d){
+                raceColorRevert();    
+                d3.select(this).style("fill", "#ffffbf");
                 var id = Number(d.dummy_id);
                 selectedPatient = id;
                 var selctedPatientIndex = getIndex(selectedPatient);
@@ -368,6 +381,15 @@ function bubbleplot(id, data){
             .attr("cy", function (d) { return y(d.y); })
                 .ease("bounce");
 
+            
+        function raceColorRevert(){
+            svg.selectAll("circle").style("fill", function(d){
+                return color1(d.race);
+            });
+            
+        }
+            
+            
             var race_size = 80;
             var race_group = ["Asian", "Hispanic", "Black",
             "Native","White"];
@@ -498,6 +520,8 @@ function bubbleplot(id, data){
                 fadeOut();
             })
             .on('click', function(d){
+                hpvColorRevert();    
+                d3.select(this).style("fill", "#ffffbf");
                 var id = Number(d.dummy_id);
                 selectedPatient = id;
                 var selctedPatientIndex = getIndex(selectedPatient);
@@ -515,6 +539,12 @@ function bubbleplot(id, data){
                 .ease("bounce");
 
 
+        function hpvColorRevert(){
+            svg.selectAll("circle").style("fill", function(d){
+                return color2(d.hpv);
+            });            
+        }
+            
         var hpv_size = 80;
         var hpv_group = ["Positive", "Negative", "Unknown"];
         d3.select("#bubble").select("svg").append("svg").selectAll("myrect")
@@ -623,6 +653,8 @@ function bubbleplot(id, data){
                 fadeOut();
             })
             .on('click', function(d){
+                OverallColorRevert();    
+                d3.select(this).style("fill", "#ffffbf");
                 var id = Number(d.dummy_id);
                 selectedPatient = id;
                 var selctedPatientIndex = getIndex(selectedPatient);
@@ -639,6 +671,12 @@ function bubbleplot(id, data){
             .attr("cy", function (d) { return y(d.y); })
                 .ease("bounce");
 
+            
+        function OverallColorRevert(){
+            svg.selectAll("circle").style("fill", function(d){
+                return color3(d.overall_survival);
+            });            
+        }
             var survival_size = 20;
             var survival_group = ["0", "1"];
             d3.select("#bubble").select("svg").append("svg").selectAll("myrect")
@@ -755,6 +793,8 @@ function bubbleplot(id, data){
                 fadeOut();
             })
             .on('click', function(d){
+                tCategoryColorRevert();    
+                d3.select(this).style("fill", "#ffffbf");
                 var id = Number(d.dummy_id);
                 selectedPatient = id;
                 var selctedPatientIndex = getIndex(selectedPatient);
@@ -771,6 +811,12 @@ function bubbleplot(id, data){
             .attr("cy", function (d) { return y(d.y); })
                 .ease("bounce");
 
+        function tCategoryColorRevert(){
+            svg.selectAll("circle").style("fill", function(d){
+                return color4(d.t_category);
+            });            
+        }
+        
         var t_size = 80;
         var t_group = ["T1", "T2", "T3", "T4"];
         d3.select("#bubble").select("svg").append("svg").selectAll("myrect")
@@ -890,6 +936,8 @@ function bubbleplot(id, data){
                 fadeOut();
             })
             .on('click', function(d){
+                tumorColorRevert();    
+                d3.select(this).style("fill", "#ffffbf");
                 var id = Number(d.dummy_id);
                 selectedPatient = id;
                 var selctedPatientIndex = getIndex(selectedPatient);
@@ -905,6 +953,12 @@ function bubbleplot(id, data){
             .attr("cx", function (d) { return x(d.x); })
             .attr("cy", function (d) { return y(d.y); })
                 .ease("bounce");
+
+    function tumorColorRevert(){
+        svg.selectAll("circle").style("fill", function(d){
+            return color5(d.tumor_subsite);
+        });            
+    }
 
         var tumor_size = 80;
         var tumor_group = ["BOT", "GPS", "NOS", "Tonsil", "Softpalate"];
