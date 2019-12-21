@@ -1,4 +1,10 @@
 
+ var height = 250;
+ var width = 400;
+ var margin = 20;
+ var randomX = [];
+ var randomY = [];
+ 
 // var medrtobj = medrtobj.init();
 var bubble = (function(){
     function bubble_graph(){
@@ -9,13 +15,24 @@ var bubble = (function(){
     d3.csv(file, function(patients) {
         var data = []
         var count = 0;
-        var x = [];
-        var y = [];
+        
         var size = [];
-
-
         var groups = ['gender', 'race', 'hpv','overall_survival', 't_category', 'tumor_subsite'];
         var group_name = ['Gender','Race','HPV','Overall Survival','T Category','Tumor Subsite'];
+        //taking random value for reducing collision of the bubble
+        //drawback? new co-ordinates everytime it reloads or refreshes
+        for(var count = 0 ; count < patients.length; count++){
+            // patients[count].x = Math.random() * width;
+            patients[count].x = 0.05 * Math.random()
+            randomX[count] = patients[count].x;
+            patients[count].y = 0.05 * Math.random();
+            // patients[count].y = Math.random() * height;
+            randomY[count] = patients[count].y;
+        }
+        for(var test = 0 ; test < 10 ; test++){
+            console.log(test * 0.05)
+        }
+        
 
         //creating a dropdown patientList
         var div = document.querySelector("#bubble_dropdown"),
@@ -154,10 +171,6 @@ function bubbleplot(id, data){
 
     }
 
-    var height = 250;
-    var width = 400;
-    var margin = 20;
-
     // var labelX = 'X';
     // var labelY = 'Y';
     var svg = d3.select('#bubble')
@@ -181,13 +194,13 @@ function bubbleplot(id, data){
                         .style('opacity', 0.9);
 
     var x = d3.scale.linear()
-            .domain([-38, 30])
+            .domain([d3.min(randomX), d3.max(randomX)])
             .range([0, width]);
 
 
     var y = d3.scale.linear()
-            .domain([-19, 25])
-            .range([height, 0]);
+            .domain([d3.min(randomY), d3.max(randomY)])
+            .range([height, 50]);
 
     var scale = d3.scale.sqrt()
                 .domain([0, 97])
@@ -250,10 +263,10 @@ function bubbleplot(id, data){
             })
             .transition()
             .delay(function (d, i) { return x(d.x) - y(d.y); })
-            .duration(500)
+            // .duration(500)
             .attr("cx", function (d) { return x(d.x); })
             .attr("cy", function (d) { return y(d.y); })
-                .ease("bounce");
+                // .ease("bounce");
 
     function genderColorRevert(){
         svg.selectAll("circle").style("fill", function(d){
@@ -330,6 +343,7 @@ function bubbleplot(id, data){
             tooltip.transition().duration(200).style("opacity", 0)
             noHighlight(d);
         })
+        
 
     function fade0(c, opacity) {
         svg.selectAll("circle")
