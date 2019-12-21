@@ -199,3 +199,4 @@ dummy_id,x,y,size,gender,race,tumor_subsite,t_category,hpv,overall_survival
 10159,14.97344286,-1.592161224,25.3,Male,White,Tonsil,T4,Unknown,0
 10184,-8.636892,-2.960134,92.7,Male,White,Tonsil,T4,Unknown,1
 10188,22.66010408,-3.981334694,24.8,Male,White,Tonsil,T4,Unknown,1
+99992,-30,20,37.9,Male,White,Softpalate,T4,Unknown,1

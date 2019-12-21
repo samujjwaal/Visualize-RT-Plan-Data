@@ -215,7 +215,12 @@ function bubbleplot(id, data){
             .attr("r", function (d) { return scale(d.size); })
             .style("fill", function (d) {
                 // console.log(d)
-                return color0(d.gender); })
+                if(d.dummy_id == 99992){
+                    return '#7f3b08';
+                }else{
+                    return color0(d.gender);
+                }
+                })
             .style("cursor", "pointer")
             .on('mouseover', function (d, i) {
                 tooltip.transition().duration(200)
@@ -252,7 +257,12 @@ function bubbleplot(id, data){
 
     function genderColorRevert(){
         svg.selectAll("circle").style("fill", function(d){
-            return color0(d.gender);
+            if(d.dummy_id == 99992){
+                return "#7f3b08";
+            }else{
+                return color0(d.gender);
+            }
+            
         });
         
     }
@@ -304,12 +314,12 @@ function bubbleplot(id, data){
             tooltip.transition().duration(200)
                 .style("opacity", .9)
             if(d == "Male"){
-                console.log(male_count)
+                // console.log(male_count)
                 tooltip.html('<strong> Total ' + d + " : " + male_count + "</strong>")
                     .style('left', (d3.select(this).attr("cx")) + 'px')
                     .style('top', (d3.select(this).attr("cy")) + 'px')
             }else{
-                console.log(female_count)
+                // console.log(female_count)
                 tooltip.html('<strong> Total ' + d + " : " + female_count + "</strong>")
                     .style('left', (d3.select(this).attr("cx")) + 'px')
                     .style('top', (d3.select(this).attr("cy")) + 'px')
@@ -347,7 +357,13 @@ function bubbleplot(id, data){
             .attr("class", function(d){ return "bubbles " + d.race })
             .attr("opacity", function (d) { return opacity(d.size); })
             .attr("r", function (d) { return scale(d.size); })
-            .style("fill", function (d) { return color1(d.race); })
+            .style("fill", function (d) { 
+                if(d.dummy_id == 99992){
+                    return '#7f3b08';
+                }else{
+                    return color1(d.race);
+                }
+             })
             .style("cursor", "pointer")
             .on('mouseover', function (d, i) {
                 tooltip.transition().duration(200)
@@ -384,7 +400,11 @@ function bubbleplot(id, data){
             
         function raceColorRevert(){
             svg.selectAll("circle").style("fill", function(d){
-                return color1(d.race);
+                if(d.dummy_id == 99992){
+                    return '#7f3b08';
+                }else{
+                    return color1(d.race);
+                }
             });
             
         }
@@ -504,7 +524,13 @@ function bubbleplot(id, data){
             .attr("class", function(d){ return "bubbles " + d.hpv })
             .attr("opacity", function (d) { return opacity(d.size); })
             .attr("r", function (d) { return scale(d.size); })
-            .style("fill", function (d) { return color2(d.hpv); })
+            .style("fill", function (d) { 
+                if(d.dummy_id == 99992){
+                    return '#7f3b08';
+                }else{
+                    return color2(d.hpv);
+                }
+             })
             .style("cursor", "pointer")
             .on('mouseover', function (d, i) {
                 tooltip.transition().duration(200)
@@ -541,7 +567,11 @@ function bubbleplot(id, data){
 
         function hpvColorRevert(){
             svg.selectAll("circle").style("fill", function(d){
-                return color2(d.hpv);
+                if(d.dummy_id == 99992){
+                    return '#7f3b08';
+                }else{
+                    return color2(d.hpv);
+                }
             });            
         }
             
@@ -637,7 +667,13 @@ function bubbleplot(id, data){
             .attr("class", function(d){ return "bubbles_survive" + d.overall_survival })
             .attr("opacity", function (d) { return opacity(d.size); })
             .attr("r", function (d) { return scale(d.size); })
-            .style("fill", function (d) { return color3(d.overall_survival); })
+            .style("fill", function (d) { 
+                if(d.dummy_id == 99992){
+                    return '#7f3b08';
+                }else{
+                    return color3(d.overall_survival);
+                }
+             })
             .style("cursor", "pointer")
             .on('mouseover', function (d, i) {
                 tooltip.transition().duration(200)
@@ -674,7 +710,11 @@ function bubbleplot(id, data){
             
         function OverallColorRevert(){
             svg.selectAll("circle").style("fill", function(d){
-                return color3(d.overall_survival);
+                if(d.dummy_id == 99992){
+                    return '#7f3b08';
+                }else{
+                    return color3(d.overall_survival);
+                }
             });            
         }
             var survival_size = 20;
@@ -777,7 +817,13 @@ function bubbleplot(id, data){
             .attr("class", function(d){ return "bubbles " + d.t_category })
             .attr("opacity", function (d) { return opacity(d.size); })
             .attr("r", function (d) { return scale(d.size); })
-            .style("fill", function (d) { return color4(d.t_category); })
+            .style("fill", function (d) {
+                if(d.dummy_id == 99992){
+                    return '#7f3b08';
+                }else{
+                    return color4(d.t_category);
+                }
+             })
             .style("cursor", "pointer")
             .on('mouseover', function (d, i) {
                 tooltip.transition().duration(200)
@@ -813,7 +859,11 @@ function bubbleplot(id, data){
 
         function tCategoryColorRevert(){
             svg.selectAll("circle").style("fill", function(d){
-                return color4(d.t_category);
+                if(d.dummy_id == 99992){
+                    return '#7f3b08';
+                }else{
+                    return color4(d.t_category);
+                }
             });            
         }
         
@@ -920,7 +970,13 @@ function bubbleplot(id, data){
             .attr("class", function(d){ return "bubbles " + d.tumor_subsite })
             .attr("opacity", function (d) { return opacity(d.size); })
             .attr("r", function (d) { return scale(d.size); })
-            .style("fill", function (d) { return color5(d.tumor_subsite); })
+            .style("fill", function (d) { 
+                if(d.dummy_id == 99992){
+                    return '#7f3b08';
+                }else{
+                    return color5(d.tumor_subsite);
+                }
+             })
             .style("cursor", "pointer")
             .on('mouseover', function (d, i) {
                 tooltip.transition().duration(200)
@@ -956,7 +1012,11 @@ function bubbleplot(id, data){
 
     function tumorColorRevert(){
         svg.selectAll("circle").style("fill", function(d){
-            return color5(d.tumor_subsite);
+            if(d.dummy_id == 99992){
+                return '#7f3b08';
+            }else{
+                return color5(d.tumor_subsite);
+            }
         });            
     }
 
