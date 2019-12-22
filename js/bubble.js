@@ -29,9 +29,7 @@ var bubble = (function(){
             // patients[count].y = Math.random() * height;
             randomY[count] = patients[count].y;
         }
-        for(var test = 0 ; test < 10 ; test++){
-            console.log(test * 0.05)
-        }
+        
         
 
         //creating a dropdown patientList

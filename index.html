@@ -47,11 +47,11 @@
                     <center>
                     <!-- <p>Show: </p> -->
                     <button id="myBtn" style="height: 50px;width: 75px;background-color: steelblue;color: azure;">Overview</button>
-                    <button onclick="chart1.violinPlots.hide();chart1.boxPlots.show({reset:true});chart1.notchBoxes.hide();chart1.dataPlots.change({showPlot:false,showBeanLines:false})">Box Plot</button>
+                    <button onclick="chart1.violinPlots.hide();chart1.boxPlots.show({reset:true});chart1.dataPlots.change({showPlot:false})">Box Plot</button>
                     <!-- <button onclick="chart1.violinPlots.hide();chart1.notchBoxes.show({reset:true});chart1.boxPlots.show({reset:true, showBox:false,showOutliers:true,boxWidth:20,scatterOutliers:true});chart1.dataPlots.change({showPlot:false,showBeanLines:false})">Notched Box Plot</button> -->
-                    <button onclick="chart1.violinPlots.show({reset:true,clamp:0});chart1.boxPlots.show({reset:true, showWhiskers:false,showOutliers:false,boxWidth:10,lineWidth:15,colors:['#555']});chart1.notchBoxes.hide();chart1.dataPlots.change({showPlot:false,showBeanLines:false})">Violin Plot Unbound</button>
+                    <button onclick="chart1.violinPlots.show({reset:true,clamp:0});chart1.boxPlots.show({reset:true, showWhiskers:false,showOutliers:false,boxWidth:10,lineWidth:15,colors:['#555']});chart1.dataPlots.change({showPlot:false})">Violin Plot Unbound</button>
                     <!-- <button onclick="chart1.violinPlots.show({reset:true, width:75, clamp:0, resolution:30, bandwidth:50});chart1.dataPlots.show({showBeanLines:true,beanWidth:15,showPlot:false,colors:['#555']});chart1.boxPlots.hide();chart1.notchBoxes.hide()">Bean Plot</button> -->
-                    <button onclick="chart1.violinPlots.hide();chart1.dataPlots.show({showPlot:true, plotType:40,colors:null});chart1.notchBoxes.hide();chart1.boxPlots.hide();">Scatter Plot</button>
+                    <button onclick="chart1.violinPlots.hide();chart1.dataPlots.show({showPlot:true, plotType:'beeswarm',colors:null});chart1.boxPlots.hide();">Scatter Plot</button>
                     </center>
                 </div>
 
@@ -59,7 +59,8 @@
                 <script type="text/javascript">
                     var chart1;
                     d3.csv('data/distribution.csv', function(error, data) {
-                        data.forEach(function (d) {d.value = +d.value;});
+                        data.forEach(function (d) {d.value = +d.value;
+                        });
 
                         chart1 = makeDistroChart({
                             data:data,
@@ -67,11 +68,11 @@
                             yName:'value',
                             axisLabels: {xAxis: null, yAxis: 'Values'},
                             selector:"#chart-distro1",
-                            chartSize:{height:460, width:960},
+                            chartSize:{height:600, width:960},
                             constrainExtremes:true});
                         chart1.renderBoxPlot();
                         chart1.renderDataPlots();
-                        chart1.renderNotchBoxes({showNotchBox:false});
+                        // chart1.renderNotchBoxes({showNotchBox:false});
                         chart1.renderViolinPlot({showViolinPlot:false});
 
                     });

@@ -68,27 +68,8 @@ function makeDistroChart(settings) {
      * @param {function|[]|object} colorOptions
      * @returns {function} Function to be used to determine chart colors
      */
-    function getColorFunct(colorOptions) {
-        if (typeof colorOptions == 'function') {
-            return colorOptions
-        } else if (Array.isArray(colorOptions)) {
-            //  If an array is provided, map it to the domain
-            var colorMap = {}, cColor = 0;
-            for (var cName in chart.groupObjs) {
-                colorMap[cName] = colorOptions[cColor];
-                cColor = (cColor + 1) % colorOptions.length;
-            }
-            return function (group) {
-                return colorMap[group];
-            }
-        } else if (typeof colorOptions == 'object') {
-            // if an object is provided, assume it maps to  the colors
-            return function (group) {
-                return colorOptions[group];
-            }
-        } else {
+    function getColorFunct(colorOptions) {       
             return d3.scale.category20b();
-        }
     }
 
     /**
@@ -105,6 +86,7 @@ function makeDistroChart(settings) {
         objSize.middle = chart.xScale.rangeBand() / 2 + gShift;
         objSize.left = padding + gShift;
         objSize.right = objSize.left + width;
+        // console.log(objSize)
         return objSize;
     }
 
@@ -114,11 +96,25 @@ function makeDistroChart(settings) {
      * @param width percent of the range band to cover with the jitter
      * @returns {number}
      */
-    function addJitter(doJitter, width) {
+    function addJitter(doJitter, width,names) {
+        
         if (doJitter !== true || width == 0) {
             return 0
         }
         return Math.floor(Math.random() * width) - width / 2;
+        //  if(typeof names == undefined){
+        //     return  Math.floor(Math.random() * width) - width / 2;
+        // }else if(names == "Tumor"){
+        //     return Math.floor(0.3 * width) - width / 2;
+        // }else if(names == "Age"){
+        //     return Math.floor(0.5 * width) - width / 2;
+        // }else if(names == "Dose"){
+        //     return Math.floor(0.6 * width) - width / 2;
+        // }else if(names == "Treatment"){
+        //     return  Math.floor(0.8 * width) - width / 2;
+        // }else if(names == "Smoke"){
+        //     return Math.floor(0.1 * width) - width / 2;
+        // }
     }
 
     function shallowCopy(oldObj) {
@@ -139,11 +135,11 @@ function makeDistroChart(settings) {
      */
     function tooltipHover(groupName, metrics) {
         var tooltipString = "<strong>Group: " + groupName;
-        tooltipString += "<br\>Max: " + formatAsFloat(metrics.max, 0.1);
+        // tooltipString += "<br\>Max: " + formatAsFloat(metrics.max, 0.1);
         tooltipString += "<br\>Q3: " + formatAsFloat(metrics.quartile3);
         tooltipString += "<br\>Median: " + formatAsFloat(metrics.median);
         tooltipString += "<br\>Q1: " + formatAsFloat(metrics.quartile1);
-        tooltipString += "<br\>Min: " + formatAsFloat(metrics.min) + "</strong>";
+        // tooltipString += "<br\>Min: " + formatAsFloat(metrics.min) + "</strong>";
         return function () {
             chart.objs.tooltip.transition().duration(200).style("opacity", 0.9);
             chart.objs.tooltip.html(tooltipString)
@@ -223,6 +219,7 @@ function makeDistroChart(settings) {
                 chart.groupObjs[current_x].values = [current_y];
             }
         }
+        // console.log(current_row)
 
         for (var cName in chart.groupObjs) {
             chart.groupObjs[cName].values.sort(d3.ascending);
@@ -349,6 +346,7 @@ function makeDistroChart(settings) {
             .attr("transform", "translate(" + chart.margin.left + "," + chart.margin.top + ")");
 
         // Create axes
+        // console.log(chart.objs.yAxis)
         chart.objs.axes = chart.objs.g.append("g").attr("class", "axis");
         chart.objs.axes.append("g")
             .attr("class", "x axis")
@@ -1046,253 +1044,12 @@ function makeDistroChart(settings) {
     };
 
     /**
-     * Render a notched box on the current chart
-     * @param options
-     * @param [options.show=true] Toggle the whole plot on and off
-     * @param [options.showNotchBox=true] Show the notch box
-     * @param [options.showLines=false] Show lines at the confidence intervals
-     * @param [options.boxWidth=35] The width of the widest part of the box
-     * @param [options.medianWidth=20] The width of the narrowist part of the box
-     * @param [options.lineWidth=50] The width of the confidence interval lines
-     * @param [options.notchStyle=null] null=traditional style, 'box' cuts out the whole notch in right angles
-     * @param [options.colors=chart default] The color mapping for the notch boxes
-     * @returns {*} The chart object
-     */
-    chart.renderNotchBoxes = function (options) {
-        chart.notchBoxes = {};
-
-        //Defaults
-        var defaultOptions = {
-            show: true,
-            showNotchBox: true,
-            showLines: false,
-            boxWidth: 35,
-            medianWidth: 20,
-            lineWidth: 50,
-            notchStyle: null,
-            colors: null
-        };
-        chart.notchBoxes.options = shallowCopy(defaultOptions);
-        for (var option in options) {
-            chart.notchBoxes.options[option] = options[option]
-        }
-        var nOpts = chart.notchBoxes.options;
-
-        //Create notch objects
-        for (var cName in chart.groupObjs) {
-            chart.groupObjs[cName].notchBox = {};
-            chart.groupObjs[cName].notchBox.objs = {};
-        }
-
-        /**
-         * Makes the svg path string for a notched box
-         * @param cNotch Current notch box object
-         * @param notchBounds objBound object
-         * @returns {string} A string in the proper format for a svg polygon
-         */
-        function makeNotchBox(cNotch, notchBounds) {
-            var scaledValues = [];
-            if (nOpts.notchStyle == 'box') {
-                scaledValues = [
-                    [notchBounds.boxLeft, chart.yScale(cNotch.metrics.quartile1)],
-                    [notchBounds.boxLeft, chart.yScale(cNotch.metrics.lowerNotch)],
-                    [notchBounds.medianLeft, chart.yScale(cNotch.metrics.lowerNotch)],
-                    [notchBounds.medianLeft, chart.yScale(cNotch.metrics.median)],
-                    [notchBounds.medianLeft, chart.yScale(cNotch.metrics.upperNotch)],
-                    [notchBounds.boxLeft, chart.yScale(cNotch.metrics.upperNotch)],
-                    [notchBounds.boxLeft, chart.yScale(cNotch.metrics.quartile3)],
-                    [notchBounds.boxRight, chart.yScale(cNotch.metrics.quartile3)],
-                    [notchBounds.boxRight, chart.yScale(cNotch.metrics.upperNotch)],
-                    [notchBounds.medianRight, chart.yScale(cNotch.metrics.upperNotch)],
-                    [notchBounds.medianRight, chart.yScale(cNotch.metrics.median)],
-                    [notchBounds.medianRight, chart.yScale(cNotch.metrics.lowerNotch)],
-                    [notchBounds.boxRight, chart.yScale(cNotch.metrics.lowerNotch)],
-                    [notchBounds.boxRight, chart.yScale(cNotch.metrics.quartile1)]
-                ];
-            } else {
-                scaledValues = [
-                    [notchBounds.boxLeft, chart.yScale(cNotch.metrics.quartile1)],
-                    [notchBounds.boxLeft, chart.yScale(cNotch.metrics.lowerNotch)],
-                    [notchBounds.medianLeft, chart.yScale(cNotch.metrics.median)],
-                    [notchBounds.boxLeft, chart.yScale(cNotch.metrics.upperNotch)],
-                    [notchBounds.boxLeft, chart.yScale(cNotch.metrics.quartile3)],
-                    [notchBounds.boxRight, chart.yScale(cNotch.metrics.quartile3)],
-                    [notchBounds.boxRight, chart.yScale(cNotch.metrics.upperNotch)],
-                    [notchBounds.medianRight, chart.yScale(cNotch.metrics.median)],
-                    [notchBounds.boxRight, chart.yScale(cNotch.metrics.lowerNotch)],
-                    [notchBounds.boxRight, chart.yScale(cNotch.metrics.quartile1)]
-                ];
-            }
-            return scaledValues.map(function (d) {
-                return [d[0], d[1]].join(",");
-            }).join(" ");
-        }
-
-        /**
-         * Calculate the confidence intervals
-         */
-        !function calcNotches() {
-            var cNotch, modifier;
-            for (var cName in chart.groupObjs) {
-                cNotch = chart.groupObjs[cName];
-                modifier = (1.57 * (cNotch.metrics.iqr / Math.sqrt(cNotch.values.length)));
-                cNotch.metrics.upperNotch = cNotch.metrics.median + modifier;
-                cNotch.metrics.lowerNotch = cNotch.metrics.median - modifier;
-            }
-        }();
-
-        /**
-         * Take a new set of options and redraw the notch boxes
-         * @param updateOptions
-         */
-        chart.notchBoxes.change = function (updateOptions) {
-            if (updateOptions) {
-                for (var key in updateOptions) {
-                    nOpts[key] = updateOptions[key]
-                }
-            }
-
-            for (var cName in chart.groupObjs) {
-                chart.groupObjs[cName].notchBox.objs.g.remove()
-            }
-            chart.notchBoxes.prepareNotchBoxes();
-            chart.notchBoxes.update();
-        };
-
-        chart.notchBoxes.reset = function () {
-            chart.notchBoxes.change(defaultOptions)
-        };
-        chart.notchBoxes.show = function (opts) {
-            if (opts !== undefined) {
-                opts.show = true;
-                if (opts.reset) {
-                    chart.notchBoxes.reset()
-                }
-            } else {
-                opts = {show: true};
-            }
-            chart.notchBoxes.change(opts)
-        };
-        chart.notchBoxes.hide = function (opts) {
-            if (opts !== undefined) {
-                opts.show = false;
-                if (opts.reset) {
-                    chart.notchBoxes.reset()
-                }
-            } else {
-                opts = {show: false};
-            }
-            chart.notchBoxes.change(opts)
-        };
-
-        /**
-         * Update the notch box obj values
-         */
-        chart.notchBoxes.update = function () {
-            var cName, cGroup;
-
-            for (cName in chart.groupObjs) {
-                cGroup = chart.groupObjs[cName];
-
-                // Get the box size
-                var boxBounds = getObjWidth(nOpts.boxWidth, cName);
-                var medianBounds = getObjWidth(nOpts.medianWidth, cName);
-
-                var notchBounds = {
-                    boxLeft: boxBounds.left,
-                    boxRight: boxBounds.right,
-                    middle: boxBounds.middle,
-                    medianLeft: medianBounds.left,
-                    medianRight: medianBounds.right
-                };
-
-                // Notch Box
-                if (cGroup.notchBox.objs.notch) {
-                    cGroup.notchBox.objs.notch
-                        .attr("points", makeNotchBox(cGroup, notchBounds));
-                }
-                if (cGroup.notchBox.objs.upperLine) {
-                    var lineBounds = null;
-                    if (nOpts.lineWidth) {
-                        lineBounds = getObjWidth(nOpts.lineWidth, cName)
-                    } else {
-                        lineBounds = objBounds
-                    }
-
-                    var confidenceLines = {
-                        upper: chart.yScale(cGroup.metrics.upperNotch),
-                        lower: chart.yScale(cGroup.metrics.lowerNotch)
-                    };
-                    cGroup.notchBox.objs.upperLine
-                        .attr("x1", lineBounds.left)
-                        .attr("x2", lineBounds.right)
-                        .attr('y1', confidenceLines.upper)
-                        .attr("y2", confidenceLines.upper);
-                    cGroup.notchBox.objs.lowerLine
-                        .attr("x1", lineBounds.left)
-                        .attr("x2", lineBounds.right)
-                        .attr('y1', confidenceLines.lower)
-                        .attr("y2", confidenceLines.lower);
-                }
-            }
-        };
-
-        /**
-         * Create the svg elements for the notch boxes
-         */
-        chart.notchBoxes.prepareNotchBoxes = function () {
-            var cName, cNotch;
-
-            if (nOpts && nOpts.colors) {
-                chart.notchBoxes.colorFunct = getColorFunct(nOpts.colors);
-            } else {
-                chart.notchBoxes.colorFunct = chart.colorFunct
-            }
-
-            if (nOpts.show == false) {
-                return
-            }
-
-            for (cName in chart.groupObjs) {
-                cNotch = chart.groupObjs[cName].notchBox;
-
-                cNotch.objs.g = chart.groupObjs[cName].g.append("g").attr("class", "notch-plot");
-
-                // Plot Box (default show)
-                if (nOpts.showNotchBox) {
-                    cNotch.objs.notch = cNotch.objs.g.append("polygon")
-                        .attr("class", "notch")
-                        .style("fill", chart.notchBoxes.colorFunct(cName))
-                        .style("stroke", chart.notchBoxes.colorFunct(cName));
-                    //A stroke is added to the notch with the group color, it is
-                    // hidden by default and can be shown through css with stroke-width
-                }
-
-                //Plot Confidence Lines (default hide)
-                if (nOpts.showLines) {
-                    cNotch.objs.upperLine = cNotch.objs.g.append("line")
-                        .attr("class", "upper confidence line")
-                        .style("stroke", chart.notchBoxes.colorFunct(cName));
-
-                    cNotch.objs.lowerLine = cNotch.objs.g.append("line")
-                        .attr("class", "lower confidence line")
-                        .style("stroke", chart.notchBoxes.colorFunct(cName));
-                }
-            }
-        };
-        chart.notchBoxes.prepareNotchBoxes();
-
-        d3.select(window).on('resize.' + chart.selector + '.notchBox', chart.notchBoxes.update);
-        chart.notchBoxes.update();
-        return chart;
-    };
-
-    /**
      * Render a raw data in various forms
      * @param options
      * @param [options.show=true] Toggle the whole plot on and off
      * @param [options.showPlot=false] True or false, show points
-     * @param [options.plotType='none'] Options: no scatter = (false or 'none'); scatter points= (true or [amount=% of width (default=10)]); beeswarm points = ('beeswarm')
+     * @param [options.plotType='none'] Options: no scatter = (false or 'none'); 
+     * scatter points= (true or [amount=% of width (default=10)]); beeswarm points = ('beeswarm')
      * @param [options.pointSize=6] Diameter of the circle in pizels (not the radius)
      * @param [options.showLines=['median']] Can equal any of the metrics lines
      * @param [options.showbeanLines=false] Options: no lines = false
@@ -1402,7 +1159,7 @@ function makeDistroChart(settings) {
 
                 if (cPlot.objs.points) {
                     if (dOpts.plotType == 'beeswarm') {
-                        var swarmBounds = getObjWidth(100, cName);
+                        var swarmBounds = getObjWidth(80, cName);
                         var yPtScale = chart.yScale.copy()
                             .range([Math.floor(chart.yScale.range()[0] / dOpts.pointSize), 0])
                             .interpolate(d3.interpolateRound)
@@ -1415,6 +1172,9 @@ function makeDistroChart(settings) {
                             cYBucket = yPtScale(cGroup.values[pt]);
                             if (ptsObj.hasOwnProperty(cYBucket) !== true) {
                                 ptsObj[cYBucket] = [];
+                            }
+                            if(isNaN(cGroup.values[pt])){
+                                cGroup.values[pt] = 0;
                             }
                             ptsObj[cYBucket].push(cPlot.objs.points.pts[pt]
                                 .attr("cx", swarmBounds.middle)
@@ -1441,10 +1201,14 @@ function makeDistroChart(settings) {
 
                         plotBounds = getObjWidth(scatterWidth, cName);
                         width = plotBounds.right - plotBounds.left;
+                        // console.log(cName)
 
                         for (var pt = 0; pt < cGroup.values.length; pt++) {
+                            if(isNaN(cGroup.values[pt])){
+                                cGroup.values[pt] = 0;
+                            }
                             cPlot.objs.points.pts[pt]
-                                .attr("cx", plotBounds.middle + addJitter(true, width))
+                                .attr("cx", plotBounds.middle + addJitter(true, width, cName))
                                 .attr("cy", chart.yScale(cGroup.values[pt]));
                         }
                     }
