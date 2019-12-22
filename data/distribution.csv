@@ -196,7 +196,7 @@ Tumor,31.9
 Tumor,99.6
 Tumor,27.2
 Tumor,45.9
-Tumor,53.9
+Tumor,53.8
 Tumor,24.1
 Age,45.95
 Age,65.36944444
@@ -2727,3 +2727,8 @@ Smoke,100
 Smoke,40
 Smoke,0
 Smoke,90
+Smoke,0.5
+Age,57
+Tumor,53.9
+Treatment,45
+Dose,69.95

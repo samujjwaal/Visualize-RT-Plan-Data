@@ -408,6 +408,7 @@ function makeDistroChart(settings) {
      * @returns {*} The chart object
      */
     chart.renderViolinPlot = function (options) {
+        
         chart.violinPlots = {};
 
         var defaultOptions = {
@@ -1259,6 +1260,7 @@ function makeDistroChart(settings) {
                             y: chart.groupObjs[cGroup].metrics[cMetric]
                         })
                     }
+                    // console.log(chart.dataPlots.objs.lines);
                     chart.dataPlots.objs.lines[cMetric].line = d3.svg.line()
                         .interpolate("cardinal")
                         .y(function (d) {
@@ -1275,9 +1277,11 @@ function makeDistroChart(settings) {
 
 
             for (cName in chart.groupObjs) {
-
+                
                 cPlot = chart.groupObjs[cName].dataPlots;
                 cPlot.objs.g = chart.groupObjs[cName].g.append("g").attr("class", "data-plot");
+
+                // console.log(chart.groupObjs[cName].values[0])
 
                 // Points Plot
                 if (dOpts.showPlot) {
@@ -1286,8 +1290,54 @@ function makeDistroChart(settings) {
                     for (var pt = 0; pt < chart.groupObjs[cName].values.length; pt++) {
                         cPlot.objs.points.pts.push(cPlot.objs.points.g.append("circle")
                             .attr("class", "point")
-                            .attr('r', dOpts.pointSize / 2)// Options is diameter, r takes radius so divide by 2
-                            .style("fill", chart.dataPlots.colorFunct(cName)));
+                            .attr('r', function(){
+                                if(chart.groupObjs[cName].values[pt] == 0.5 && cName == 'Smoke'){
+                                    // console.log("condition visited");
+                                    return dOpts.pointSize * 1.1;
+                                } 
+                                 else if (chart.groupObjs[cName].values[pt] == 57 && cName == 'Age'){
+                                    // console.log("condition visited");
+                                    return dOpts.pointSize * 1.1;
+                                }else if (chart.groupObjs[cName].values[pt] == 53.9 && cName == 'Tumor'){
+                                    // console.log("condition visited");
+                                    return dOpts.pointSize * 1.1;
+                                }else if(chart.groupObjs[cName].values[pt] == 45 && cName == 'Treatment'){
+                                    // console.log("condition visited");
+                                    return dOpts.pointSize * 1.1;
+                                }else if(chart.groupObjs[cName].values[pt] == 69.95 && cName == 'Dose'){
+                                    // console.log("condition visited");
+                                    return dOpts.pointSize * 1.1;
+                               }
+                               else{
+                                   // console.log("hi")
+                                   return dOpts.pointSize / 2;
+                               }
+                            })
+                            // .attr('r', dOpts.pointSize / 2)// Options is diameter, r takes radius so divide by 2
+                            .style('fill', function(d){
+                                // console.log(d)
+                                if(chart.groupObjs[cName].values[pt] == 0.5 && cName == 'Smoke'){
+                                    // console.log("condition visited");
+                                    return 'white';
+                                } 
+                                 else if (chart.groupObjs[cName].values[pt] == 57 && cName == 'Age'){
+                                    // console.log("condition visited");
+                                    return 'white';
+                                }else if (chart.groupObjs[cName].values[pt] == 53.9 && cName == 'Tumor'){
+                                    // console.log("condition visited");
+                                    return 'white';
+                                }else if(chart.groupObjs[cName].values[pt] == 45 && cName == 'Treatment'){
+                                    // console.log("condition visited");
+                                    return 'white';
+                                }else if(chart.groupObjs[cName].values[pt] == 69.95 && cName == 'Dose'){
+                                    // console.log("condition visited");
+                                    return 'white';
+                               }else{
+                                    // console.log("hi")
+                                    return chart.dataPlots.colorFunct(cName);
+                                }
+                            }));
+                            // .style("fill", chart.dataPlots.colorFunct(cName)));
                     }
                 }
 
