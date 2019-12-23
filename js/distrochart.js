@@ -118,14 +118,18 @@ function makeDistroChart(settings) {
     }
 
     function shallowCopy(oldObj) {
+        // console.log(oldObj)
         var newObj = {};
         for (var i in oldObj) {
             if (oldObj.hasOwnProperty(i)) {
                 newObj[i] = oldObj[i];
             }
         }
+        // console.log(newObj)
         return newObj;
     }
+    
+    
 
     /**
      * Closure that creates the tooltip hover function
@@ -134,6 +138,7 @@ function makeDistroChart(settings) {
      * @returns {Function} A function that provides the values for the tooltip
      */
     function tooltipHover(groupName, metrics) {
+        
         var tooltipString = "<strong>Group: " + groupName;
         // tooltipString += "<br\>Max: " + formatAsFloat(metrics.max, 0.1);
         tooltipString += "<br\>Q3: " + formatAsFloat(metrics.quartile3);
@@ -150,7 +155,8 @@ function makeDistroChart(settings) {
      * Parse the data and calculates base values for the plots
      */
     !function prepareData() {
-        function calcMetrics(values) {
+        function calcMetrics(values , name) {
+            
 
             var metrics = { //These are the original non�scaled values
                 max: null,
@@ -163,7 +169,8 @@ function makeDistroChart(settings) {
                 quartile1: null,
                 lowerInnerFence: null,
                 lowerOuterFence: null,
-                min: null
+                min: null,
+                uic: null
             };
 
             metrics.min = d3.min(values);
@@ -173,6 +180,30 @@ function makeDistroChart(settings) {
             metrics.quartile3 = d3.quantile(values, 0.75);
             metrics.max = d3.max(values);
             metrics.iqr = metrics.quartile3 - metrics.quartile1;
+
+
+            //adding UIC patients value
+            for(var count = 0 ; count < values.length ; count ++){
+                if(values[count] == 0 && name == "Smoke"){
+                    metrics.uic = 0;
+                    break;
+                } 
+                 else if (values[count] == 57 && name == "Age" ){
+                    metrics.uic = 57;
+                    break;
+                }else if (values[count] == 53.9 && name == "Tumor"){
+                    metrics.uic = 53.9
+                    break;
+                }else if(values[count] == 45 && name == "Treatment"){
+                    metrics.uic = 45;
+                    break;
+                }else if(values[count] == 69.95 && name == "Dose"){
+                    metrics.uic = 69.95;
+                    break;
+               }
+
+            }
+            
 
             //The inner fences are the closest value to the IQR without going past it (assumes sorted lists)
             var LIF = metrics.quartile1 - (1.5 * metrics.iqr);
@@ -211,8 +242,10 @@ function makeDistroChart(settings) {
         for (current_row = 0; current_row < chart.data.length; current_row++) {
             current_x = chart.data[current_row][chart.settings.xName];
             current_y = chart.data[current_row][chart.settings.yName];
+            // console.log(chart.groupObjs[current_x])
 
             if (chart.groupObjs.hasOwnProperty(current_x)) {
+                // console.log(chart.groupObjs[current_x].values.push(current_y))
                 chart.groupObjs[current_x].values.push(current_y);
             } else {
                 chart.groupObjs[current_x] = {};
@@ -224,7 +257,7 @@ function makeDistroChart(settings) {
         for (var cName in chart.groupObjs) {
             chart.groupObjs[cName].values.sort(d3.ascending);
             chart.groupObjs[cName].metrics = {};
-            chart.groupObjs[cName].metrics = calcMetrics(chart.groupObjs[cName].values);
+            chart.groupObjs[cName].metrics = calcMetrics(chart.groupObjs[cName].values , cName);
 
         }
     }();
@@ -838,6 +871,7 @@ function makeDistroChart(settings) {
 
             for (cName in chart.groupObjs) {
                 cBoxPlot = chart.groupObjs[cName].boxPlot;
+                console.log(chart.groupObjs)
 
                 // Get the box width
                 var objBounds = getObjWidth(bOpts.boxWidth, cName);
@@ -892,7 +926,16 @@ function makeDistroChart(settings) {
                         .attr("y2", sMetrics.lowerInnerFence);
                 }
 
+                //UIC
+
+                cBoxPlot.objs.uic.circle
+                .attr("cx", lineBounds.middle)
+                .attr("cy", sMetrics.uic)
+
                 // --Median
+                // console.log(chart.groupObjs[cName].metrics)
+                // console.log(cBoxPlot)
+                // console.log(sMetrics)
                 if (cBoxPlot.objs.median) {
                     cBoxPlot.objs.median.line
                         .attr("x1", lineBounds.left)
@@ -903,6 +946,8 @@ function makeDistroChart(settings) {
                         .attr("cx", lineBounds.middle)
                         .attr("cy", sMetrics.median)
                 }
+
+            
 
                 // --Mean
                 if (cBoxPlot.objs.mean) {
@@ -966,6 +1011,12 @@ function makeDistroChart(settings) {
                     //A stroke is added to the box with the group color, it is
                     // hidden by default and can be shown through css with stroke-width
                 }
+                //Plot UIC (default show)
+                cBoxPlot.objs.uic = {circle: null};
+                    cBoxPlot.objs.uic.circle = cBoxPlot.objs.g.append("circle")
+                        .attr("class", "uic")
+                        .attr('r', bOpts.medianCSize * 1.5)
+                        .style("fill", "#fae300");
 
                 //Plot Median (default show)
                 if (bOpts.showMedian) {
@@ -974,7 +1025,7 @@ function makeDistroChart(settings) {
                         .attr("class", "median");
                     cBoxPlot.objs.median.circle = cBoxPlot.objs.g.append("circle")
                         .attr("class", "median")
-                        .attr('r', bOpts.medianCSize)
+                        .attr('r', bOpts.medianCSize / 2)
                         .style("fill", chart.boxPlots.colorFunct(cName));
                 }
 
@@ -1017,7 +1068,7 @@ function makeDistroChart(settings) {
                         for (pt in cBoxPlot.objs.outliers) {
                             cBoxPlot.objs.outliers[pt].point = outDiv.append("circle")
                                 .attr("class", "outlier")
-                                .attr('r', bOpts.outlierCSize)
+                                .attr('r', bOpts.outlierCSize/1.5)
                                 .style("fill", chart.boxPlots.colorFunct(cName));
                         }
                     }
@@ -1027,7 +1078,7 @@ function makeDistroChart(settings) {
                         for (pt in cBoxPlot.objs.extremes) {
                             cBoxPlot.objs.extremes[pt].point = extDiv.append("circle")
                                 .attr("class", "extreme")
-                                .attr('r', bOpts.outlierCSize)
+                                .attr('r', bOpts.outlierCSize/1.5)
                                 .style("stroke", chart.boxPlots.colorFunct(cName));
                         }
                     }
@@ -1318,20 +1369,20 @@ function makeDistroChart(settings) {
                                 // console.log(d)
                                 if(chart.groupObjs[cName].values[pt] == 0.5 && cName == 'Smoke'){
                                     // console.log("condition visited");
-                                    return 'white';
+                                    return '#fae300';
                                 } 
                                  else if (chart.groupObjs[cName].values[pt] == 57 && cName == 'Age'){
                                     // console.log("condition visited");
-                                    return 'white';
+                                    return '#fae300';
                                 }else if (chart.groupObjs[cName].values[pt] == 53.9 && cName == 'Tumor'){
                                     // console.log("condition visited");
-                                    return 'white';
+                                    return '#fae300';
                                 }else if(chart.groupObjs[cName].values[pt] == 45 && cName == 'Treatment'){
                                     // console.log("condition visited");
-                                    return 'white';
+                                    return '#fae300';
                                 }else if(chart.groupObjs[cName].values[pt] == 69.95 && cName == 'Dose'){
                                     // console.log("condition visited");
-                                    return 'white';
+                                    return '#fae300';
                                }else{
                                     // console.log("hi")
                                     return chart.dataPlots.colorFunct(cName);

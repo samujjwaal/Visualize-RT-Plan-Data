@@ -80,8 +80,13 @@
 .chart-wrapper .box-plot circle.median {
     /*the script makes the circles the same color as the box, you can override this in the js*/
     fill: white !important;
+    /* position: relative; */
 }
-
+/* .uic{
+    position: fixed;
+    z-index: 2;
+    display: block;
+} */
 .chart-wrapper .box-plot .mean {
     stroke: white;
     stroke-dasharray: 2,1;
