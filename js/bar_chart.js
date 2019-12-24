@@ -32,9 +32,10 @@ var bar = (function(){
     //creating the bar chart
 function bar_chart(orgList, meanDose){
     d3.select('#bar_chart').select('svg').remove();
-    var margin = {top: 5, right: 100, bottom: 90, left: 30, spacing: 4},
-    width = 1000 - margin.left - margin.right,
-    height = 300 - margin.top - margin.bottom;
+    var margin = {top: 5, right: 10, bottom: 90, left: 30, spacing: 1},
+    width = document.getElementById("bar_holder").offsetWidth - margin.right - margin.left,
+    height = document.getElementById("bar_holder").offsetHeight - margin.bottom - margin.top;
+    // console.log(document.getElementById("bar_holder").offsetWidth)
 
     var svg = d3.select("#bar_chart")
         .append("svg")
@@ -59,28 +60,21 @@ function bar_chart(orgList, meanDose){
                 .scale(y)
                 .orient("left");
 
-    var tooltip = d3.select("body").append("div")
-                .attr("class", "tooltip")
-                .style("position", "absolute")
-                .style("font","15px sans-serif")
-                .style("background", "#ffffff")
-                .style("border","1px solid black")
-                .style("border-radius","8px")
-                .style("text-align","center")
-                .style("padding","5px");
+    var tooltip = d3.select("#bar_chart").append("div")
+                .attr("class", "tooltip_bar")
+                .style('opacity', 0.9)
 
 function mouseOver(d,i){
-
-    var tooltipString =  '<strong>Organ Name : ' + orgList[i] ;
-    tooltipString +=  '<br>Dose Volume : '+ d  + '</strong>';
-    tooltip.style("opacity", .9);
-    tooltip.html(tooltipString)
-            .style("left", (d3.event.pageX + 30 ) + "px")
-            .style("top", (d3.event.pageY - 30) + "px");
+    tooltip.transition().duration(200)
+        .style('opacity', .9)
+    tooltip.html('<strong>Organ Name : ' + orgList[i] + 
+                 '<br>Dose Volume : '+ d  + '</strong>')
+            .style('left', (d3.select(this).attr("x")) + 'px')
+            .style('top', (d3.select(this).attr("y")) + 'px');
   }
 
   function mouseOut(d) {
-    tooltip.style("opacity", 0);
+    tooltip.transition().duration(200).style("opacity", 0);
   }
     svg.append("g")
         .attr("class", "x axis")

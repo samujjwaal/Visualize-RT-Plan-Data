@@ -95,7 +95,8 @@ d3.json("data/organAtlas.json", function(organs){
 			bar.init()	;
 			bubble.init();
 			allPatientDropdownIds = getPatientIDS(patients);
-			bar.dropdown(allPatientDropdownIds);	          
+			bar.dropdown(allPatientDropdownIds);	
+			bubble.dropdown();          
 		 
 			 //by default show patient ID 99992's information
 			 var onChange = false;
@@ -137,11 +138,12 @@ d3.json("data/organAtlas.json", function(organs){
 
 			scene_control.setup();
 			
-			window.addEventListener('resize', function(d){
-				bar.init()	;
-				//bubble.init();
-				scene_control.setup();
-			});
+			// window.addEventListener('resize', function(d){
+			// 	bar_chart(organList, organMeanDose);
+			// 	bubble.bubbleplot(selectedBubbleIndex, bubbledata);
+			// 	medrtobj.init();
+			// 	scene_control.setup();
+			// });
 			scene_control.toggleBrush(true);
 		}
 		medrtobj = (function(){
@@ -354,7 +356,7 @@ d3.json("data/organAtlas.json", function(organs){
 					gtvs.push(organSphere);
 					nodeColor = '#4169e1';
 					//using real scaling doesn't seem to really work so it's just porportional now
-					outlineMesh.scale.multiplyScalar( Math.pow(organSphere.userData.volume, .4));
+					outlineMesh.scale.multiplyScalar( Math.pow(organSphere.userData.volume, .28));
 					let tumorOutline = scene_control.getDoseColor(organSphere.userData.meanDose);
 					outlineMesh.material.color.set( tumorOutline );
 					outlineMesh.material.transparent = true;

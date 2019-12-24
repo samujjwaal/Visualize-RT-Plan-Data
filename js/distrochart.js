@@ -871,7 +871,7 @@ function makeDistroChart(settings) {
 
             for (cName in chart.groupObjs) {
                 cBoxPlot = chart.groupObjs[cName].boxPlot;
-                console.log(chart.groupObjs)
+                // console.log(chart.groupObjs)
 
                 // Get the box width
                 var objBounds = getObjWidth(bOpts.boxWidth, cName);
