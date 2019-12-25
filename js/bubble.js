@@ -281,8 +281,10 @@ var bubble = (function(){
                 .data(gender_group)
                 .enter()
                 .append("circle")
-                    .attr("cx", 350)
-                    .attr("cy", function(d,i){ return 10 + i*(gender_size+5)}) // 100 is where the first dot appears. 25 is the distance between dots
+                    .attr("cx", width - 1.5 * margin)
+                    .attr("cy", function(d,i){
+                        //  console.log(10 + i*(gender_size+5))
+                         return 10 + i*(gender_size+5)}) // 100 is where the first dot appears. 25 is the distance between dots
                     .attr("r", 7)
                     .style("fill", function(d){ return color0(d)})
                     .on("mouseover", function(d){
@@ -311,7 +313,7 @@ var bubble = (function(){
               .data(gender_group)
               .enter()
               .append("text")
-                .attr("x", 350 + gender_size*.8)
+                .attr("x", width - 1.5 * margin + gender_size*.8)
                 .attr("y", function(d,i){ return i * (gender_size + 5) + (gender_size/2)}) // 100 is where the first dot appears. 25 is the distance between dots
                 .style("fill", function(d){ return color0(d)})
                 .style("cursor", "pointer")
@@ -732,7 +734,7 @@ var bubble = (function(){
                         .data(survival_group)
                         .enter()
                         .append("circle")
-                            .attr("cx", 350)
+                            .attr("cx", width - 1.5 * margin)
                             .attr("cy", function(d,i){ return 10 + i*(survival_size+5)}) // 100 is where the first dot appears. 25 is the distance between dots
                             .attr("r", 7)
                             .style("fill", function(d){ return color3(d)})
@@ -761,7 +763,7 @@ var bubble = (function(){
                     .data(survival_group)
                     .enter()
                     .append("text")
-                        .attr("x", 350 + survival_size*.8)
+                        .attr("x", width - 1.5 * margin + survival_size*.8)
                         .attr("y", function(d,i){ return i * (survival_size + 5) + (survival_size/2)}) // 100 is where the first dot appears. 25 is the distance between dots
                         .style("fill", function(d){ return color3(d)})
                         .text(function(d){ return d})
@@ -876,13 +878,13 @@ var bubble = (function(){
                     });            
                 }
                 
-                var t_size = 80;
+                var t_size = 60;
                 var t_group = ["T1", "T2", "T3", "T4"];
                 d3.select("#bubble").select("svg").append("svg").selectAll("myrect")
                     .data(t_group)
                     .enter()
                     .append("circle")
-                    .attr("cx", function(d,i){ return 10 + i * (t_size + 5)})
+                    .attr("cx", function(d,i){ return 10 + i * (t_size)})
                     .attr("cy", 15)  // 100 is where the first dot appears. 25 is the distance between dots
                     .attr("r", 7)
                     .style("fill", function(d){ return color4(d)})
@@ -919,7 +921,7 @@ var bubble = (function(){
                     .data(t_group)
                     .enter()
                     .append("text")
-                    .attr("x", function(d,i){ return i * (t_size + 5) + (t_size/4)})
+                    .attr("x", function(d,i){ return i * (t_size ) + (t_size/3)})
                     .attr("y", 15 )  // 100 is where the first dot appears. 25 is the distance between dots
                     .style("fill", function(d){ return color4(d)})
                     .text(function(d){ return d})

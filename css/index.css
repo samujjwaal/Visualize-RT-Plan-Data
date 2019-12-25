@@ -1,10 +1,10 @@
-/* * {
+* {
 	box-sizing: border-box;
 	-moz-box-sizing: border-box;
-} */
+}
 
 body {
-	
+	margin: 0px;
 	--scene-width: 22em;
 	--scene-height: 29em;
 	--scene-margin: .8em;
@@ -15,7 +15,7 @@ body {
 #leftContent {
 	position: absolute;
 	top: 0;
-	width: calc(100% - 2*var(--scene-width) - 4*var(--scene-margin));
+	width: calc(100% - 2 * var(--scene-width) - 4*var(--scene-margin));
 	height: 100%;
 	overflow: auto;
 	/* -webkit-column-width: auto; */
@@ -63,6 +63,8 @@ body {
 	height: calc( var(--scene-height) - 10*var(--scene-margin));
 	z-index: 2;
 	vertical-align: top;
+	min-width:250px ;
+	min-height: 100 px;
 	/* box-shadow: 1px 1px 12px 1px rgba(0, 0, 0, 0.25); */
 }
 #bubble_holder{
@@ -94,18 +96,18 @@ body {
 	/* box-shadow: 1px 1px 12px 1px rgba(0, 0, 0, 0.25); */
 }
 
-#popup{
-	position: relative;
-	background-color: var(--plot-background-color);
-	display: inline-block;
-	width: calc(100% - 25em);
+/* #popup{ */
+	/* position: relative; */
+	/* background-color: var(--plot-background-color); */
+	/* display: inline-block; */
+	/* width: calc(100% - 25em); */
 	/* margin: var(--scene-margin); */
 	/* margin-top: 0 auto; */
-	height: calc( var(--scene-height) - 10*var(--scene-margin));
-	z-index: 2;
-	vertical-align: top;
+	/* height: calc( var(--scene-height) - 10*var(--scene-margin)); */
+	/* z-index: 2; */
+	/* vertical-align: top; */
 	/* box-shadow: 1px 1px 12px 1px rgba(0, 0, 0, 0.25); */
-}
+/* } */
 
 /*
 #loadScreen {

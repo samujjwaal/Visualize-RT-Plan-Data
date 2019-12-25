@@ -1,4 +1,8 @@
-var w = 300, h = 30;
+var containerWidth = document.getElementById("dropdown_legend_container").offsetWidth;
+var bubbleWidth = document.getElementById("bubble_dropdown").offsetWidth;
+var w = containerWidth - bubbleWidth - 30;
+// console.log(bw)
+var h = 30;
 
     var key = d3.select("#legend3D")
       .append("svg")

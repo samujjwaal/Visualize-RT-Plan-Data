@@ -3,7 +3,7 @@
 /*Nested divs for responsiveness*/
 .chart-wrapper {
     max-width: 800px;  /*Overwritten by the JS*/
-    min-width: 310px;
+    min-width: 100px;
     /* margin-bottom: 8px; */
     /* background-color: #FAF7F7; */
     position: relative;
@@ -128,14 +128,16 @@
 
 /* Non-Chart Styles for demo*/
 .chart-options  {
-    min-width: 200px;
+    min-width: 100px;
     font-size: 13px;
     font-family: sans-serif;
 }
 .chart-options button {
-    margin: 3px;
-    padding: 3px;
-    font-size: 12px;
+    /* margin: 3px; */
+    padding: .3em;
+    /* font-size: 12px; */
+    /* float: left; */
+    /* width: 100%; */
 }
 .chart-options p {
     display: inline;

@@ -43,7 +43,7 @@
         <div id="chart_holder">
             <div class="chart-wrapper" id="chart-distro1">
                 <!--Sorry about all the inline JS. It is a quick way to show what options are available-->
-                <div class="chart-options">
+                <div class="chart-options" id="button_div">
                     <center>
                     <!-- <p>Show: </p> -->
                     <button id="myBtn" style="height: 50px;width: 75px;background-color: steelblue;color: azure;">Overview</button>
@@ -61,6 +61,12 @@
                     d3.csv('data/distribution.csv', function(error, data) {
                         data.forEach(function (d) {d.value = +d.value;
                         });
+                        var h = document.getElementById("chart_holder").offsetHeight;
+                        var bh = document.getElementById("button_div").offsetHeight;
+                        var w = document.getElementById("chart_holder").offsetWidth;
+                        console.log(h);
+                        console.log(bh);
+                        console.log(h - bh)
 
                         chart1 = makeDistroChart({
                             data:data,
@@ -68,7 +74,7 @@
                             yName:'value',
                             axisLabels: {xAxis: null, yAxis: 'Values'},
                             selector:"#chart-distro1",
-                            chartSize:{height:600, width:960},
+                            chartSize:{height: h - bh - 50, width: w},
                             constrainExtremes:true});
                         chart1.renderBoxPlot();
                         chart1.renderDataPlots();
@@ -82,7 +88,7 @@
         </div>
 
         <div id="bubble_holder">
-            <div class="row">
+            <div class="row" id="dropdown_legend_container">
                 <div class="col-4" id="bubble_dropdown"></div>
                 <div class="col-8" id="legend3D" style="display: inline-block;"></div>
             </div>
