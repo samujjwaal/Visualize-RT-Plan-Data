@@ -2,8 +2,8 @@
 
 /*Nested divs for responsiveness*/
 .chart-wrapper {
-    max-width: 800px;  /*Overwritten by the JS*/
-    min-width: 100px;
+    /* max-width: 800px;  Overwritten by the JS */
+    /* min-width: 100px; */
     /* margin-bottom: 8px; */
     /* background-color: #FAF7F7; */
     position: relative;
@@ -93,7 +93,7 @@
     stroke-width: 1px;
 }
 
-@media (max-width:500px){
+@media (max-width:550px){
     .chart-wrapper .box-plot circle {display: none;}
 }
 
@@ -142,6 +142,6 @@
 .chart-options p {
     display: inline;
 }
-@media (max-width:500px){
+@media (max-width:550px){
     .chart-options p {display: block;}
 }

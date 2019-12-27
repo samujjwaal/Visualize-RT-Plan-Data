@@ -33,7 +33,7 @@ function makeDistroChart(settings) {
         yTicks: 1,
         scale: 'linear',
         chartSize: {width: 800, height: 400},
-        margin: {top: 15, right: 60, bottom: 60, left: 50},
+        margin: {top: 15, right: 5, bottom: 60, left: 30},
         constrainExtremes: false,
         color: d3.scale.category20b()
     };
