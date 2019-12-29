@@ -62,7 +62,7 @@ body {
 	/* background-color: var(--plot-background-color); */
 	display: inline-block;
 	/* width: calc(100% - var(--scene-width) - 6 * var(--scene-margin)); */
-	width: calc(100% - 27em);
+	width: 23em;
 	/* margin: var(--scene-margin); */
 	/* margin-top: 0 auto; */
 	height: calc( var(--scene-height) - 10*var(--scene-margin));
@@ -79,7 +79,7 @@ body {
 	/* background-color: var(--plot-background-color); */
 	display: inline-block;
 	/* width: calc(100% - var(--scene-width) - 6 * var(--scene-margin)); */
-	width: calc(100% - 27em);
+	width: calc(100% - 24em);
 	/* margin: var(--scene-margin); */
 	/* margin-top: 0 auto; */
 	height: calc( var(--scene-height) - 10*var(--scene-margin));
@@ -88,6 +88,9 @@ body {
 	box-shadow: 1px 1px 12px 1px rgba(0, 0, 0, 0.25);
 	min-width:300px ;
 	min-height: 100 px;
+	float: right;
+	margin-right: 15px;
+
 	/* max-width: 530px; */
 }
 #bar_holder{
@@ -228,10 +231,12 @@ body {
 	position: relative;
 	display: inline-block;
 	z-index: 1;
-	margin-right: var(--scene-margin);
+	margin-right: 2* var(--scene-margin);
+	/* float: right; */
 	/* padding: 0em; */
 	/* width: var(--scene-width); */
-	width: 16em;
+	
+	width: 17em;
 	height: 400px;
 	/* box-shadow: 0px 20px 10px 1px rgba(0, 0, 0, 0.25); */
 	/* color: black; */
