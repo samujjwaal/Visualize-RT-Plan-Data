@@ -15,7 +15,7 @@ body {
 #leftContent {
 	position: absolute;
 	top: 0;
-	width: calc(100% -  var(--scene-width) - 25*var(--scene-margin) );
+	width: calc(100% -  var(--scene-width) - 26*var(--scene-margin) );
 	height: 100%;
 	overflow: auto;
 	/* -webkit-column-width: auto; */
@@ -29,8 +29,9 @@ body {
 	/* width: calc(100% - 2*var(--scene-width) - 4*var(--scene-margin));
 	left: calc(100% - 2*var(--scene-width) - 4*var(--scene-margin)); */
 
-	width: calc(0% + var(--scene-width) + 25 * var(--scene-margin));
-    left: calc(100% - var(--scene-width) - 25 * var(--scene-margin) );
+	width: calc(0% + var(--scene-width) + 26 * var(--scene-margin));
+	left: calc(100% - var(--scene-width) - 26 * var(--scene-margin) );
+	padding-left: 10px;
 	overflow-y: scroll;
 
 	overflow-x: visible;
@@ -60,15 +61,16 @@ body {
 	position: relative;
 	/* background-color: var(--plot-background-color); */
 	display: inline-block;
-	width: calc(100% - var(--scene-width) - 15 * var(--scene-margin));
+	/* width: calc(100% - var(--scene-width) - 6 * var(--scene-margin)); */
+	width: calc(100% - 27em);
 	/* margin: var(--scene-margin); */
 	/* margin-top: 0 auto; */
 	height: calc( var(--scene-height) - 10*var(--scene-margin));
 	z-index: 2;
 	vertical-align: top;
-	min-width:250px ;
+	min-width:300px ;
 	min-height: 200 px;
-	max-width: 530px;
+	/* max-width: 530px; */
 	max-height: 400px;
 	/* box-shadow: 1px 1px 12px 1px rgba(0, 0, 0, 0.25); */
 }
@@ -76,16 +78,17 @@ body {
 	position: relative;
 	/* background-color: var(--plot-background-color); */
 	display: inline-block;
-	width: calc(100% - var(--scene-width) - 15 * var(--scene-margin));
+	/* width: calc(100% - var(--scene-width) - 6 * var(--scene-margin)); */
+	width: calc(100% - 27em);
 	/* margin: var(--scene-margin); */
 	/* margin-top: 0 auto; */
 	height: calc( var(--scene-height) - 10*var(--scene-margin));
 	z-index: 2;
 	vertical-align: top;
 	box-shadow: 1px 1px 12px 1px rgba(0, 0, 0, 0.25);
-	min-width:250px ;
+	min-width:300px ;
 	min-height: 100 px;
-	max-width: 530px;
+	/* max-width: 530px; */
 }
 #bar_holder{
 	position: relative;
@@ -225,11 +228,11 @@ body {
 	position: relative;
 	display: inline-block;
 	z-index: 1;
-	/* margin: var(--scene-margin); */
+	margin-right: var(--scene-margin);
 	/* padding: 0em; */
 	/* width: var(--scene-width); */
-	width: 15em;
-	height: 420px;
+	width: 16em;
+	height: 400px;
 	/* box-shadow: 0px 20px 10px 1px rgba(0, 0, 0, 0.25); */
 	/* color: black; */
 }
