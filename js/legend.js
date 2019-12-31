@@ -1,6 +1,6 @@
 var containerWidth = document.getElementById("dropdown_legend_container").offsetWidth;
 var bubbleWidth = document.getElementById("bubble_dropdown").offsetWidth;
-var w = containerWidth - bubbleWidth - 30;
+var w = containerWidth - bubbleWidth - 40;
 // console.log(bw)
 var h = 30;
 
@@ -14,7 +14,7 @@ var h = 30;
       .attr("id", "gradient")
       .attr("x1", "0%")
       .attr("y1", "100%")
-      .attr("x2", "100%")
+      .attr("x2", "75%")
       .attr("y2", "100%")
       .attr("spreadMethod", "pad");
 
@@ -34,7 +34,7 @@ var h = 30;
     //   .attr("stop-opacity", 1);
 
     legend.append("stop")
-      .attr("offset", "100%")
+      .attr("offset", "75%")
       .attr("stop-color", "#662506")
       .attr("stop-opacity", 1);
 
@@ -45,8 +45,8 @@ var h = 30;
       .attr("transform", "translate(0,0)");
 
     var y = d3.scale.linear()
-      .range([300, 0])
-      .domain([86, 20]);
+      .range([w - 5, 0])
+      .domain([70, 20]);
 
     
     var yAxis = d3.svg.axis()

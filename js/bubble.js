@@ -421,16 +421,16 @@ var bubble = (function(){
                 }
                     
                     
-                    var race_size = 80;
+                    var race_size = 55;
                     var race_group = ["Asian", "Hispanic", "Black",
                     "Native","White"];
                     d3.select("#bubble").select("svg").append("svg").selectAll("myrect")
                         .data(race_group)
                         .enter()
                         .append("circle")
-                        .attr("cx", function(d,i){ return 10 + i * (race_size + 5)})
+                        .attr("cx", function(d,i){ return 5 + i * (race_size + 5)})
                         .attr("cy", 15) // 100 is where the first dot appears. 25 is the distance between dots
-                        .attr("r", 7)
+                        .attr("r", 5)
                         .style("fill", function(d){ return color1(d)})
                         .style("cursor", "pointer")
                         .on("mouseover", function(d){
@@ -474,6 +474,7 @@ var bubble = (function(){
                             .style("fill", function(d){ return color1(d)})
                             .text(function(d){ return d})
                             .attr("text-anchor", "left")
+                            .attr("font-size", "12px")
                             .style("alignment-baseline", "middle")
                             .style("cursor", "pointer")
                             .on("mouseover", function(d){
@@ -1031,15 +1032,15 @@ var bubble = (function(){
                 });            
             }
         
-                var tumor_size = 80;
+                var tumor_size = 55;
                 var tumor_group = ["BOT", "GPS", "NOS", "Tonsil", "Softpalate"];
                 d3.select("#bubble").select("svg").append("svg").selectAll("myrect")
                     .data(tumor_group)
                     .enter()
                     .append("circle")
-                    .attr("cx", function(d,i){ return 10 + i * (tumor_size + 5)})
+                    .attr("cx", function(d,i){ return 5 + i * (tumor_size + 5)})
                     .attr("cy", 15)
-                    .attr("r", 7)
+                    .attr("r", 5)
                     .style("fill", function(d){ return color5(d)})
                     .style("cursor", "pointer")
                     .on("mouseover", function(d){
@@ -1083,6 +1084,7 @@ var bubble = (function(){
                     .style("fill", function(d){ return color5(d)})
                     .text(function(d){ return d})
                     .attr("text-anchor", "left")
+                    .attr("font-size", "12px")
                     .style("alignment-baseline", "middle")
                     .style("cursor", "pointer")
                     .on("mouseover", function(d){

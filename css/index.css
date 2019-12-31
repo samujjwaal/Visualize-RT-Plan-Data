@@ -15,7 +15,7 @@ body {
 #leftContent {
 	position: absolute;
 	top: 0;
-	width: calc(100% -  var(--scene-width) - 26*var(--scene-margin) );
+	width: calc(100% -  2*var(--scene-width));
 	height: 100%;
 	overflow: auto;
 	/* -webkit-column-width: auto; */
@@ -29,8 +29,8 @@ body {
 	/* width: calc(100% - 2*var(--scene-width) - 4*var(--scene-margin));
 	left: calc(100% - 2*var(--scene-width) - 4*var(--scene-margin)); */
 
-	width: calc(0% + var(--scene-width) + 26 * var(--scene-margin));
-	left: calc(100% - var(--scene-width) - 26 * var(--scene-margin) );
+	width: calc(0% + 2 * var(--scene-width));
+	left: calc(100% - 52*var(--scene-margin));
 	padding-left: 10px;
 	overflow-y: scroll;
 
@@ -68,7 +68,7 @@ body {
 	height: calc( var(--scene-height) - 10*var(--scene-margin));
 	z-index: 2;
 	vertical-align: top;
-	min-width:300px ;
+	min-width:100px ;
 	min-height: 200 px;
 	/* max-width: 530px; */
 	max-height: 400px;
@@ -79,17 +79,17 @@ body {
 	/* background-color: var(--plot-background-color); */
 	display: inline-block;
 	/* width: calc(100% - var(--scene-width) - 6 * var(--scene-margin)); */
-	width: calc(100% - 24em);
+	width:calc(100% - 24em);
 	/* margin: var(--scene-margin); */
 	/* margin-top: 0 auto; */
 	height: calc( var(--scene-height) - 10*var(--scene-margin));
 	z-index: 2;
 	vertical-align: top;
 	box-shadow: 1px 1px 12px 1px rgba(0, 0, 0, 0.25);
-	min-width:300px ;
+	min-width:150px ;
 	min-height: 100 px;
-	float: right;
-	margin-right: 15px;
+	/* float: right; */
+	/* margin-right: 15px; */
 
 	/* max-width: 530px; */
 }
@@ -280,5 +280,5 @@ body {
 
 ::-webkit-scrollbar {
 	width: 0 !important;
-	background: grey;
+	background: #D9D9D9;
 }
