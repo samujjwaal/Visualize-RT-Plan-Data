@@ -21,7 +21,7 @@ var allPatientDropdownIds;
 	
 var selectedPatient = 99992;
 
-var patientsToShow = 5;
+var patientsToShow = 7;
 
 var totalModelCount;
 
@@ -64,6 +64,8 @@ var meshes;
 var json_patients;
 
 var promises = [];
+
+var bar_index = 200;
 
 
 d3.json("data/organAtlas.json", function(organs){
@@ -115,11 +117,14 @@ d3.json("data/organAtlas.json", function(organs){
 			 document.getElementById("select").onchange = function(){
 				 onChange = true
 				 selectedIndex = this.selectedIndex;
+				 bar_index = 200 - selectedIndex;
+				//  console.log("bar " + bar_index)
+				//  console.log(selectedIndex);
 				 selectedPatient = allPatientDropdownIds[selectedIndex];
 				 medrtobj.init();
-				 organList = getOrganList(selectedIndex, patients);
+				 organList = getOrganList(bar_index, patients);
 			     //mean dose of the organs
-				organMeanDose = getOrganMeanDose(selectedIndex, organList, patients);
+				organMeanDose = getOrganMeanDose(bar_index, organList, patients);
 				 bar_chart(organList, organMeanDose);
 		 
 			 };
@@ -187,6 +192,7 @@ d3.json("data/organAtlas.json", function(organs){
 			removeOldViews(selectedPatient);
 			var scenes = [];
 			var matches = similarPatients(selectedPatient);
+			console.log(matches)
 			for (var i = 0; i < patientsToShow && i < matches.length; i++) {
 				var id = matches[i];
 				var target = (i == 0)? "leftContent" : "content";
@@ -283,7 +289,7 @@ d3.json("data/organAtlas.json", function(organs){
 				document.getElementById(parentDivId).appendChild(element);
 			}
 		
-			var scalarVal = 2.4; 
+			var scalarVal = 1.72; 
 		
 			var camera = new THREE.OrthographicCamera(scene.userData.element.offsetWidth / -scalarVal,
 				scene.userData.element.offsetWidth / scalarVal,
@@ -305,7 +311,7 @@ d3.json("data/organAtlas.json", function(organs){
 			scene.userData.controls = controls;
 		
 			 //creates the bubbles on the organs
-			var outlineSize = 5.5; //makes a border around the bubbles
+			var outlineSize = 5; //makes a border around the bubbles
 			var nodeSize = 4; //size of the bubbles
 			var geometry = new THREE.SphereGeometry(nodeSize, 16);
 			var outlineGeometry = new THREE.SphereGeometry(outlineSize, 16);
@@ -356,7 +362,8 @@ d3.json("data/organAtlas.json", function(organs){
 					gtvs.push(organSphere);
 					nodeColor = '#4169e1';
 					//using real scaling doesn't seem to really work so it's just porportional now
-					outlineMesh.scale.multiplyScalar( Math.pow(organSphere.userData.volume, .28));
+					//tumor size 
+					outlineMesh.scale.multiplyScalar( Math.pow(organSphere.userData.volume, .32));
 					let tumorOutline = scene_control.getDoseColor(organSphere.userData.meanDose);
 					outlineMesh.material.color.set( tumorOutline );
 					outlineMesh.material.transparent = true;

@@ -50,49 +50,7 @@ var scene_control = (function(){
 			enableBrush = isEnabled;
 		},
 
-		// brush: function(id){
-		// 	if(enableBrush){
-		// 		//highlight patient matches in other views on mousover
-		// 		var patientView = document.getElementById(id);
-		// 		if(patientView != null){
-		// 			patientView.style.boxShadow = '0px 5px 5px 10px white';
-		// 			var description = patientView.querySelector('.description');
-		// 			description.style.color = 'white';;
-		// 		}
-		// 	}
-		// },
-
-		// unbrush: function(id){
-		// 	if(enableBrush){
-		// 		var patientView = document.getElementById(id);
-		// 		if(patientView != null){
-		// 			patientView.style.boxShadow = '';
-		// 			var description = patientView.querySelector('.description');
-		// 			description.style.color = 'black';
-		// 		}
-		// 		if( !d3.selectAll('.doseRect').empty()){
-		// 			d3.selectAll('.doseRect').moveToFront();
-		// 		}
-		// 		d3.selectAll('.doseRect').filter('.meanDose')
-		// 			.attr('fill', data.getClusterColor(selectedPatient))
-		// 			.attr('opacity', 1);
-		// 	}
-		// },
-
 		setup: function(){
-			//setup general listenrs
-			// var self = this;
-			// d3.selectAll('.description').on('mouseover', function(d){
-			// 	var id = this.parentNode.parentNode.id;
-			// 	self.brush(id);
-			// }).on('mouseout', function(d){
-			// 	var id = this.parentNode.parentNode.id;
-			// 	self.unbrush(id);
-			// }).on('click', function(d){
-			// 	var id = this.parentNode.parentNode.id;
-			// 	//switchPatient(id); //switching patient after clicking a div of 3D
-			// });
-
 		},
 
 		setCamera: function(camera){

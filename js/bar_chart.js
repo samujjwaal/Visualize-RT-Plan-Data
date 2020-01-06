@@ -14,9 +14,9 @@ var bar = (function(){
         create_select.setAttribute("name", "Select Patients")
         //creating counter for all the loops
         var count;
-        for (count = id.length - 1 ; count >= 0 ; count--){
+        for (count = 0 ; count < id.length ; count++){
             // console.log(count)
-            if(count === id.length - 1){
+            if(id[count] == 99992){
                 create_select.options.add( new Option("UIC ID : " + id[count], id[count]) );
             }else{
                 create_select.options.add( new Option("MDACC ID : " + id[count], id[count]) );
@@ -34,7 +34,7 @@ function bar_chart(orgList, meanDose){
     d3.select('#bar_chart').select('svg').remove();
     var margin = {top: 5, right: 10, bottom: 90, left: 30, spacing: 1},
     width = document.getElementById("bar_holder").offsetWidth - margin.right - margin.left,
-    height = document.getElementById("bar_holder").offsetHeight - margin.bottom - margin.top;
+    height = document.getElementById("bar_holder").offsetHeight - margin.bottom - margin.top - margin.right;
     // console.log(document.getElementById("bar_holder").offsetWidth)
 
     var svg = d3.select("#bar_chart")
@@ -143,8 +143,10 @@ function getOrganMeanDose(id, organsForMean, patients){
 function getPatientIDS(patients){
     var id = [];
     var count ;
-    for (count = 0 ; count < patients.length ; count ++){
-        id[count] = patients[count].ID;
+    var index = 0;
+    for (count = patients.length - 1 ; count >= 0 ; count--){
+        id[index] = patients[count].ID;
+        index++;
     }
     return id;
 }

@@ -307,6 +307,7 @@ function makeDistroChart(settings) {
         chart.xScale = d3.scale.ordinal().domain(Object.keys(chart.groupObjs)).rangeBands([0, chart.width]);
 
         //Build Axes Functions
+        //  console.log(chart.objs.yAxis.ticks(chart.objs.yAxis.ticks()*chart.settings.yTicks));
         chart.objs.yAxis = d3.svg.axis()
             .scale(chart.yScale)
             .orient("left")
@@ -379,7 +380,7 @@ function makeDistroChart(settings) {
             .attr("transform", "translate(" + chart.margin.left + "," + chart.margin.top + ")");
 
         // Create axes
-        // console.log(chart.objs.yAxis)
+        //  console.log(chart.yAxisLable)
         chart.objs.axes = chart.objs.g.append("g").attr("class", "axis");
         chart.objs.axes.append("g")
             .attr("class", "x axis")

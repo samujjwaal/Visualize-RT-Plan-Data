@@ -24,8 +24,14 @@ var Data = function(patientData, oAtlas) {
 		},
 
 		getPatientName: function(internalId){
+			// console.log(internalId)
 			var id = this.getPatientId(internalId);
-			return "ID: " + id;
+			if(internalId == 201) {
+				return "UIC ID: " + id;
+			}else{
+				return "MDACC ID : " + id;
+			}
+			
 		},
 
 		getPatient: function(patientInternalId){
