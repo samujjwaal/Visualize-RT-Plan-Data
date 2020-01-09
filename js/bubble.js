@@ -1,9 +1,6 @@
 var bubbledata;
 var selectedBubbleIndex = 0;
-var margin = 20;
-//  var height = document.getElementById("bubble_holder").offsetHeight;
-var width = document.getElementById("bubble_holder").offsetWidth - margin - margin;
-var height = 250;
+
 // var width = 400;
 
  var randomX = [];
@@ -79,7 +76,7 @@ var bubble = (function(){
         var onChange = false;
         if (onChange === false){
             //color(0, patients);
-            bubble.bubbleplot(0, bubbledata);
+            bubbleplot(0, bubbledata);
 
         }
 
@@ -89,7 +86,7 @@ var bubble = (function(){
             //alert(this.selectedIndex);
             selectedBubbleIndex = this.selectedIndex;
             // console.log(selectedIndex);
-            bubble.bubbleplot(selectedBubbleIndex, bubbledata);
+            bubbleplot(selectedBubbleIndex, bubbledata);
         };       
 
     });
@@ -117,9 +114,21 @@ var bubble = (function(){
         fragment.appendChild(create_select);
         div.appendChild(fragment);
     }
-    bubble_graph.bubbleplot = function(id, data){
+
+    return bubble_graph;
+
+
+})();
+
+    function bubbleplot (id, data){
+        // console.log("called")
         //function bubbleplot(id, data){
-            d3.select('#bubble').select('svg').remove();
+        d3.select('#bubble').select('svg').remove();
+
+        var margin = 20;
+        //  var height = document.getElementById("bubble_holder").offsetHeight;
+        var width = document.getElementById("bubble_holder").offsetWidth - margin - margin;
+        var height = 250;
             // var c = new medrtobj.medrt()
             var male_count = 0;
             var female_count = 0;
@@ -1175,10 +1184,7 @@ var bubble = (function(){
         
 
     }
-    return bubble_graph;
-
-
-})();
+    
 
 function getIndex(patientID){
     var setIndex = 0;

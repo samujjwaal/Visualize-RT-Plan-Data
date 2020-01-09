@@ -249,12 +249,15 @@ d3.json("data/organAtlas.json", function(organs){
 
 			scene_control.setup();
 			
-			// window.addEventListener('resize', function(d){
-			// 	bar_chart(organList, organMeanDose);
-			// 	bubble.bubbleplot(selectedBubbleIndex, bubbledata);
-			// 	medrtobj.init();
-			// 	scene_control.setup();
-			// });
+			window.addEventListener('resize', function(d){
+				bar_chart(organList, organMeanDose);
+				// let b_index = document.getElementById("bubble_select").value;
+				// let b_data = bubbledata;
+				// console.log(selectedBubbleIndex);
+				bubbleplot(selectedBubbleIndex, bubbledata);
+				medrtobj.init();
+				// scene_control.setup();
+			});
 			scene_control.toggleBrush(true);
 		}
 		medrtobj = (function(){
