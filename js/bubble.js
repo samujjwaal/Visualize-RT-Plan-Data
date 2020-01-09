@@ -506,12 +506,12 @@ var bubble = (function(){
                             .data(race_group)
                             .enter()
                             .append("text")
-                            .attr("x", function(d,i){ return i * (race_size + 5) + (race_size/4)})
+                            .attr("x", function(d,i){ return i * (race_size + 4) + (race_size/4)})
                             .attr("y", 15 )// 100 is where the first dot appears. 25 is the distance between dots
                             .style("fill", function(d){ return color1(d)})
                             .text(function(d){ return d})
                             .attr("text-anchor", "left")
-                            .attr("font-size", "12px")
+                            .attr("font-size", "11px")
                             .style("alignment-baseline", "middle")
                             .style("cursor", "pointer")
                             .on("mouseover", function(d){
@@ -1055,7 +1055,7 @@ var bubble = (function(){
                 });            
             }
         
-                var tumor_size = 55;
+                var tumor_size = 50;
                 var tumor_group = ["BOT", "GPS", "NOS", "Tonsil", "Softpalate"];
                 d3.select("#bubble").select("svg").append("svg").selectAll("myrect")
                     .data(tumor_group)
@@ -1102,12 +1102,12 @@ var bubble = (function(){
                     .data(tumor_group)
                     .enter()
                     .append("text")
-                    .attr("x", function(d,i){ return i * (tumor_size + 5) + (tumor_size/4)})
+                    .attr("x", function(d,i){ return i * (tumor_size + 4.5) + (tumor_size/4)})
                     .attr("y", 15 )
                     .style("fill", function(d){ return color5(d)})
                     .text(function(d){ return d})
                     .attr("text-anchor", "left")
-                    .attr("font-size", "12px")
+                    .attr("font-size", "11px")
                     .style("alignment-baseline", "middle")
                     .style("cursor", "pointer")
                     .on("mouseover", function(d){
