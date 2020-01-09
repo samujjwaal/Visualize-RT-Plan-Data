@@ -32,7 +32,7 @@ var bar = (function(){
     //creating the bar chart
 function bar_chart(orgList, meanDose){
     d3.select('#bar_chart').select('svg').remove();
-    var margin = {top: 5, right: 10, bottom: 90, left: 30, spacing: 1},
+    var margin = {top: 5, right: 10, bottom: 90, left: 40, spacing: 1},
     width = document.getElementById("bar_holder").offsetWidth - margin.right - margin.left,
     height = document.getElementById("bar_holder").offsetHeight - margin.bottom - margin.top - margin.right;
     // console.log(document.getElementById("bar_holder").offsetWidth)
@@ -81,15 +81,36 @@ function mouseOver(d,i){
         .attr("transform", "translate(0," + height + ")")
         .call(xAxis)
         .selectAll("text")
-        .style("font-size", "9px")
+        .style("font-size", "7px")
         .style("text-anchor", "end")
-        .attr("dx", "-.8em")
-        .attr("dy", "-.55em")
+        .attr("x", "-4")
+        .attr("y", "3")
         .attr("transform", "rotate(-45)" );
 
     svg.append("g")
         .attr("class", "y axis")
         .call(yAxis);
+
+    //x label
+    svg.append("text")
+    .attr("class", "x axis-label")
+    .attr("x", width/2)
+    .attr("y", height + 80)
+    .attr("font-size", "13px")
+    .attr("font-weight", "bold")
+    .attr("text-anchor", "middle")
+    .text("Organs")
+
+    //y label
+    svg.append("text")
+    .attr("class", "y axis-label")
+    .attr("x",-(height/2))
+    .attr("y", -24)
+    .attr("font-weight", "bold")
+    .attr("text-anchor", "middle")
+    .attr("font-size", "13px")
+    .attr("transform", "rotate(-90)")
+    .text("Mean Dose (GY)")
 
 
 

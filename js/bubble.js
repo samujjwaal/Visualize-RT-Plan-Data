@@ -8,7 +8,49 @@ var height = 250;
 
  var randomX = [];
  var randomY = [];
- 
+
+ //color range for categories
+ //gender
+ var color0 = d3.scale.ordinal()
+                    .range(['#D81B60',
+                        '#1E88E5']);
+
+//race
+var color1 = d3.scale.ordinal()
+                    .range(['#D81B60',
+                        '#1E88E5',
+                        '#FFC107',
+                        '#004D40',
+                        '#870F62']);
+
+//hpv
+var color2 = d3.scale.ordinal()
+                    .range(['#D81B60',
+        
+                    '#1E88E5',
+        
+                    '#004D40']);
+
+//overall_survival
+var color3 = d3.scale.ordinal()
+                .range(['#D81B60',
+                '#1E88E5']);
+
+//t_category
+var color4 = d3.scale.ordinal()
+                    .range(['#D81B60',
+                    '#1E88E5',
+                    '#004D40',
+                    '#870F62']);
+
+//tumor_subsite
+var color5 = d3.scale.ordinal()
+                    .range(['#D81B60',
+                    '#1E88E5',
+                    '#FFC107',
+                    '#004D40',
+                    '#870F62']);
+                
 // var medrtobj = medrtobj.init();
 var bubble = (function(){
     function bubble_graph(){
@@ -180,7 +222,8 @@ var bubble = (function(){
                         .call(d3.behavior.zoom().on("zoom", function(){
                             svg.attr("transform", "translate(" + d3.event.translate +")" +  " scale(" + d3.event.scale + ")")
                         }))
-                        .append("g");
+                        // .append("g")
+                        .attr('id', 'bubbles_group');
         
             d3.select("#bubble").style("stroke", "black").style("stroke-width", .5);
         
@@ -206,10 +249,7 @@ var bubble = (function(){
                         .range([1, .5]);
         
            if(id == 0 ){//gender
-                var color0 = d3.scale.ordinal()
-                    .range(['#D81B60',
-                        '#1E88E5']);
-        
+                        
                 svg.selectAll("circle")
                     .data(data)
                     .enter()
@@ -218,7 +258,7 @@ var bubble = (function(){
                     .attr("cy", height / 2)
                     .attr("id", "circle")
                     .attr("class", function(d){ return "bubbles " + d.gender })
-                    .attr("opacity", function (d) { return opacity(d.size); })
+                    // .attr("opacity", function (d) { return opacity(d.size); })
                     // .attr("r", function(d){return d.size;})
                     .attr("r", function (d) { return scale(d.size); })
                     .style("fill", function (d) {
@@ -243,11 +283,12 @@ var bubble = (function(){
                         tooltip.transition().duration(200).style("opacity", 0)
                         fadeOut();
                     })
-                    .on('click', function(d){                
+                    .on('click', function(d){                                         
                         genderColorRevert();    
                         d3.select(this).style("fill", "#ffffbf");            
                         var id = Number(d.dummy_id);
                         selectedPatient = id;
+                        document.getElementById("select").value = selectedPatient;
                         var selctedPatientIndex = getIndex(selectedPatient);
                         // console.log(json_patients);
                         bar.init();
@@ -352,12 +393,7 @@ var bubble = (function(){
             }
         
             }else if(id == 1){//race
-                var color1 = d3.scale.ordinal()
-                    .range(['#D81B60',
-                        '#1E88E5',
-                        '#FFC107',
-                        '#004D40',
-                        '#870F62']);
+                
                 svg.selectAll("circle")
                     .data(data)
                     .enter()
@@ -366,7 +402,7 @@ var bubble = (function(){
                     .attr("cy", height / 2)
                     .attr("id", "circle")
                     .attr("class", function(d){ return "bubbles " + d.race })
-                    .attr("opacity", function (d) { return opacity(d.size); })
+                    // .attr("opacity", function (d) { return opacity(d.size); })
                     .attr("r", function (d) { return scale(d.size); })
                     .style("fill", function (d) { 
                         if(d.dummy_id == 99992){
@@ -394,6 +430,7 @@ var bubble = (function(){
                         d3.select(this).style("fill", "#ffffbf");
                         var id = Number(d.dummy_id);
                         selectedPatient = id;
+                        document.getElementById("select").value = selectedPatient;
                         var selctedPatientIndex = getIndex(selectedPatient);
                         bar.init();
                         var organList = getOrganList(selctedPatientIndex, json_patients);
@@ -520,12 +557,6 @@ var bubble = (function(){
             }
         
             }else if(id == 2){//hpv
-                var color2 = d3.scale.ordinal()
-                    .range(['#D81B60',
-        
-                    '#1E88E5',
-        
-                    '#004D40']);
                 svg.selectAll("circle")
                     .data(data)
                     .enter()
@@ -534,7 +565,7 @@ var bubble = (function(){
                     .attr("cy", height / 2)
                     .attr("id", "circle")
                     .attr("class", function(d){ return "bubbles " + d.hpv })
-                    .attr("opacity", function (d) { return opacity(d.size); })
+                    // .attr("opacity", function (d) { return opacity(d.size); })
                     .attr("r", function (d) { return scale(d.size); })
                     .style("fill", function (d) { 
                         if(d.dummy_id == 99992){
@@ -562,6 +593,7 @@ var bubble = (function(){
                         d3.select(this).style("fill", "#ffffbf");
                         var id = Number(d.dummy_id);
                         selectedPatient = id;
+                        document.getElementById("select").value = selectedPatient;
                         var selctedPatientIndex = getIndex(selectedPatient);
                         bar.init();
                         var organList = getOrganList(selctedPatientIndex, json_patients);
@@ -666,9 +698,7 @@ var bubble = (function(){
             }
         
             }else if(id == 3){//overall_survival
-                var color3 = d3.scale.ordinal()
-                    .range(['#D81B60',
-                    '#1E88E5']);
+
                 svg.selectAll("circle")
                     .data(data)
                     .enter()
@@ -677,7 +707,7 @@ var bubble = (function(){
                     .attr("cy", height / 2)
                     .attr("id", "circle")
                     .attr("class", function(d){ return "bubbles_survive" + d.overall_survival })
-                    .attr("opacity", function (d) { return opacity(d.size); })
+                    // .attr("opacity", function (d) { return opacity(d.size); })
                     .attr("r", function (d) { return scale(d.size); })
                     .style("fill", function (d) { 
                         if(d.dummy_id == 99992){
@@ -705,6 +735,7 @@ var bubble = (function(){
                         d3.select(this).style("fill", "#ffffbf");
                         var id = Number(d.dummy_id);
                         selectedPatient = id;
+                        document.getElementById("select").value = selectedPatient;
                         var selctedPatientIndex = getIndex(selectedPatient);
                         bar.init();
                         var organList = getOrganList(selctedPatientIndex, json_patients);
@@ -814,11 +845,7 @@ var bubble = (function(){
             }
         
             }else if(id == 4){//t_category
-                var color4 = d3.scale.ordinal()
-                    .range(['#D81B60',
-                    '#1E88E5',
-                    '#004D40',
-                    '#870F62']);
+
                 svg.selectAll("circle")
                     .data(data)
                     .enter()
@@ -827,7 +854,7 @@ var bubble = (function(){
                     .attr("cy", height / 2)
                     .attr("id", "circle")
                     .attr("class", function(d){ return "bubbles " + d.t_category })
-                    .attr("opacity", function (d) { return opacity(d.size); })
+                    // .attr("opacity", function (d) { return opacity(d.size); })
                     .attr("r", function (d) { return scale(d.size); })
                     .style("fill", function (d) {
                         if(d.dummy_id == 99992){
@@ -855,6 +882,7 @@ var bubble = (function(){
                         d3.select(this).style("fill", "#ffffbf");
                         var id = Number(d.dummy_id);
                         selectedPatient = id;
+                        document.getElementById("select").value = selectedPatient;
                         var selctedPatientIndex = getIndex(selectedPatient);
                         bar.init();
                         var organList = getOrganList(selctedPatientIndex, json_patients);
@@ -966,12 +994,6 @@ var bubble = (function(){
             }
         
             }else{//tumor_subsite
-                var color5 = d3.scale.ordinal()
-                    .range(['#D81B60',
-                    '#1E88E5',
-                    '#FFC107',
-                    '#004D40',
-                    '#870F62']);
                 svg.selectAll("circle")
                     .data(data)
                     .enter()
@@ -980,7 +1002,7 @@ var bubble = (function(){
                     .attr("cy", height / 2)
                     .attr("id", "circle")
                     .attr("class", function(d){ return "bubbles " + d.tumor_subsite })
-                    .attr("opacity", function (d) { return opacity(d.size); })
+                    // .attr("opacity", function (d) { return opacity(d.size); })
                     .attr("r", function (d) { return scale(d.size); })
                     .style("fill", function (d) { 
                         if(d.dummy_id == 99992){
@@ -1008,6 +1030,7 @@ var bubble = (function(){
                         d3.select(this).style("fill", "#ffffbf");
                         var id = Number(d.dummy_id);
                         selectedPatient = id;
+                        document.getElementById("select").value = selectedPatient;
                         var selctedPatientIndex = getIndex(selectedPatient);
                         bar.init();
                         var organList = getOrganList(selctedPatientIndex, json_patients);

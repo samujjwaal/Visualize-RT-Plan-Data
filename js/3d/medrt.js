@@ -92,7 +92,111 @@ d3.json("data/organAtlas.json", function(organs){
 			});
 			return meshes;
 		}
-		
+		function bubbleColorChange(selectedPatient){
+			let dropdown_value = document.getElementById("bubble_select").value;
+			// var groups = ['gender', 'race', 'hpv','overall_survival', 't_category', 'tumor_subsite'];
+			let uic = 'brown';
+			if(selectedPatient == 99992){
+				uic = 'black';
+			}
+			if(dropdown_value == 'gender'){
+				// console.log('gender');
+				d3.select('#bubble').select('svg').select('#bubbles_group').selectAll("circle").style("fill", function(d){
+					if(d.dummy_id == selectedPatient){
+						return "white";
+					}else if (d.dummy_id == 99992){
+						if(uic == 'brown'){
+							return "#7f3b08";
+						}else{
+							return "white";
+						}						
+					}else{
+						return color0(d.gender);
+					}
+					
+				});
+			}else if(dropdown_value == 'race'){
+				// console.log('race');
+				d3.select('#bubble').select('svg').select('#bubbles_group').selectAll("circle").style("fill", function(d){
+					if(d.dummy_id == selectedPatient){
+						return "white";
+					}else if (d.dummy_id == 99992){
+						if(uic == 'brown'){
+							return "#7f3b08";
+						}else{
+							return "white";
+						}						
+					}else{
+						return color1(d.race);
+					}
+					
+				});
+			}else if(dropdown_value == 'hpv'){
+				// console.log('hpv');
+				d3.select('#bubble').select('svg').select('#bubbles_group').selectAll("circle").style("fill", function(d){
+					if(d.dummy_id == selectedPatient){
+						return "white";
+					}else if (d.dummy_id == 99992){
+						if(uic == 'brown'){
+							return "#7f3b08";
+						}else{
+							return "white";
+						}						
+					}else{
+						return color2(d.hpv);
+					}
+					
+				});
+			}else if(dropdown_value == 'overall_survival'){
+				// console.log('overall_survival');
+				d3.select('#bubble').select('svg').select('#bubbles_group').selectAll("circle").style("fill", function(d){
+					if(d.dummy_id == selectedPatient){
+						return "white";
+					}else if (d.dummy_id == 99992){
+						if(uic == 'brown'){
+							return "#7f3b08";
+						}else{
+							return "white";
+						}						
+					}else{
+						return color3(d.overall_survival);
+					}
+					
+				});
+			}else if(dropdown_value == 't_category'){
+				// console.log('t_category');
+				d3.select('#bubble').select('svg').select('#bubbles_group').selectAll("circle").style("fill", function(d){
+					if(d.dummy_id == selectedPatient){
+						return "white";
+					}else if (d.dummy_id == 99992){
+						if(uic == 'brown'){
+							return "#7f3b08";
+						}else{
+							return "white";
+						}						
+					}else{
+						return color4(d.t_category);
+					}
+					
+				});
+			}else if(dropdown_value == 'tumor_subsite'){
+				// console.log('tumor_subsite');
+				d3.select('#bubble').select('svg').select('#bubbles_group').selectAll("circle").style("fill", function(d){
+					if(d.dummy_id == selectedPatient){
+						return "white";
+					}else if (d.dummy_id == 99992){
+						if(uic == 'brown'){
+							return "#7f3b08";
+						}else{
+							return "white";
+						}						
+					}else{
+						return color5(d.tumor_subsite);
+					}
+					
+				});
+			}
+		}
 		function start() {
 			bar.init()	;
 			bubble.init();
@@ -119,8 +223,10 @@ d3.json("data/organAtlas.json", function(organs){
 				 selectedIndex = this.selectedIndex;
 				 bar_index = 200 - selectedIndex;
 				//  console.log("bar " + bar_index)
-				//  console.log(selectedIndex);
+				// console.log(selectedIndex);
 				 selectedPatient = allPatientDropdownIds[selectedIndex];
+				//  console.log(selectedPatient)
+				 bubbleColorChange(selectedPatient);
 				 medrtobj.init();
 				 organList = getOrganList(bar_index, patients);
 			     //mean dose of the organs
@@ -192,7 +298,7 @@ d3.json("data/organAtlas.json", function(organs){
 			removeOldViews(selectedPatient);
 			var scenes = [];
 			var matches = similarPatients(selectedPatient);
-			console.log(matches)
+			// console.log(matches)
 			for (var i = 0; i < patientsToShow && i < matches.length; i++) {
 				var id = matches[i];
 				var target = (i == 0)? "leftContent" : "content";
