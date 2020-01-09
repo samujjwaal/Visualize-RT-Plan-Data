@@ -117,17 +117,36 @@
             <span class="close">&times;</span>
             <h1 style="text-align: center">MedRT</h1>
             <hr style="width: 100%; border: 0px; border-top: 8px groove #ddd;" />
-            <p>Radiation therapy is a primary modality to treat head and neck cancer patients. In this project, we propose a novel approach to correlate similarities and differences between the cancer patients. We have used the head and neck cancer patients’ data from UIC and MDACC Radiation Therapy plan and visualized the similarities and dissimilarities between them.</p>
+            <p>Radiation therapy is a primary modality to treat head and neck cancer patients. 
+                In this project, we propose a novel approach to correlate similarities and differences between the cancer patients. 
+                We have used the head and neck cancer patients’ data from UIC and MDACC Radiation Therapy plan and visualized 
+                the similarities and dissimilarities between them.</p>
             <h5>Distribution plot:</h5>
-            <p>Data distribution chart is added for the MDACC patient dataset on the basis of  patients’ tumor size, age, given dose volume, treatment duration and smoking status. We showed different encodings (i.e. box plot, violin plot, bean plot, scatter plot) to visualize data distribution and tried to know how a user might interpret these encodings. On hovering mouse over the plots, a tooltip shows the maximum, median, minimum and quartiles.</p>
+            <p>Data distribution chart is added for the MDACC patient dataset on the basis of  patients’ tumor size, age, given dose volume, 
+                treatment duration and smoking status. 
+                Different encodings (i.e. box plot, violin plot, scatter plot) are shown to visualize data distribution.
+                 The yellow circle is the UIC Patient
+                  On hovering mouse over the plots, a tooltip shows the maximum, median, minimum and quartiles.</p>
             <h5>Bubble plot:</h5>
-            <p>Bubble plot shows the patients’ cohorts in terms of gender, race, HPV, overall survival, T-category, tumor subsite.The radius of the bubbles is dependent on the GTVp tumor volume. On hovering mouse over a certain cohort, only that cohort shows and other cohorts fade out. On hovering over a bubble a tooltip will provide the information of a patient ID and the cohor it falls under. If a single patient is clicked, the bar chart - showing the selected patient's organs and the 3D plot change according to it.
-            To get a better view user can zoom in by using mouse scroll. User can move the chart by clicking and holding a bubble and move the mouse direction.
+            <p>Bubble plot shows the patients’ cohorts in terms of gender, race, HPV, overall survival, T-category, tumor subsite.
+                The radius of the bubbles is dependent on the GTVp tumor volume.
+                 On hovering mouse over a certain cohort, only that cohort shows and other cohorts fade out. 
+                 On hovering over a bubble a tooltip will provide the information of a patient ID and the cohor it falls under. 
+                 The <b>Brown</b> colored bubble is the UIC patient
+                 If a single patient is clicked, the color will change to white and the you will see the ID in the dropdown menu as well.
+                 additionally, the bar chart - showing the selected patient's organs and the 3D plot will also change according to it.
+            To get a better view user can zoom in by using mouse scroll. User can move the chart by clicking 
+            and holding a bubble and move the mouse direction.
             </p>
             <h5>Bar Chart:</h5>
-            <p>A dropdown is added for selecting a patient. A bar chart shows how much the patient’s organs were affected by the dose volume given to the patient. The slider will help to move the bar chart and see all the organs and their dose value</p>
+            <p>A dropdown is added for selecting a patient. 
+                A bar chart shows how much the patient’s organs were affected by the dose volume given to the patient.
+            Select a Patient from the dropdown menu, the patient will be highlighted in the bubble chart as well</p>
             <h5>3D plot:</h5>
-            <p>For 3D view, we have plotted the organs and distributed the color range depending upon the dose amount each organ received. For one patient (selected from the dropdown / clicking on the patient from the bubble chart), four most similar patients according to dose pattern are showing on the right side. Hovering the mouse on the organs, a tooltip shows the organ name and dose value. User can rotate the 3D view for their convenence</p>
+            <p>For 3D view, the organs and distributed the color range depending upon the dose amount each organ received are shown. 
+                For one patient (selected from the dropdown / clicking on the patient from the bubble chart), 
+                six most similar patients according to dose pattern are showing on the right side. 
+                Hovering the mouse on the organs, a tooltip shows the organ name and dose value. User can rotate the 3D view for their convenence</p>
         </div>
     </div>
 
