@@ -198,6 +198,7 @@ d3.json("data/organAtlas.json", function(organs){
 			}
 		}
 		function start() {
+			legend();
 			bar.init()	;
 			bubble.init();
 			allPatientDropdownIds = getPatientIDS(patients);
@@ -256,6 +257,7 @@ d3.json("data/organAtlas.json", function(organs){
 				// console.log(selectedBubbleIndex);
 				bubbleplot(selectedBubbleIndex, bubbledata);
 				medrtobj.init();
+				legend();
 				// scene_control.setup();
 			});
 			scene_control.toggleBrush(true);
