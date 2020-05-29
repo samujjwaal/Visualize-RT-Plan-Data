@@ -1,7 +1,0 @@
-Data and Task Abstraction
-State of the Art Report
-Functional Specifications
-Goals and Targets
-Prototypes
-
-Will work in three.js
