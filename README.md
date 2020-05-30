@@ -5,7 +5,6 @@
 ![GitHub repo size](https://img.shields.io/github/repo-size/samujjwaal/Visualize-RT-Plan-Data)
 
 ## Identifying Similarities and Dissimalirities Between [UIC][uic] and [MDACC][mdacc] RT Plan Data
-
 [uic]: https://cancer.uillinois.edu/ "University of Illinois Cancer Center"
 [mdacc]: https://www.mdanderson.org/ "The University of Texas MD Anderson Cancer Center"
 
