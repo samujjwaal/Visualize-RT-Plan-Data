@@ -32,4 +32,14 @@ Javascript libraries used: [D3.js](https://github.com/d3/d3) and [THREE.js](http
 Here is the [Project Report](https://docs.google.com/document/d/1oi8C-q11IrezS6G9zEKIcqfHg5QgJ-OT4_aYK8SP0Yw/edit?usp=sharing) submitted for this project.
 
 Here is a demo video to explain the UI of the project and various visual encodings employed.
+
 [![Demo Video](https://img.youtube.com/vi/yJpJ_xZvsP8/0.jpg)](https://www.youtube.com/watch?v=yJpJ_xZvsP8 "Demo Video")
+
+## Usage Details
+
+The project can be viewed at [MedRT](https://samujjwaal.github.io/Visualize-RT-Plan-Data).
+
+To run the project locally, open the terminal and follow these steps: 
+1. Run: `git clone https://github.com/samujjwaal/Visualize-RT-Plan-Data.git`
+2. Start an http server: `python -m http.server 8888`
+3. Open http://localhost:8888 in a browser to view the project
