@@ -33,7 +33,11 @@ Here is the [Project Report](https://docs.google.com/document/d/1oi8C-q11IrezS6G
 
 Here is a demo video to explain the UI of the project and various visual encodings employed.
 
-[![Demo Video](https://img.youtube.com/vi/yJpJ_xZvsP8/0.jpg)](https://www.youtube.com/watch?v=yJpJ_xZvsP8 "Demo Video")
+<p align="center" style="margin: 0 0">
+    <a href="https://www.youtube.com/watch?v=yJpJ_xZvsP8" target="_blank" >
+        <img src="https://img.youtube.com/vi/yJpJ_xZvsP8/0.jpg" alt="Demo Video" />
+    </a>
+</p>
 
 ## Usage Details
 
